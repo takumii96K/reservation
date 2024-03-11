@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+<title>商品選択画面</title>
+    <script src="/js/add-to-cart-form.js"></script>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: rgb(226, 214, 152); /* ボディ背景色：橙 */
+  }
+  
+   header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgb(255, 255, 255); /* ヘッダー背景色：白 */
+    text-align: center;
+    padding: 10px 0;
+    z-index: 1000;
+  }
+  
+  .menu-container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-top: 80px; /* ヘッダーの高さ分の余白 */
+  }
+
+  .menu-item {
+    width: calc(33.33% - 40px);
+    margin: 20px;
+    text-align: center;
+    position: relative;
+  }
+  
+  .menu-item img {
+      width: 100%; /* または希望する固定の幅 */
+      height: auto; /* 画像の元のアスペクト比を保持 */
+      object-fit: contain; /* 画像を枠内に収めるため、必要に応じて画像をトリミング */
+      max-height: 200px; /* 希望する最大の高さ */
+      background-color: #f0f0f0; /* 画像がコンテナに完全に収まらない場合の背景色 */
+  }
+
+  .menu-item:hover img {
+    opacity: 0.7;
+  }
+
+  .menu-item h3 {
+    margin: 10px 0;
+  }
+  
+  .menu-item p {
+    color: #555;
+  }
+
+  footer {
+    text-align: center;
+    margin-top: 20px;
+  }
+
+button {
+    background-color: #ff7f0e;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+</style>
+  
+</head>
+<body>
+
+    <header>
+        <h1>チームA</h1>
+    </header>
+    
+    <h3>商品を選択してください</h3>
+    <!-- ▽▽　以下商品一覧　▽▽ -->
+<!--    &lt;!&ndash; 商品1 &ndash;&gt;-->
+<!--    <div class="menu">-->
+<!--        &lt;!&ndash; 商品1 &ndash;&gt;-->
+<!--        <div class="menu-item">-->
+<!--            <img src="https://cdn.macaro-ni.jp/image/summary/108/108786/bPSqCOs6isa8vH8rGWVFZhiRcpQs4reeaT8ZlN8n.jpg" alt="商品1">-->
+<!--            <h3>たこやき <span>￥300</span></h3>-->
+<!--            <form action="/takeout/product/checkStock" method="post">-->
+<!--                <div th:each="product : ${products}">-->
+<!--                    <label th:text="${product.productName}">-->
+<!--                        <input type="checkbox" name="productName" th:value="${product.productName}">-->
+<!--                    </label><br>-->
+<!--                </div>-->
+<!--            </form>-->
+<!--        </div>-->
+<!--        -->
+<!--        &lt;!&ndash; 商品2 &ndash;&gt;-->
+<!--        <div class="menu-item">-->
+<!--            <img src="https://www.esthetic.cc/column/column/img/01296.jpg" alt="商品2">-->
+<!--            <h3 th:object="${products}">焼きそば <span>￥400</span></h3>-->
+<!--            <form action="/takeout/product/checkStock" method="post">-->
+<!--                <div th:each="product : ${products}">-->
+<!--                    <label th:text="${product.productName}">-->
+<!--                        <input type="checkbox" name="productName" th:value="${product.productName}">-->
+<!--                    </label><br>-->
+<!--                </div>-->
+<!--            </form>-->
+<!--        </div>-->
+    <div th:each="product : ${products}" class="product">
+        <div class="menu-container">
+            <div class="menu-item">
+                <img th:src="${product.imageUrl}" alt="商品画像" th:alt="${product.productName}">
+                <h3 th:text="${product.productName} + ' ' + ${product.productPrice} + '円'"></h3>
+                <form class="add-to-cart-form">
+                    <input type="hidden" class="product-id" th:value="${product.productId}" />
+                    <label>
+                        <input type="number" class="quantity" name="quantity" min="1" value="1" />
+                    </label>
+                    <button type="button" class="add-to-cart-btn">カートに追加</button>
+                </form>
+            </div>
+        </div>
+    </div>
+        <button type="submit">注文確認(ユーザー情報入力)</button>
+    <!-- カートの中身を表示するセクション -->
+    <div id="cart-summary">
+        <h3>カートの中身</h3>
+        <div id="cart-items">
+            <!-- カートのアイテムがここに表示される -->
+        </div>
+        <p>合計金額: <span id="cart-total">0</span>円</p>
+    </div>
+
+<!--    &lt;!&ndash;ProductFormクラスを用いて個数と注文商品をPOSTする&ndash;&gt;-->
+<!--    <form action="/takeout/product/confirmOrder" method="post">-->
+<!--        <div class="menu-container">-->
+<!--            &lt;!&ndash;productsはList<product>の複数行の情報を取得:表示用&ndash;&gt;-->
+<!--            <div th:each="product, iterStat : ${products}" class="menu-item">-->
+<!--                &lt;!&ndash; 商品画像と名前 &ndash;&gt;-->
+<!--                <img th:src="${product.imageUrl}" alt="商品画像" th:alt="${product.productName}">-->
+<!--                <h3 th:text="${product.productName} + ' ' + ${product.productPrice} + '円'"></h3>-->
+<!--                &lt;!&ndash; 商品選択 &ndash;&gt;-->
+<!--                <label>-->
+<!--                    <input type="checkbox" th:name="*{selected}" th:value="true">-->
+<!--                    <span th:text="${product.productName}"></span>-->
+<!--                </label>-->
+<!--                &lt;!&ndash; 商品数量 &ndash;&gt;-->
+<!--                <label>-->
+<!--                    数量:-->
+<!--                    <input type="number" th:name="*{quality}" min="1" value="1">-->
+<!--                </label>-->
+<!--                &lt;!&ndash; 隠しフィールドとして商品名を送信 &ndash;&gt;-->
+<!--                <input type="hidden" th:name="'products[' + ${iterStat.index} + '].productId'" th:value="${product.productName}">-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <button type="submit">注文確認(ユーザー情報入力）</button>-->
+<!--    </form>-->
+<!--        -->
+<!--        &lt;!&ndash; 商品3 &ndash;&gt;-->
+<!--        <div class="menu-item">-->
+<!--            <img src="https://yataiya-senjudo.com/wp-content/uploads/2021/01/hashimaki_33.jpg" alt="商品3">-->
+<!--            <h3>はしまき <span>￥300</span></h3>-->
+<!--            <form action="/takeout/product/checkStock" method="post">-->
+<!--                <div th:each="product : ${products}">-->
+<!--                    <label th:text="${product.productName}">-->
+<!--                        <input type="checkbox" name="productName" th:value="${product.productName}">-->
+<!--                    </label><br>-->
+<!--                </div>-->
+<!--            </form>-->
+<!--        </div>-->
+<!--        -->
+<!--        &lt;!&ndash; 商品4 &ndash;&gt;-->
+<!--        <div class="menu-item">-->
+<!--            <img src="https://www.daisho.co.jp/dw/wp-content/uploads/2023/07/HP%E3%83%AC%E3%82%B7%E3%83%94%E7%94%A8%E3%80%80%E3%81%82%E3%82%81%E3%80%80%E3%82%8A%E3%82%93%E3%81%94-scaled.jpg" alt="商品4">-->
+<!--            <h3>りんご飴 <span>￥300</span></h3>-->
+<!--            <form action="/takeout/product/checkStock" method="post">-->
+<!--                <div th:each="product : ${products}">-->
+<!--                    <label th:text="${product.productName}">-->
+<!--                        <input type="checkbox" name="productName" th:value="${product.productName}">-->
+<!--                    </label><br>-->
+<!--                </div>-->
+<!--            </form>-->
+<!--        </div>-->
+<!--        -->
+<!--        &lt;!&ndash; 商品5 &ndash;&gt;-->
+<!--        <div class="menu-item">-->
+<!--            <img src="https://www.esthetic.cc/column/column/img/01296.jpg" alt="商品5">-->
+<!--            <h3>焼きそば <span>￥400</span></h3>-->
+<!--            <form action="/takeout/product/checkStock" method="post">-->
+<!--                <div th:each="product : ${products}">-->
+<!--                    <label th:text="${product.productName}">-->
+<!--                        <input type="checkbox" name="productName" th:value="${product.productName}">-->
+<!--                    </label><br>-->
+<!--                </div>-->
+<!--            </form>-->
+<!--        </div>-->
+<!--        -->
+<!--        &lt;!&ndash; 商品6 &ndash;&gt;-->
+<!--        <div class="menu-item">-->
+<!--            <img src="https://yataiya-senjudo.com/wp-content/uploads/2021/01/hashimaki_33.jpg" alt="商品6">-->
+<!--            <h3>はしまき <span>￥300</span></h3>-->
+<!--            <form action="/takeout/product/check" method="post">-->
+<!--                <div th:each="product : ${products}">-->
+<!--                    <label th:text="${product.productName}">-->
+<!--                        <input type="checkbox" name="productName" th:value="${product.productName}">-->
+<!--                    </label><br>-->
+<!--                </div>-->
+<!--            </form>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    -->
+<!--    <button type="submit">ユーザー情報入力へ</button>-->
+</body>
+</html>

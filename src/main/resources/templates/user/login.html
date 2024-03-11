@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head>
+    <title>ログイン</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<h1>ログイン</h1>
+<div th:if="${failureMessage != null}" th:text="${failureMessage}"></div>
+<form th:action="@{/login}" method="post">
+    <table>
+        <tr>
+            <th>ログインID</th>
+            <td><label>
+                <input type="text" name="username"/>
+            </label></td>
+        </tr>
+        <tr>
+            <th>パスワード</th>
+            <td><label>
+                <input type="password" name="password"/>
+            </label></td>
+        </tr>
+    </table>
+    <input type="submit" value="ログイン"/>
+</form>
+<!-- 新しいフォーム部分の追加 -->
+<div>
+    <form th:action="@{/register}" method="get">
+        <input type="submit" value="ユーザー登録"/>
+    </form>
+    <form th:action="@{/takeout/product}" method="get">
+        <input type="submit" value="ゲストで商品選択へ"/>
+    </form>
+</div>
+</body>
+</html>

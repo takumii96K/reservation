@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>管理画面</title>
+</head>
+<body>
+	<h2>商品情報</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>商品ID</th>
+                <th>商品名</th>
+                <th>在庫数</th>
+                <th>売上個数</th>
+                <th>売上金額</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="product : ${products}">
+                <td th:text="${product.productId}"></td>
+                <td th:text="${product.productName}"></td>
+                <td th:text="${product.stockQuantity}"></td>
+                <td th:text="${product.salesQuantity}"></td>
+                <td th:text="${product.salesAmount}"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>ユーザー情報</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ユーザーID</th>
+                <th>名前</th>
+                <th>商品ID</th>
+                <th>購入した個数</th>
+                <th>購入日時</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="user : ${users}">
+                <td th:text="${user.userId}"></td>
+                <td th:text="${user.name}"></td>
+                <td th:text="${user.productId}"></td>
+                <td th:text="${user.purchaseQuantity}"></td>
+                <td th:text="${user.purchaseDateTime}"></td>
+            </tr>
+        </tbody>
+    </table>
+    
+      <h2>予約情報</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>商品ID</th>
+                <th>予約者名</th>
+                <th>予約日時</th>
+                <th>連絡先</th>
+                <th>予約状態</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="reservation : ${reservations}">
+                <td th:text="${reservation.productId}"></td>
+                <td th:text="${reservation.reserverName}"></td>
+                <td th:text="${reservation.reservationDateTime}"></td>
+                <td th:text="${reservation.contactInfo}"></td>
+                <td th:text="${reservation.reservationStatus}"></td>
+            </tr>
+            </tr>
+        </tbody>
+    </table>
+
+
+</body>
+</html>
