@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+<<<<<<< HEAD
+=======
+
+>>>>>>> refs/remotes/origin/team
 
 
 /** Productコントローラ */
@@ -31,7 +35,7 @@ public class ProductController {
 		return "/product"; // ホームページのビュー名
 	}
 
-	@PostMapping("/confirm")
+	@PostMapping//("/confirm")
 	public String handleProductSelection(@ModelAttribute("ProductSelection") ProductForm form, HttpSession session) {
 		// 選択された商品情報をセッションに保存
 		session.setAttribute("selectedProducts", form.getSelections());

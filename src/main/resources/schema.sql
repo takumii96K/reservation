@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS public.reservation
     customer_name character varying COLLATE pg_catalog."default" NOT NULL,
     reservation_time time with time zone NOT NULL,
     customer_tel character varying COLLATE pg_catalog."default",
+    reservation_email character varying COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT reservation_pkey PRIMARY KEY (reservation_id)
 );
 
