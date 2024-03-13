@@ -9,143 +9,8 @@
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
 <style>
-	@import url('https://fonts.googleapis.com/css2?family=M+PLUS+1p&display=swap');
 	
-	body {
-    	background-color: rgb(244, 213, 128);
-    	font-family: "M PLUS 1p", sans-serif;
-	}
-	
-		*{
-		margin: 0;
-		padding: 0;
-		box-sizing: border-box;
-		list-style: none;
-		text-decoration: none;
-		font-family: "M PLUS 1p", sans-serif;
-	}
-	
-	/* ▽▽▽サイドバー▽▽▽ */
-	
-	.sidebar{
-		position: fixed;
-		left: -250px;
-		background-color: rgb(105, 84, 56);
-		width: 250px;
-		height: 100%;
-		transition: all 0.5s;
-	}
-	
-	.sidebar header{
-		font-size: 22px;
-		color: white;
-		text-align: center;
-		line-height: 70px;
-		background: burlywood;
-		user-select: none;
-	}
-	
-	.sidebar ul a {
-		display: block;
-		height: 100%;
-		width: 100%;
-		line-height: 50px;
-		color: white;
-		font-size: 15px;
-		padding-left: 40px;
-		border-top: 1px solid rgba(255,255,255,0.1);
-		/*border-bottom: 1px solid navajowhite;*/
-		transition: 0.4s;
-	}
-	
-	ul li:hover a {
-		padding-left: 50px;
-	}
-	
-	.sidebar ul a i {
-		margin-right: 16px;
-	}
-	
-	.sidebar ul p{
-		color: whitesmoke;
-	}
-	
-		/* toggle section */
-	#check{
-		display: none;
-	}
-	
-	label #hambargerBtton,
-	label #cancel{
-		position: absolute;
-		cursor: pointer;
-		background: #b66f2d;
-		border-radius: 3px;
-	}
-	
-	label #hambargerBtton{
-		left: 40px;
-		top: 25px;
-		font-size: 25px;
-		color: white;
-		padding: 6px 12px;
-		transition: all 0.5s;
-	}
-	
-	label #cancel{
-		z-index: 10;
-		left: -195px;
-		top: 17px;
-		font-size: 30px;
-		color: white;
-		padding: 4px 9px;
-		transition: all 0.5s;
-	}
-	
-	#check:checked ~ .sidebar{
-		left: 0px;
-	}
-	
-	#check:checked ~ label #hambargerBtton{
-		left: 250px;
-		opacity: 0;
-		pointer-events: none;
-	}
-	
-	#check:checked ~ label #cancel{
-		left: 195px;
-		}
-		
-		
-	/* ▽▽▽　メインページ　▽▽▽ */
-	#check:checked ~ main {	
-		margin-left: 250px;
-		}
-		
-	main {
-		background-position: center;
-		text-align:  left;    /* 文字寄せ */
-    	height: 100vh;
-    	background-size: cover;
-    	background-position: center;
-    	padding:  50px;        /* 余白指定 */
-    	/*border: solid 2px;      /* 枠線指定 */
-    	transition: all 0.5s;
-	}
-	
-	/* 見出し */
-	.ttl_line2 {
- 		 font-weight: bold;
- 		 border-bottom: 2px solid rgb(128, 64, 0);
- 		 padding: 0.3em;
-  		 margin-bottom: 0.3em;
-	}
-	.ttl_line2:first-letter {
- 		font-size: 1.5em;
-  		color: rgb(255, 128, 0);
-	}
-	
-	/* 次ページへのボタン */
+	/* ▽▽▽ 次ページへのボタン ▽▽▽ */
 	.sample_button11 {
 		display: inline-block;
 		width: 250px;
@@ -182,26 +47,33 @@
 </head>
 <body>
 	
-	<!-- トグルセクション -->
+	<!-- ▽▽▽　トグルセクション　▽▽▽ -->
 	<input type="checkbox" id="check">
 	<label for="check">
-		<i class="fas fa-bars" id="hambargerBtton"></i>
+		<i class="fas fa-bars" id="hambargerButton"></i>
 		<i class="fas fa-times" id="cancel"></i>
 	</label>
 	
-	<!-- サイドバーセクション -->
+	<!-- ▽▽▽　サイドバーセクション　▽▽▽ -->
 	<div class="sidebar">
 		<header>Team A</header>
 		<ul>
+			<!-- メニュー画面リンク -->
 			<li>
-				<a href="#"><i class="fa fa-cutlery" aria-hidden="true"></i>menu</a>
+				<a href="/product_menu.html"><i class="fa fa-cutlery" aria-hidden="true"></i>menu</a>
 			</li>
+			
+			<!-- 店舗情報画面リンク（ダミー） -->
 			<li>
 				<a href="#"><i class="fa fa-map-marker" aria-hidden="true"></i>store information</a>
 			</li>
+			
+			<!-- メンバー紹介画面リンク -->
 			<li>
-				<a href="#"><i class="fa fa-users" aria-hidden="true"></i>member</a>
+				<a href="product_member.html"><i class="fa fa-users" aria-hidden="true"></i>member</a>
 			</li>
+			
+			<!-- カートの中身画面リンク（どうする？要相談） -->
 			<li>
 				<a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i>cart</a>
 				<!-- カートの中身を表示するセクション -->
@@ -211,7 +83,6 @@
 				<p>合計金額: <span id="cart-total">0</span>円</p>
 				 </div>
 			</li>
-			
 		</ul>
 	</div>
 	

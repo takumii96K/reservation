@@ -30,24 +30,6 @@
   		color: rgb(255, 128, 0);
 	}
 	
-	
-	/*サイドバー開いたときにメイン部分もスライドする*/
-	#check:checked ~ main {	
-		margin-left: 250px;
-	}
-	
-	main {
-		background-position: center;
-		text-align:  left;    /* 文字左寄せ */
-    	height: 100vh;
-    	background-size: cover;
-    	padding:  50px;        /* 余白指定 */
-    	/*border: solid 2px;      /* 枠線指定 */
-    	transition: all 0.5s; /* トランジション(動き)*/
-	}
-	
-	
-	
 	/* ▽▽▽ サイドバーセクション ▽▽▽ */
 	*{
 		margin: 0;
@@ -147,4 +129,20 @@
 	
 	#check:checked ~ label #cancel{
 		left: 195px;
+	}
+		
+	
+	/*サイドバー開いたときにメイン部分もスライドする*/
+	#check:checked ~ main {	
+		margin-left: 250px;
+	}
+	
+	main {
+		background-position: center;
+		text-align:  left;    /* 文字左寄せ */
+    	height: 100vh;
+    	background-size: cover;
+    	padding:  50px;        /* 余白指定 */
+    	/*border: solid 2px;      /* 枠線指定 */
+    	transition: all 0.5s; /* トランジション(動き)*/
 	}
