@@ -11,11 +11,11 @@ import lombok.NoArgsConstructor;
 public class ReservationForm {
 	
 	//商品ID
-private Integer id;
+//private Integer id;
 
 private String name;
 
-private String tel;
+private String phone;
 
 
 }

@@ -3,132 +3,168 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="_csrf" th:content="${_csrf.token}"/>
-    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
-<title>商品選択画面</title>
-    <script src="/js/add-to-cart-form.js"></script>
-<style>
-  body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    background-color: rgb(226, 214, 152); /* ボディ背景色：橙 */
-  }
-  
-   header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: rgb(255, 255, 255); /* ヘッダー背景色：白 */
-    text-align: center;
-    padding: 10px 0;
-    z-index: 1000;
-  }
-  
-  .menu-container{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    padding-top: 80px; /* ヘッダーの高さ分の余白 */
-  }
+    <meta id="csrfToken" name="_csrf" th:content="${_csrf.token}"/>
+    <meta id="csrfHeaderName" name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>商品選択画面</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+        }
 
-  .menu-item {
-    width: calc(33.33% - 40px);
-    margin: 20px;
-    text-align: center;
-    position: relative;
-  }
-  
-  .menu-item img {
-      width: 100%; /* または希望する固定の幅 */
-      height: auto; /* 画像の元のアスペクト比を保持 */
-      object-fit: contain; /* 画像を枠内に収めるため、必要に応じて画像をトリミング */
-      max-height: 200px; /* 希望する最大の高さ */
-      background-color: #f0f0f0; /* 画像がコンテナに完全に収まらない場合の背景色 */
-  }
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+        }
 
-  .menu-item:hover img {
-    opacity: 0.7;
-  }
+        h1, h3 {
+            margin: 0;
+            padding: 10px 0;
+        }
 
-  .menu-item h3 {
-    margin: 10px 0;
-  }
-  
-  .menu-item p {
-    color: #555;
-  }
+        .menu-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin-top: 100px; /* ヘッダーの高さに合わせて調整 */
+        }
 
-  footer {
-    text-align: center;
-    margin-top: 20px;
-  }
+        .menu-item {
+            background-color: #fff;
+            margin: 15px;
+            width: 30%;
+            box-shadow: 0 2px 4px rgba(0,0,0,.2);
+            transition: transform .2s;
+            position: relative; /* この変更を加えます */
+        }
 
-button {
-    background-color: #ff7f0e;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-  }
-</style>
-  
+        .menu-item:hover {
+            transform: scale(1.05);
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 200px; /* 画像の高さ */
+            object-fit: cover;
+        }
+
+        .product-details {
+            padding: 15px;
+            text-align: center;
+        }
+
+        .product-details span {
+            display: block;
+            margin: 10px 0;
+        }
+
+        .quantity-input {
+            width: 60px; /* 数量入力フィールドの幅 */
+            padding: 5px;
+            margin-top: 5px;
+            margin-bottom: 15px; /* ボタンとの間隔 */
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            width: 100%; /* ボタンの幅を広げる */
+            margin-bottom: 15px; /* 下部のマージン */
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #message-container {
+            display: none; /* 最初は非表示に */
+            margin-bottom: 20px;
+        }
+
+    </style>
 </head>
 <body>
-
-    <header>
-        <h1>チームA</h1>
-    </header>
-    
-    <h3>商品を選択してください</h3>
-    <!-- ▽▽　以下商品一覧　▽▽ -->
-<!--    &lt;!&ndash; 商品1 &ndash;&gt;-->
-<!--    <div class="menu">-->
-<!--        &lt;!&ndash; 商品1 &ndash;&gt;-->
-<!--        <div class="menu-item">-->
-<!--            <img src="https://cdn.macaro-ni.jp/image/summary/108/108786/bPSqCOs6isa8vH8rGWVFZhiRcpQs4reeaT8ZlN8n.jpg" alt="商品1">-->
-<!--            <h3>たこやき <span>￥300</span></h3>-->
-<!--            <form action="/takeout/product/checkStock" method="post">-->
-<!--                <div th:each="product : ${products}">-->
-<!--                    <label th:text="${product.productName}">-->
-<!--                        <input type="checkbox" name="productName" th:value="${product.productName}">-->
-<!--                    </label><br>-->
-<!--                </div>-->
-<!--            </form>-->
-<!--        </div>-->
-<!--        -->
-<!--        &lt;!&ndash; 商品2 &ndash;&gt;-->
-<!--        <div class="menu-item">-->
-<!--            <img src="https://www.esthetic.cc/column/column/img/01296.jpg" alt="商品2">-->
-<!--            <h3 th:object="${products}">焼きそば <span>￥400</span></h3>-->
-<!--            <form action="/takeout/product/checkStock" method="post">-->
-<!--                <div th:each="product : ${products}">-->
-<!--                    <label th:text="${product.productName}">-->
-<!--                        <input type="checkbox" name="productName" th:value="${product.productName}">-->
-<!--                    </label><br>-->
-<!--                </div>-->
-<!--            </form>-->
-<!--        </div>-->
-    <div th:each="product : ${products}" class="product">
-        <div class="menu-container">
-            <div class="menu-item">
-                <img th:src="${product.imageUrl}" alt="商品画像" th:alt="${product.productName}">
-                <h3 th:text="${product.productName} + ' ' + ${product.productPrice} + '円'"></h3>
-                <form class="add-to-cart-form">
-                    <input type="hidden" class="product-id" th:value="${product.productId}" />
-                    <label>
-                        <input type="number" class="quantity" name="quantity" min="1" value="1" />
-                    </label>
-                    <button type="button" class="add-to-cart-btn">カートに追加</button>
-                </form>
-            </div>
-        </div>
+<header>
+    <h1>チームA</h1>
+</header>
+<h3>商品を選択してください</h3>
+<div class="menu-container">
+    <div class="menu-item">
+        <form>
+            <ul>
+                <!-- 商品リストを動的に表示 -->
+                <li th:each="product : ${products}">
+                    <div class="product-image">
+                        <img th:src="${product.imageUrl}" th:alt="${product.productName}" />
+                    </div>
+                    <div class="product-details">
+                        <span th:text="${product.productName}">Product Name</span> -
+                        <span th:text="${product.productPrice}">Price</span>
+                        <label>
+                            <input type="number" name="quantity" min="1" value="1" class="quantity-input" />
+                        </label>
+                        <input type="hidden" name="productId" th:value="${product.productId}" />
+                        <button type="button" onclick="addToCart(this)">カートに追加</button>
+                    </div>
+                </li>
+            </ul>
+        </form>
     </div>
-        <button type="submit">注文確認(ユーザー情報入力)</button>
+</div>
+
+<div id="message-container">
+    <p id="message"></p>
+</div>
+
+<script>
+    function addToCart(element) {
+        let productId = element.closest('.product-details').querySelector('input[name="productId"]').value;
+        let quantity = element.closest('.product-details').querySelector('.quantity-input').value;
+        let csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+        let csrfHeaderName = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+
+        $.ajax({
+            url: '/cart/add',
+            type: 'POST',
+            contentType: 'application/json',
+            headers: {
+                'X-CSRF-TOKEN': csrfToken
+            },
+            data: JSON.stringify({
+                productId: productId,
+                quantity: quantity
+            }),
+            success: function() {
+                displayMessage('商品がカートに追加されました!', 'success');
+            },
+            error: function() {
+                displayMessage('商品をカートに追加する際にエラーが発生しました。もう一度お試しください。', 'error');
+            }
+        });
+    }
+
+    function displayMessage(text, type) {
+        let messageContainer = document.getElementById('message-container');
+        let message = document.getElementById('message');
+        messageContainer.style.display = 'block';
+        messageContainer.style.backgroundColor = type === 'success' ? '#4CAF50' : '#f44336';
+        message.textContent = text;
+        setTimeout(function() {
+            messageContainer.style.display = 'none';
+        }, 3000);
+    }
+</script>
+
+<footer>
+    <button type="submit">注文確認(ユーザー情報入力)</button>
     <!-- カートの中身を表示するセクション -->
     <div id="cart-summary">
         <h3>カートの中身</h3>
@@ -137,85 +173,6 @@ button {
         </div>
         <p>合計金額: <span id="cart-total">0</span>円</p>
     </div>
-
-<!--    &lt;!&ndash;ProductFormクラスを用いて個数と注文商品をPOSTする&ndash;&gt;-->
-<!--    <form action="/takeout/product/confirmOrder" method="post">-->
-<!--        <div class="menu-container">-->
-<!--            &lt;!&ndash;productsはList<product>の複数行の情報を取得:表示用&ndash;&gt;-->
-<!--            <div th:each="product, iterStat : ${products}" class="menu-item">-->
-<!--                &lt;!&ndash; 商品画像と名前 &ndash;&gt;-->
-<!--                <img th:src="${product.imageUrl}" alt="商品画像" th:alt="${product.productName}">-->
-<!--                <h3 th:text="${product.productName} + ' ' + ${product.productPrice} + '円'"></h3>-->
-<!--                &lt;!&ndash; 商品選択 &ndash;&gt;-->
-<!--                <label>-->
-<!--                    <input type="checkbox" th:name="*{selected}" th:value="true">-->
-<!--                    <span th:text="${product.productName}"></span>-->
-<!--                </label>-->
-<!--                &lt;!&ndash; 商品数量 &ndash;&gt;-->
-<!--                <label>-->
-<!--                    数量:-->
-<!--                    <input type="number" th:name="*{quality}" min="1" value="1">-->
-<!--                </label>-->
-<!--                &lt;!&ndash; 隠しフィールドとして商品名を送信 &ndash;&gt;-->
-<!--                <input type="hidden" th:name="'products[' + ${iterStat.index} + '].productId'" th:value="${product.productName}">-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <button type="submit">注文確認(ユーザー情報入力）</button>-->
-<!--    </form>-->
-<!--        -->
-<!--        &lt;!&ndash; 商品3 &ndash;&gt;-->
-<!--        <div class="menu-item">-->
-<!--            <img src="https://yataiya-senjudo.com/wp-content/uploads/2021/01/hashimaki_33.jpg" alt="商品3">-->
-<!--            <h3>はしまき <span>￥300</span></h3>-->
-<!--            <form action="/takeout/product/checkStock" method="post">-->
-<!--                <div th:each="product : ${products}">-->
-<!--                    <label th:text="${product.productName}">-->
-<!--                        <input type="checkbox" name="productName" th:value="${product.productName}">-->
-<!--                    </label><br>-->
-<!--                </div>-->
-<!--            </form>-->
-<!--        </div>-->
-<!--        -->
-<!--        &lt;!&ndash; 商品4 &ndash;&gt;-->
-<!--        <div class="menu-item">-->
-<!--            <img src="https://www.daisho.co.jp/dw/wp-content/uploads/2023/07/HP%E3%83%AC%E3%82%B7%E3%83%94%E7%94%A8%E3%80%80%E3%81%82%E3%82%81%E3%80%80%E3%82%8A%E3%82%93%E3%81%94-scaled.jpg" alt="商品4">-->
-<!--            <h3>りんご飴 <span>￥300</span></h3>-->
-<!--            <form action="/takeout/product/checkStock" method="post">-->
-<!--                <div th:each="product : ${products}">-->
-<!--                    <label th:text="${product.productName}">-->
-<!--                        <input type="checkbox" name="productName" th:value="${product.productName}">-->
-<!--                    </label><br>-->
-<!--                </div>-->
-<!--            </form>-->
-<!--        </div>-->
-<!--        -->
-<!--        &lt;!&ndash; 商品5 &ndash;&gt;-->
-<!--        <div class="menu-item">-->
-<!--            <img src="https://www.esthetic.cc/column/column/img/01296.jpg" alt="商品5">-->
-<!--            <h3>焼きそば <span>￥400</span></h3>-->
-<!--            <form action="/takeout/product/checkStock" method="post">-->
-<!--                <div th:each="product : ${products}">-->
-<!--                    <label th:text="${product.productName}">-->
-<!--                        <input type="checkbox" name="productName" th:value="${product.productName}">-->
-<!--                    </label><br>-->
-<!--                </div>-->
-<!--            </form>-->
-<!--        </div>-->
-<!--        -->
-<!--        &lt;!&ndash; 商品6 &ndash;&gt;-->
-<!--        <div class="menu-item">-->
-<!--            <img src="https://yataiya-senjudo.com/wp-content/uploads/2021/01/hashimaki_33.jpg" alt="商品6">-->
-<!--            <h3>はしまき <span>￥300</span></h3>-->
-<!--            <form action="/takeout/product/check" method="post">-->
-<!--                <div th:each="product : ${products}">-->
-<!--                    <label th:text="${product.productName}">-->
-<!--                        <input type="checkbox" name="productName" th:value="${product.productName}">-->
-<!--                    </label><br>-->
-<!--                </div>-->
-<!--            </form>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    -->
-<!--    <button type="submit">ユーザー情報入力へ</button>-->
+</footer>
 </body>
 </html>

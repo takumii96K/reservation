@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -29,7 +30,7 @@ public class Product {
 
 	@NotNull
 	@Column(name = "product_price")
-	private int productPrice;	//売上金額
+	private BigDecimal productPrice;	//商品の金額
 
 	@NotNull
 	@Column(name = "product_stock")

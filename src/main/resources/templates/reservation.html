@@ -1,27 +1,4 @@
-<!--<!DOCTYPE html>-->
-<!--<html xmlns:th="http://www.thymeleaf.org">-->
-<!--<head>-->
-<!--<meta charset="UTF-8">-->
-<!--<title>「テイクアウト予約」アプリ：予約確認画面</title>-->
-<!--</head>-->
-<!--<body>-->
-<!--<h1>「テイクアウト予約」アプリ：予約確認画面</h1>-->
-<!--<h3>内容を確認して、氏名・連絡先を入力</h3>-->
-<!--<form method="POST" th:action="@{takeout/product/reservation}"-->
-<!--th:object="${confirmForm}">-->
 
-<!--<label>氏名：</label><br>-->
-<!--<input type="text" th:field="*{name}"></textarea><br>-->
-<!--<label>電話番号：</label><br>-->
-<!--<input type="text" th:field="*{tel}"><br>-->
-<!--<label>注文内容：</label><br>-->
-<!--<input type="text" th:field="*{productId}"><br>-->
-
-
-<!--<input type="submit" value="確定">-->
-<!--</form>-->
-<!--</body>-->
-<!--</html>-->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
 <head>
@@ -29,24 +6,24 @@
     <title>Reservation</title>
 </head>
 <body>
-<h2>Selected Products</h2>
-<div th:object="${selectedProducts}">
-    <div th:each="item : ${selectedProducts}">
-        <p>Product Name: <span th:text="${item.productName}"></span></p>
-        <p>Quantity: <span th:text="${item.quantity}"></span></p>
-    </div>
-</div>
+<!--<h2>Selected Products</h2>-->
+<!--<div th:object="${selectedProducts}">-->
+<!--    <div th:each="item : ${selectedProducts}">-->
+<!--        <p>Product Name: <span th:text="${item.productName}"></span></p>-->
+<!--        <p>Quantity: <span th:text="${item.quantity}"></span></p>-->
+<!--    </div>-->
+<!--</div>-->
 
 <h2>User Information</h2>
-<form th:action="@{/takeout/completeOrder}" th:object="${inputRegistrationForm}" method="post">
+<form th:action="@{/takeout/product/reservation}" th:object="${inputReservationForm}" method="post">
     <div>
         <label for="name">Name:</label>
         <input type="text" id="name" th:field="*{name}" />
     </div>
-    <div>
-        <label for="email">Email:</label>
-        <input type="email" id="email" th:field="*{email}" />
-    </div>
+<!--    <div>-->
+<!--        <label for="email">Email:</label>-->
+<!--        <input type="email" id="email" th:field="*{email}" />-->
+<!--    </div>-->
     <div>
         <label for="phone">Phone:</label>
         <input type="tel" id="phone" th:field="*{phone}" />

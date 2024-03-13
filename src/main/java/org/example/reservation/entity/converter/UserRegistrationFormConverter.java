@@ -21,7 +21,7 @@ public class UserRegistrationFormConverter implements Converter<UserRegistration
         user.setAuthorities(AuthorityKind.ROLE_USER);
         return user;
     }
-    public UserRegistrationForm convertToForm(User user){
+    public UserRegistrationForm convertToDto(User user){
         UserRegistrationForm form = new UserRegistrationForm();
         form.setName(user.getUserName());
         form.setTel(user.getTel());
