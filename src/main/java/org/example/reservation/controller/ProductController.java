@@ -36,12 +36,22 @@ public class ProductController {
 		return "/product"; // 商品選択ページのビュー名
 	}
 
+	@GetMapping("/top")
+	public String goTopPage(){
+		return "/top";
+	}
+
 	@PostMapping("/confirm")
 	public String handleProductSelection(@ModelAttribute("ProductSelection") ProductForm form, HttpSession session) {
 		// 選択された商品情報をセッションに保存
 //		session.setAttribute("selectedProducts", form.getSelections());se
 		// 次のステップ（ユーザー情報入力画面）にリダイレクト
 		return "/reservation";
+	}
+
+	@GetMapping("/product/member")
+	public String memberPage(){
+		return "/product_member";
 	}
 
 //	@GetMapping("/reservation")

@@ -3,6 +3,7 @@ package org.example.reservation.service.implement;
 import java.util.List;
 
 import org.example.reservation.entity.Reservation;
+import org.example.reservation.entity.projection.ReservationProductDto;
 import org.example.reservation.form.ReservationForm;
 import org.example.reservation.repository.JpaReservationRepository;
 import org.example.reservation.service.spec.ReservationService;
@@ -48,5 +49,10 @@ public class ReservationServiceImpl implements ReservationService {
 			return false;
 		}
 	}
-	
+
+	@Override
+	public List<ReservationProductDto> getReservationProductDtoAll() {
+		return repository.findReservationDetails();
+	}
+
 }

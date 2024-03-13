@@ -11,9 +11,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProductForm {
-	private Long productId; // 商品のID
+	private Long id; // 商品のID
+	private String productName; //商品名
+	private int productStock; //在庫
 	private Integer quantity; // 選択された商品の数量
-
-
 }
 
