@@ -26,32 +26,86 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>Reservation</title>
+    <title>予約確認</title>
 </head>
 <body>
-<h2>Selected Products</h2>
+<h2>注文内容</h2>
 <div th:object="${selectedProducts}">
     <div th:each="item : ${selectedProducts}">
-        <p>Product Name: <span th:text="${item.productName}"></span></p>
-        <p>Quantity: <span th:text="${item.quantity}"></span></p>
+        <p>商品: <span th:text="${item.productName}"></span></p>
+        <p>数量: <span th:text="${item.quantity}"></span></p>
+        <p>合計金額: <span th:text="${totalAmount}"></span></p>
     </div>
 </div>
 
-<h2>User Information</h2>
-<form th:action="@{/takeout/completeOrder}" th:object="${inputRegistrationForm}" method="post">
+<h2>注文者情報</h2>
+<form th:action="@{/takeout/product/completeOrder}" th:object="${reservationForm}" method="post">
     <div>
-        <label for="name">Name:</label>
+        <label for="name">お名前:</label>
         <input type="text" id="name" th:field="*{name}" />
     </div>
     <div>
-        <label for="email">Email:</label>
+        <label for="email">E-mail:</label>
         <input type="email" id="email" th:field="*{email}" />
     </div>
     <div>
-        <label for="phone">Phone:</label>
+        <label for="phone">電話番号:</label>
         <input type="tel" id="phone" th:field="*{phone}" />
     </div>
-    <button type="submit">Submit</button>
+    
+     <label for="date">受取日時:</label>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+<!--      <form th:action="@{/submitDate}" method="post">-->
+        <input type="text" id="datetime" name="datetime" autocomplete="off"/>
+          </div>
+    <div>
+		
+    <!--エラー表示-->
+<ul th:if="${#fields.hasErrors('*')}">
+    <li th:each="err:${#fields.errors('*')}" th:text="${err}"></li>
+</ul>
+    
+      <label for="datetime">☝受取日時を選択してください☝</label>
+<!--    </form>-->
+
+    <script>
+<!--		$(function() {-->
+<!--    $('#submitDateTime').click(function() {-->
+<!--        var selectedDateTime = $('#datetime').val();-->
+<!--        $.ajax({-->
+<!--            url: '/submitDate', // サーバー側のエンドポイント-->
+<!--            method: 'POST',-->
+<!--            data: { datetime: selectedDateTime },-->
+<!--            success: function(response) {-->
+<!--                console.log('Date submitted successfully');-->
+<!--            },-->
+<!--            error: function(xhr, status, error) {-->
+<!--                console.error('Error submitting date:', error);-->
+<!--            }-->
+<!--        });-->
+<!--    });-->
+<!--});-->
+       $(function() {
+        $('#datetime').datetimepicker({
+            format: 'Y-m-d H:i',
+            onChangeDateTime: function(dp, $input) {
+                var selectedDateTime = $input.val();
+                // Thymeleafを使用してモデルのフィールドに値を設定
+<!--                [[${date}]] = selectedDateTime;-->
+                console.log("Selected date and time: " + selectedDateTime);
+            }
+        });
+    });
+    </script>
+    <br> </br>
+
+    <button type="submit">注文を確定☺</button>
+    
+
+    <br>
+<a href="#" th:href="@{/takeout/product/resercation/product}">メニュー画面に戻る</a><br>
 </form>
 </body>
 </html>

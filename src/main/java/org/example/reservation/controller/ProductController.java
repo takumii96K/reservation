@@ -1,15 +1,17 @@
 package org.example.reservation.controller;
 
-import jakarta.servlet.http.HttpSession;
-import lombok.RequiredArgsConstructor;
 import org.example.reservation.form.ProductForm;
-import org.example.reservation.form.UserRegistrationForm;
 import org.example.reservation.service.spec.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.List;
+import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
+
 
 
 /** Productコントローラ */
@@ -30,7 +32,7 @@ public class ProductController {
 		return "/product"; // 商品選択ページのビュー名
 	}
 
-	@PostMapping("/confirm")
+	@PostMapping//("/confirm")
 	public String handleProductSelection(@ModelAttribute("ProductSelection") ProductForm form, HttpSession session) {
 		// 選択された商品情報をセッションに保存
 		session.setAttribute("selectedProducts", form.getSelections());

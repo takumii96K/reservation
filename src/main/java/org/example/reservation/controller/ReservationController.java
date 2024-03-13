@@ -1,57 +1,80 @@
 package org.example.reservation.controller;
 
-import lombok.RequiredArgsConstructor;
-import org.example.reservation.entity.Product;
+import java.time.LocalDateTime;
+
 import org.example.reservation.form.ReservationForm;
-import org.example.reservation.service.spec.ProductService;
+import org.example.reservation.service.spec.ReservationService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
-import java.util.Optional;
+import lombok.RequiredArgsConstructor;
 
 
 //予約内容確認画面コントローラ
 @Controller
-@RequestMapping("takeout/product/reservation")
+@RequestMapping("/takeout/product")
 @RequiredArgsConstructor
-public class ReservationController {
+public class ReservationController
+{
 	// DI対象
-
-	private final ProductService service;
-
+	//
+	//	private final ProductService service;
+	private final ReservationService reservationService;
 
 	//入力した名前と電話番号を受け取る⇔Formに入る
-	@ModelAttribute
-	public void setUpForm(Model model) {
-		ReservationForm form = new ReservationForm();
-		model.addAttribute("reservationForm", form);
+
+	//注文内容を確認する
+	@GetMapping("/reservation")
+	public String showReservationForm(Model model)
+	{
+		model.addAttribute("reservationForm", new ReservationForm());
+		return "/reservation";
 	}
 
-//	//注文内容を確認する
-//	@GetMapping
-//	public String showReservationForm(ReservationForm Form, @PathVariable Integer id, Model model) {
-//		Optional<Product> productOpt = service.getProductById(id);
-//		return "confirmation";
-//	}
-	   // 選択された商品の合計金額を表示
-//    @PostMapping("/products/selected")
-//    public String showSelectedProducts(@RequestParam("selectedProducts") List<Long> ids, Model model) {
-//        List<Product> selectedProducts = serviceervice.getProductsByIds(ids);
-//        model.addAttribute("selectedProducts", selectedProducts);
-//        // 合計金額を計算
-//        double totalAmount = selectedProducts.stream().mapToDouble(Product::getPrice).sum();
-//        model.addAttribute("totalAmount", totalAmount);
-//       return "selectedProducts"; // 選択された商品と合計金額を表示するビュー
-//    }
+	@PostMapping("/confirm")
+	public String showConfirm(@ModelAttribute("inputReservationForm") ReservationForm form, Model model) 
+	{
+		// ここでフォームのデータを使用した処理を実行します。
+		// 例えば、予約データをデータベースに保存するなど。
 
-	/** 確定 */
-	public String confirmReservation(@ModelAttribute ReservationForm form, Model model) {
-        // ここで予約情報をデータベースに保存する処理を追加します
-        // 例: service.saveReservation(form);
-
-        // 予約完了ページやリストページにリダイレクト
-        return "redirect:/reservation/confirm";
+		//setReservationRegisterの戻り値がtrueの場合
+		if(reservationService.setReservationRegister(form))
+		{
+			return "/confirmation";//結果表示ページを戻り値として返す
+		}
+		else
+		{
+			return "redirect:/takeout/product/reservation";//予約画面のページを戻り値として返す
+		}
 	}
+
+	//カレンダーから日時指定をする
+	@PostMapping("/submitDate")
+	public String submitDate(@RequestParam("datetime") String datetime, Model model)
+	{
+		// 文字列をLocalDateTimeに変換（フォーマットはフロントエンドで選択した日時に応じて）
+		LocalDateTime parsedDateTime = LocalDateTime.parse(datetime);
+		model.addAttribute("selectedDateTime", parsedDateTime.toString());
+		return "resultPage";
+	}
+	
+	//確定画面表示
+	@PostMapping("/completeOrder")
+	public String completeOrderView(ReservationForm reservationForm)
+	{
+		
+		reservationService.setReservationRegister(reservationForm);
+		
+		return "confirmation";
+		
+	}
+	
+	
+
 }
+
