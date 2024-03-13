@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="yourPanel" th:fragment="yourFragment">
+    <form id="yourForm" method="POST"
+          th:action="@{/actions/postForm}"
+          th:object="${yourFormBean}">
+        <div class="form-group">
+            <label for="param1"></label>
+            <input class="form-component" type="text" th:field="*{param1}" />
+        </div>
+        <div class="form-group">
+            <label for="param2"></label>
+            <input class="form-component" type="text" th:field="*{param2}" />
+        </div>
+        <div class="form-group">
+            <label for="param3"></label>
+            <input class="form-component" type="checkbox" th:field="*{param3}" />
+        </div>
+
+        <button type="submit" class="btn btn-success">Save</button>
+        <a href='#' class="btn btn-default">Cancel</a>
+    </form>
+</div>
+
+
+
+</body>
+</html>

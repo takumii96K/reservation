@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+<title>teamA-トップページ</title>
+<link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+<style>
+	
+	/* 背景 */
+	#check:checked ~ .bg {	
+		margin-left: 250px;
+	}
+	
+	body {
+    	margin: 0;
+    	padding: 0;
+	}
+	main{
+    	width: 100vw; /* ビューポートの幅いっぱいに広がる */
+    	height: 100vh; /* ビューポートの高さいっぱいに広がる */
+    	overflow: hidden; /* 画像がはみ出さないようにオーバーフローを隠す */
+	}
+	.bg {
+    	position: absolute;
+    	top: 0;
+    	left: 0;
+    	width: 100%;
+    	height: 100%;
+    	object-fit: cover; /* 画像が領域に合わせてカバーされるようにする */
+    	z-index: -1; /* レイヤーの一番下に配置 */
+	}
+	
+</style>    
+</head>
+<body>
+	
+	<!-- ▽▽▽　トグルセクション　▽▽▽ -->
+	<input type="checkbox" id="check">
+	<label for="check">
+		<i class="fas fa-bars" id="hambargerButton"></i>
+		<i class="fas fa-times" id="cancel"></i>
+	</label>
+	
+	<!-- ▽▽▽　サイドバーセクション　▽▽▽ -->
+	<div th:replace="sidebar.html :: sidebar"></div>
+<!--	<div class="sidebar">-->
+<!--		<header>Team A</header>-->
+<!--		<ul>-->
+<!--			&lt;!&ndash; メニュー画面リンク &ndash;&gt;-->
+<!--			<li>-->
+<!--				<a href="/takeout/product"><i class="fa fa-cutlery" aria-hidden="true"></i>menu</a>-->
+<!--			</li>-->
+<!--			-->
+<!--			&lt;!&ndash; 店舗情報画面リンク（ダミー） &ndash;&gt;-->
+<!--			<li>-->
+<!--				<a href="#"><i class="fa fa-map-marker" aria-hidden="true"></i>store information</a>-->
+<!--			</li>-->
+<!--			-->
+<!--			&lt;!&ndash; メンバー紹介画面リンク &ndash;&gt;-->
+<!--			<li>-->
+<!--				<a href="/takeout/product/member"><i class="fa fa-users" aria-hidden="true"></i>member</a>-->
+<!--			</li>-->
+<!--			-->
+<!--			&lt;!&ndash; カートの中身画面リンク（どうする？要相談） &ndash;&gt;-->
+<!--			<li>-->
+<!--				<a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i>cart</a>-->
+<!--				&lt;!&ndash; カートの中身を表示するセクション &ndash;&gt;-->
+<!--				<div id="cart-items">-->
+<!--&lt;!&ndash;				<p th:text="${product.productName} + ' ' + ${product.productPrice} + '円'"></p>&ndash;&gt;-->
+<!--				</div>-->
+<!--				<p>合計金額: <span id="cart-total">0</span>円</p>-->
+<!--			</li>-->
+<!--		</ul>-->
+<!--	</div>-->
+<!--	-->
+	<!-- 背景画像挿入 -->
+	<main>
+		<img class="bg" src="https://cdn.pixabay.com/photo/2017/01/13/03/02/burgers-1976198_1280.jpg">	
+	</main>
+</body>
+</html>

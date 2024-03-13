@@ -3,39 +3,55 @@ package org.example.reservation.controller;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.example.reservation.form.ProductForm;
-import org.example.reservation.form.UserRegistrationForm;
 import org.example.reservation.service.spec.ProductService;
+import org.example.reservation.service.spec.ShoppingCartService;
+import org.example.reservation.session.CartSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Objects;
 
 
 /** Productコントローラ */
 @Controller
-@RequiredArgsConstructor
-@RequestMapping("/takeout/product")
+//@RequiredArgsConstructor
+@RequestMapping("/takeout")
 public class ProductController {
 
-	private final ProductService service;
+	@Autowired
+	private  ProductService service;
+	private ShoppingCartController controller;
+//	private final CartSession cartSession;
 
 	// 商品選択画面を表示
-	@GetMapping
+	@GetMapping("/product")
 	public String showProductSelection(Model model) {
 		// 全商品情報を取得してModelに追加
 		model.addAttribute("products", service.getAllProducts());
 		// フォームオブジェクトを初期化してModelに追加
-		model.addAttribute("ProductSelection", new ProductForm());
+		model.addAttribute("inputProduct", new ProductForm());
+		System.out.println(Objects.isNull(controller));
 		return "/product"; // 商品選択ページのビュー名
+	}
+
+	@GetMapping("/top")
+	public String goTopPage(){
+		return "/top";
 	}
 
 	@PostMapping("/confirm")
 	public String handleProductSelection(@ModelAttribute("ProductSelection") ProductForm form, HttpSession session) {
 		// 選択された商品情報をセッションに保存
-		session.setAttribute("selectedProducts", form.getSelections());
+//		session.setAttribute("selectedProducts", form.getSelections());se
 		// 次のステップ（ユーザー情報入力画面）にリダイレクト
 		return "/reservation";
+	}
+
+	@GetMapping("/product/member")
+	public String memberPage(){
+		return "/product_member";
 	}
 
 //	@GetMapping("/reservation")
