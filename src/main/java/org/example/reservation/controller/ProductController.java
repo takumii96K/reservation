@@ -1,33 +1,34 @@
 package org.example.reservation.controller;
 
-import jakarta.servlet.http.HttpSession;
-import lombok.RequiredArgsConstructor;
 import org.example.reservation.form.ProductForm;
-import org.example.reservation.form.UserRegistrationForm;
 import org.example.reservation.service.spec.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.List;
+import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 
 
 /** Productコントローラ */
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/takeout/product")
+@RequestMapping("/takeout/top")
 public class ProductController {
 
 	private final ProductService service;
 
-	// 商品選択画面を表示
+	// ホームページを表示
 	@GetMapping
 	public String showProductSelection(Model model) {
 		// 全商品情報を取得してModelに追加
 		model.addAttribute("products", service.getAllProducts());
 		// フォームオブジェクトを初期化してModelに追加
 		model.addAttribute("ProductSelection", new ProductForm());
-		return "/product"; // 商品選択ページのビュー名
+		return "/product"; // ホームページのビュー名
 	}
 
 	@PostMapping("/confirm")
@@ -37,6 +38,14 @@ public class ProductController {
 		// 次のステップ（ユーザー情報入力画面）にリダイレクト
 		return "/reservation";
 	}
+	
+	// メンバーページを表示
+	@GetMapping("/member")
+	public String showProductMember(Model model) {
+	    // メンバーページのビュー名を返す
+	    return "/product-member";
+	}
+	
 
 //	@GetMapping("/reservation")
 //	public String showReservation(Model model, HttpSession session) {

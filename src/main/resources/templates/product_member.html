@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+<title>メンバー紹介</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+<style>
+	@import url('https://fonts.googleapis.com/css2?family=M+PLUS+1p&display=swap');
+	
+	
+	body {
+    	background-color: rgb(244, 213, 128);
+    	font-family: "M PLUS 1p", sans-serif;
+	}
+	
+	/* ▽▽▽ メインページ ▽▽▽ */
+	#check:checked ~ main {	
+		margin-left: 250px;
+		}
+		
+	main {
+		background-position: center;
+		text-align:  left;    /* 文字左寄せ */
+    	height: 100vh;
+    	background-size: cover;
+    	background-position: center;
+    	padding:  50px;        /* 余白指定 */
+    	/*border: solid 2px;      /* 枠線指定 */
+    	transition: all 0.5s;
+	}
+	
+	/* 見出し */
+	.ttl_line2 {
+ 		 font-weight: bold;
+ 		 border-bottom: 2px solid rgb(128, 64, 0);
+ 		 padding: 0.3em;
+  		 margin-bottom: 0.3em;
+	}
+	.ttl_line2:first-letter {
+ 		font-size: 1.5em;
+  		color: rgb(255, 128, 0);
+	}
+	
+	/* プロフィール見出し */
+	.heading-22 {
+    	padding: .5em .7em;
+    	border-left: 5px solid #c7620f;
+    	background-color: #fbee9d;
+    	color: #4e4646;
+    	font-size: 20px;
+	}
+	
+	/* ▽▽▽ メンバープロフィール ▽▽▽ */
+	.profile {
+		background: #FFF;
+		width: 300px;
+		padding: 2rem;
+		border: 1px solid #1a1a1a;
+		display: inline-block;
+    	vertical-align: top; /* 上揃えにする */
+    	margin-right: 40px; /* プロフィール間　横のスペース */
+    	margin-top: 40px; /* プロフィール間　縦のスペース */
+    	text-align: center; /* 中央揃え */
+	}
+
+	.profile__img {
+		display: block;
+		width: 160px;
+		height: 160px;
+		border-radius:50%;
+		margin: 0 auto;
+		width: 100px; /* 画像の幅 */
+		height: 100px; /* 画像の高さ */
+    	border-radius: 50%; /* 丸い形にする */
+    	object-fit: cover; /* 画像のアスペクト比を維持しつつ枠にフィット */
+	}
+
+	.profile__name {
+		text-align:center;
+		font-weight:bold;
+		font-size:1.2rem;
+		margin: 1rem auto 1rem;
+		letter-spacing:.1rem;
+		font-weight: bold; /* 太字 */
+		margin-top: 5px; /* プロフィール名と説明文の間のスペース */
+	}
+
+	.profile__desc {
+		line-height:1.6rem;
+		margin-top: 5px; /* 説明文と次のプロフィールの間のスペース */
+	}
+	
+	.profile-group + .heading-22 {
+    	margin-top: 40px; /* 余白の大きさを調整します */
+	}
+	
+	
+
+	/* デモ用の調整 */
+	body {
+	padding: 50px 20px;
+	}
+	
+	
+	/* ▽▽▽ サイドバー ▽▽▽ */
+	*{
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+		list-style: none;
+		text-decoration: none;
+		font-family: "M PLUS 1p", sans-serif;
+	}
+	
+	.sidebar{
+		position: fixed;
+		left: -250px;
+		background-color: rgb(105, 84, 56);
+		width: 250px;
+		height: 100%;
+		transition: all 0.5s;
+	}
+	
+	.sidebar header{
+		font-size: 22px;
+		color: white;
+		text-align: center;
+		line-height: 70px;
+		background: burlywood;
+		user-select: none;
+	}
+	
+	.sidebar ul a {
+		display: block;
+		height: 100%;
+		width: 100%;
+		line-height: 50px;
+		color: white;
+		font-size: 15px;
+		padding-left: 40px;
+		border-top: 1px solid rgba(255,255,255,0.1);
+		/*border-bottom: 1px solid navajowhite;*/
+		transition: 0.4s;
+	}
+	
+	ul li:hover a {
+		padding-left: 50px;
+	}
+	
+	.sidebar ul a i {
+		margin-right: 16px;
+	}
+	
+	.sidebar ul p{
+		color: whitesmoke;
+	}
+	
+	/* toggle section */
+	#check{
+		display: none;
+	}
+	
+	label #hambargerBtton,
+	label #cancel{
+		position: absolute;
+		cursor: pointer;
+		background: #b66f2d;
+		border-radius: 3px;
+	}
+	
+	label #hambargerBtton{
+		left: 40px;
+		top: 25px;
+		font-size: 25px;
+		color: white;
+		padding: 6px 12px;
+		transition: all 0.5s;
+	}
+	
+	label #cancel{
+		z-index: 10;
+		left: -195px;
+		top: 17px;
+		font-size: 30px;
+		color: white;
+		padding: 4px 9px;
+		transition: all 0.5s;
+	}
+	
+	#check:checked ~ .sidebar{
+		left: 0px;
+	}
+	
+	#check:checked ~ label #hambargerBtton{
+		left: 250px;
+		opacity: 0;
+		pointer-events: none;
+	}
+	
+	#check:checked ~ label #cancel{
+		left: 195px;
+		}
+		
+	
+	
+</style>
+</head>
+<body>
+	
+	<!-- トグルセクション -->
+	<input type="checkbox" id="check">
+	<label for="check">
+		<i class="fas fa-bars" id="hambargerBtton"></i>
+		<i class="fas fa-times" id="cancel"></i>
+	</label>
+	
+	<!-- サイドバーセクション -->
+	<div class="sidebar">
+		<header>Team A</header>
+		<ul>
+			<li>
+				<a href="#"><i class="fa fa-cutlery" aria-hidden="true"></i>menu</a>
+			</li>
+			<li>
+				<a href="#"><i class="fa fa-map-marker" aria-hidden="true"></i>store information</a>
+			</li>
+			<li>
+				<a href="#"><i class="fa fa-users" aria-hidden="true"></i>member</a>
+			</li>
+			<li>
+				<a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i>cart</a>
+				<!-- カートの中身を表示するセクション -->
+				<div id="cart-items">
+				<p th:text="${product.productName} + ' ' + ${product.productPrice} + '円'"></p>
+				</div>
+				<p>合計金額: <span id="cart-total">0</span>円</p>
+				 </div>
+			</li>
+			
+		</ul>
+	</div>
+	
+	<!-- ▽▽▽ メインページ ▽▽▽ -->
+	<main>
+		<h2 class="ttl_line2">Members</h2>
+		
+	<!-- ▽▽▽ メンバープロフィール ▽▽▽ -->
+	<!-- バックエンド -->
+	<h2 class="heading-22">back end</h2>
+	<div class="profile-group">
+		<div class="profile">
+			<img class="profile__img" src="https://1.bp.blogspot.com/-tVeC6En4e_E/X96mhDTzJNI/AAAAAAABdBo/jlD_jvZvMuk3qUcNjA_XORrA4w3lhPkdQCNcBGAsYHQ/s400/onepiece01_luffy.png">
+			<div class="profile__name">Kawahara Takumi</div>
+			<div class="profile__desc">リーダー</div>
+		</div>
+		<div class="profile">
+			<img class="profile__img" src="https://1.bp.blogspot.com/-LZL7jGWmL3Q/X-FcwoOnE2I/AAAAAAABdEs/qUrY1ClrQrMukkdaEnZK8-Bdob7mOdmQgCNcBGAsYHQ/s400/onepiece13_crocodile.png">
+			<div class="profile__name">Mizokami Hiroyuki</div>
+			<div class="profile__desc">ここに簡単な自己紹介が入ります。</div>
+		</div>
+	</div>
+	
+	<!-- フロントエンド -->
+	<h2 class="heading-22">front end</h2>
+	<div class="profile-group">
+		<div class="profile">
+			<img class="profile__img" src="https://1.bp.blogspot.com/-VACf4WfKNOk/X-Fcx7DWraI/AAAAAAABdE8/KT0UudaIHrMtbFvjC02yLuPLNBZurGYpQCNcBGAsYHQ/s400/onepiece17_doflamingo.png">
+			<div class="profile__name">Yamamoto Shiho</div>
+			<div class="profile__desc">ここに簡単な自己紹介が入ります。</div>
+		</div>
+		<div class="profile">
+			<img class="profile__img" src="https://1.bp.blogspot.com/--9Rl2O4BBN0/X-Fct8K5mqI/AAAAAAABdEI/yLOziAqJO34fwn73AolVP0e42A2h-ql1QCNcBGAsYHQ/s400/onepiece06_chopper.png">
+			<div class="profile__name">Hayashida Mika</div>
+			<div class="profile__desc">ここに簡単な自己紹介が入ります。</div>
+		</div>
+	</div>
+	
+	<div class="profile-group">
+		<div class="profile">
+			<img class="profile__img" src="https://i.pinimg.com/236x/bd/b3/51/bdb35178e39091b53a8cdae16afa1e03.jpg">
+			<div class="profile__name">Suzuki Manami</div>
+			<div class="profile__desc">ここに簡単な自己紹介が入ります。</div>
+		</div>
+		<div class="profile">
+			<img class="profile__img" src="https://1.bp.blogspot.com/-vIXZ3_KMn9g/X-FcvVKPQSI/AAAAAAABdEc/i8oJKU0UDMM2uQfzemn6oOmJLICo4VcVgCNcBGAsYHQ/s200/onepiece10_jinbe.png">
+			<div class="profile__name">Fujiwara Miu</div>
+			<div class="profile__desc">ここに簡単な自己紹介が入ります。</div>
+		</div>
+	</div>
+	
+	</main>
+	
+
+</body>
+</html>
