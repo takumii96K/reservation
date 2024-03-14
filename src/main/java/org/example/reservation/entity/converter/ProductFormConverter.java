@@ -2,10 +2,12 @@ package org.example.reservation.entity.converter;
 
 import org.example.reservation.entity.Product;
 import org.example.reservation.form.ProductForm;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class ProductFormConverter implements Converter<ProductForm, Product>{
     @Override
     public Product convertToEntity(ProductForm form) {
@@ -19,7 +21,7 @@ public class ProductFormConverter implements Converter<ProductForm, Product>{
         form.setProductName(entity.getProductName());
 //        form.setProductPrice(entity.getProductPrice());
 //        form.setStock(entity.getProductStock());
-        return null;
+        return form;
     }
 
     //    public LIst<ProductForm> convertToForm(List<Product> allEntity) {

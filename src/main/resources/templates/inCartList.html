@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Shopping Cart</title>
+</head>
+<body>
+<h2>Shopping Cart Items:</h2>
+<div>
+    <table>
+        <thead>
+        <tr>
+            <th>商品名</th>
+            <th>価格</th>
+            <th>個数</th>
+            <th>小計</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${cartItem}">
+            <td th:text="${item.value.itemName}">商品名</td>
+            <td th:text="${item.value.price}">価格</td>
+            <td th:text="${item.value.quantity}">個数</td>
+            <td th:text="${item.value.price * item.value.quantity}">小計</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div th:object="${total}">
+    <p>total: <span th:text="${total}"></span></p>
+</div>
+</body>
+</html>

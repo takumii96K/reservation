@@ -75,42 +75,43 @@
 <body>
 	
 	<!-- ▽▽▽　トグルセクション　▽▽▽ -->
-	<input type="checkbox" id="check">
-	<label for="check">
-		<i class="fas fa-bars" id="hambargerButton"></i>
-		<i class="fas fa-times" id="cancel"></i>
-	</label>
+<!--	<input type="checkbox" id="check">-->
+<!--	<label for="check">-->
+<!--		<i class="fas fa-bars" id="hambargerButton"></i>-->
+<!--		<i class="fas fa-times" id="cancel"></i>-->
+<!--	</label>-->
 	
 	<!-- ▽▽▽　サイドバーセクション　▽▽▽ -->
-	<div class="sidebar">
-		<header>Team A</header>
-		<ul>
-			<!-- メニュー画面リンク -->
-			<li>
-				<a href="/product_menu.html"><i class="fa fa-cutlery" aria-hidden="true"></i>menu</a>
-			</li>
-			
-			<!-- 店舗情報画面リンク（ダミー） -->
-			<li>
-				<a href="#"><i class="fa fa-map-marker" aria-hidden="true"></i>store information</a>
-			</li>
-			
-			<!-- メンバー紹介画面リンク -->
-			<li>
-				<a href="product_member.html"><i class="fa fa-users" aria-hidden="true"></i>member</a>
-			</li>
-			
-			<!-- カートの中身画面リンク（どうする？要相談） -->
-			<li>
-				<a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i>cart</a>
-				<!-- カートの中身を表示するセクション -->
-				<div id="cart-items">
-<!--				<p th:text="${product.productName} + ' ' + ${product.productPrice} + '円'"></p>-->
-				</div>
-				<p>合計金額: <span id="cart-total">0</span>円</p>
-			</li>
-		</ul>
-	</div>
+	<div th:replace="sidebar.html :: sidebar"></div>
+<!--	<div class="sidebar">-->
+<!--		<header>Team A</header>-->
+<!--		<ul>-->
+<!--			&lt;!&ndash; メニュー画面リンク &ndash;&gt;-->
+<!--			<li>-->
+<!--				<a href="/product_menu.html"><i class="fa fa-cutlery" aria-hidden="true"></i>menu</a>-->
+<!--			</li>-->
+<!--			-->
+<!--			&lt;!&ndash; 店舗情報画面リンク（ダミー） &ndash;&gt;-->
+<!--			<li>-->
+<!--				<a href="#"><i class="fa fa-map-marker" aria-hidden="true"></i>store information</a>-->
+<!--			</li>-->
+<!--			-->
+<!--			&lt;!&ndash; メンバー紹介画面リンク &ndash;&gt;-->
+<!--			<li>-->
+<!--				<a href="product_member.html"><i class="fa fa-users" aria-hidden="true"></i>member</a>-->
+<!--			</li>-->
+<!--			-->
+<!--			&lt;!&ndash; カートの中身画面リンク（どうする？要相談） &ndash;&gt;-->
+<!--			<li>-->
+<!--				<a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i>cart</a>-->
+<!--				&lt;!&ndash; カートの中身を表示するセクション &ndash;&gt;-->
+<!--				<div id="cart-items">-->
+<!--&lt;!&ndash;				<p th:text="${product.productName} + ' ' + ${product.productPrice} + '円'"></p>&ndash;&gt;-->
+<!--				</div>-->
+<!--				<p>合計金額: <span id="cart-total">0</span>円</p>-->
+<!--			</li>-->
+<!--		</ul>-->
+<!--	</div>-->
 	
 	<!-- ▽▽▽ メインページ ▽▽▽ -->
 	<main>

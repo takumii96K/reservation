@@ -2,26 +2,23 @@ package org.example.reservation.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.example.reservation.form.CartItemRequest;
-import org.example.reservation.service.spec.ProductService;
 import org.example.reservation.service.spec.ShoppingCartService;
-import org.example.reservation.session.CartSession;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.source.ConfigurationPropertyName;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import javax.print.DocFlavor;
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/cart")
 public class ShoppingCartController {
-
 
     private final ShoppingCartService service;
 
-    @PostMapping("/cart/add")
+    /**
+     * カートに追加ボタン
+     * @param cartItemRequest request(ProductId,Quantity(UserInput))
+     * @return responseパラメータ
+     */
+    @PostMapping("/add")
     public ResponseEntity<?> addToCart(@RequestBody CartItemRequest cartItemRequest) {
         System.out.println("メソッド起動");
         try {
@@ -32,7 +29,6 @@ public class ShoppingCartController {
             return ResponseEntity.badRequest().body("商品をカートに追加する際にエラーが発生しました: " + e.getMessage());
         }
     }
-
 
 //}
 
