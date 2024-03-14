@@ -24,20 +24,20 @@ public class ReservationServiceImpl implements ReservationService {
 	}
 
 	@Override
-	public boolean setReservationRegister(ReservationForm inputForm)
+	public boolean setReservationRegister(ReservationForm rvForm)
 	{
-		//データベースに登録する処理
+		//データベース(reservationテーブル)呼び出し
 		Reservation reservation = new Reservation();
 		
 		//予約画面で受け取った値(name,phone,email,date)が全てnullじゃなかった場合true
-		if(inputForm.getName() != null && inputForm.getPhone() != null
-			&& inputForm.getEmail() != null)
+		if(rvForm.getName() != null&& !rvForm.getName().isEmpty() && rvForm.getPhone() != null 
+			&& rvForm.getEmail() != null && rvForm.getDate() != null)
 		{
 			//set処理
-			reservation.setCustomerName(inputForm.getName());//名前
-			reservation.setTel(inputForm.getPhone());		//電話番号
-			reservation.setEmail(inputForm.getEmail());   	//メアド
-			reservation.setDateTime(inputForm.getDate());	//日時
+			reservation.setCustomerName(rvForm.getName());//名前
+			reservation.setTel(rvForm.getPhone());		//電話番号
+			reservation.setEmail(rvForm.getEmail());   	//メアド
+			reservation.setDateTime(rvForm.getDate());	//日時
 			
 			repository.save(reservation);	//保存
 			
