@@ -1,16 +1,17 @@
 package org.example.reservation.service.implement;
 
 import lombok.RequiredArgsConstructor;
-import org.example.reservation.entity.Product;
 import org.example.reservation.entity.converter.IntoCartConverter;
+import org.example.reservation.entity.projection.ProductProjection;
 import org.example.reservation.repository.JpaProductRepository;
 import org.example.reservation.service.spec.ShoppingCartService;
+import org.example.reservation.session.Cart;
 import org.example.reservation.session.CartItem;
 import org.example.reservation.session.CartSession;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.Optional;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -27,12 +28,14 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
      */
     @Override
     public void addItemToCart(Long id, int quantity) {
-        Product product = repository.findById(id).orElseThrow();
-        CartItem item = converter.convertToDto(product);
+        ProductProjection record = repository.findProductProjectionByProductId(id);
+        CartItem item = converter.convertToDto(record);
+        item.setQuantity(quantity);
 
         //カートに指定idの商品と個数を追加 ※数量更新も含む
-        cartSession.getCart().addItem(item, quantity);
+        cartSession.getCart().addItem(item);
     }
+
 
     /**
      * 商品をカートから削除
@@ -58,6 +61,17 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     public void refreshCart() {
         cartSession.resetCart();
+    }
+
+    @Override
+    public Map<Long ,CartItem> lookInCart() {
+        System.out.println("カートの中身を表示します");
+        return cartSession.getCart().getItems();
+    }
+
+    @Override
+    public void submitShopping() {
+        Cart cart =cartSession.getCart();
     }
 
 

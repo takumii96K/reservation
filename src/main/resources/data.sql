@@ -21,3 +21,9 @@ INSERT INTO reservation_product (reservation_id, product_id) VALUES
                                                                  (4, 2), -- 田中次郎が焼きそばを予約
                                                                  (4, 3), -- 田中次郎がはしまきを予約
                                                                  (5, 5); -- 伊藤桃子がスパイシーチキンバーガーを予約
+                                                                 
+ -- user_tableにデータを挿入
+INSERT INTO user_table (authority_kind, user_name, user_password, user_tel) VALUES
+                                                                 				(1,'yamataro','taro-y111','080-1234-5678'),
+                                                                 				(1,'suzuki1','ichiro51','080-8765-4321'),
+                                                                 				(1,'komomo110','110momoko', '060-9988-7766');                                                                 

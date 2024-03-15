@@ -4,7 +4,6 @@ import java.util.Objects;
 
 import org.example.reservation.form.ProductForm;
 import org.example.reservation.service.spec.ProductService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,17 +12,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 
 
 /** Productコントローラ */
 @Controller
-//@RequiredArgsConstructor
+@RequiredArgsConstructor
 @RequestMapping("/takeout")
 public class ProductController {
 
-	@Autowired
-	private ProductService service;
-	private ShoppingCartController controller;
+
+	private  final ProductService service;
+	private final ShoppingCartController controller;
+
 //	private final CartSession cartSession;
 
 	// 商品選択画面を表示

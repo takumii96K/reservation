@@ -1,5 +1,7 @@
 package org.example.reservation.repository;
 
+import java.util.List;
+
 import org.example.reservation.entity.User;
 import org.example.reservation.entity.projection.UserLoginProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,5 +15,8 @@ public interface JpaUserRepository extends JpaRepository<User, Long> {
 
     //usernameはユニーク制約のためカスタムcheckメソッド
     boolean existsByUserName(String userName);
+    
+    List<User> findAll();
+
 
 }
