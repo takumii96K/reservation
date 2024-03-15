@@ -25,8 +25,11 @@ public interface UserService {
      */
     void updateUser(UserRegistrationForm form);
     
-    //全件取得
-    List<User> getAllUser();
+//    //全ユーザー取得
+//    List<User> getAllUser();
+    
+    //authorityKindが1のユーザーのみを取得
+    List<User> getPeopleWithAuthorityKindOne();
  
 
 }

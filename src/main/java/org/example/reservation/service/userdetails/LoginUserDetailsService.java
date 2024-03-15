@@ -94,12 +94,20 @@ public class LoginUserDetailsService implements UserDetailsService, UserService 
         repository.save(converter.convertToEntity(form));
     }
     
-    //全件取得
-   	@Override
-   	public List<org.example.reservation.entity.User> getAllUser() {
+    
+//    //全ユーザー取得
+//   	@Override
+//   	public List<org.example.reservation.entity.User> getAllUser() {
+//   	//パッケージの名前がUserの前についている
+//   	//securityでUserをimportしている為
+//   		return repository.findAll();
+//   	}
+   	
+   	//authorityKindが1のユーザーのみを取得
+	@Override
+   	public List<org.example.reservation.entity.User> getPeopleWithAuthorityKindOne() {
    	//パッケージの名前がUserの前についている
    	//securityでUserをimportしている為
-   		return repository.findAll();
-   	}
-
+   		return repository.findPeopleWithAuthorityKindOne();
+	}
 }
