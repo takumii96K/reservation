@@ -3,17 +3,20 @@ package org.example.reservation.controller;
 
 import java.util.List;
 
-import lombok.RequiredArgsConstructor;
 import org.example.reservation.entity.Product;
+import org.example.reservation.entity.User;
 import org.example.reservation.entity.converter.ProductFormConverter;
 import org.example.reservation.entity.projection.ReservationProductDto;
 import org.example.reservation.form.ProductForm;
 import org.example.reservation.service.spec.ProductService;
 import org.example.reservation.service.spec.ReservationService;
+import org.example.reservation.service.spec.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequestMapping("/takeout")
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ManageController {
     /** DI対象 */
     private final ProductService productService;
+    private final UserService userService;
     private final ReservationService reservationService;
 
     ProductFormConverter productFormConverter=new ProductFormConverter();
@@ -37,6 +41,10 @@ public class ManageController {
         model.addAttribute("products" ,list2);
 
         /** ユーザー情報 */
+        List<User> ulist=userService.getAllUser();
+        //表示用「Model」への格納
+        model.addAttribute("users", ulist);
+
 
 
         /** 予約情報 */
