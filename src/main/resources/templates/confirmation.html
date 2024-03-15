@@ -1,17 +1,35 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
 <head>
-<meta charset="UTF-8">
-<title>「テイクアウト予約」アプリ：予約確定画面</title>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>「テイクアウト予約」アプリ：予約確定画面</title>
+	<link rel="stylesheet" type="text/css" href="/style.css">
+	<link rel="stylesheet" href ="https://cdn.skypack.dev/sanitize.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+<style>
+	
+</style>
 </head>
 <body>
 	
-<h1>「「テイクアウト予約」アプリ：予約確定画面</h1>
-<h3>ご予約が確定いたしました！ありがとうございます！</h3>
-<form method="POST" th:action="@{takeout/product/resercation/confirm}
-"th:object="${confirmForm}">
-<br>
+	<!--固定ヘッダーフラグメントの挿入 -->
+    <div th:replace="layout :: header"></div>
+    
+    <main class="wrap">
+		<h1 class="midashi">「テイクアウト予約」アプリ：予約確定画面</h1>
+		
+		<h3>ご予約が確定いたしました！ありがとうございます！</h3>
+	<form method="POST" th:action="@{takeout/product/resercation/confirm}
+	"th:object="${confirmForm}">
+	<br>
     <a href="#" th:href="@{/takeout/product/resercation/product}">メニュー画面に戻る</a><br>
+
+	</main>
+	
+	<!--固定フッターフラグメントの挿入 -->
+	<div th:replace="layout :: footer"></div>
+
 
 </body>
 </html>

@@ -51,7 +51,7 @@ public class ProductController {
 		return "/reservation";
 	}
 
-	@GetMapping("/product/member")
+	@GetMapping("/product_member")
 	public String memberPage(){
 		return "/product_member";
 	}
