@@ -1,148 +1,154 @@
 @charset "UTF-8";
-	
-	/* フォントインポート */
-	@import url('https://fonts.googleapis.com/css2?family=M+PLUS+1p&display=swap');
-	
-	/* ▽▽▽ メインページ ▽▽▽ */
-	
-	
-	/* ▽▽▽ 全体の背景色とフォント ▽▽▽ */
-	body {
-    	background-color: rgb(244, 213, 128);
-    	font-family: "M PLUS 1p", sans-serif;
-	}
-	
-	/* ▽▽▽ 各ページの見出し ▽▽▽ */
-	/*下記HTML文に記述*/
-	/*<h2 class="ttl_line2">ここに見出しいれる（例）Menu </h2>*/
-	
-	/* 見出しの下線 */
-	.ttl_line2 {
- 		 font-weight: bold;
- 		 border-bottom: 2px solid rgb(128, 64, 0);
- 		 padding: 0.3em;
-  		 margin-bottom: 0.3em;
-	}
-	
-	/* 見出しの1文字目を大きくする */
-	.ttl_line2:first-letter {
- 		font-size: 1.5em;
-  		color: rgb(255, 128, 0);
-	}
-	
-	/* ▽▽▽ サイドバーセクション ▽▽▽ */
-	*{
-		margin: 0;
-		padding: 0;
-		box-sizing: border-box;
-		list-style: none;
-		text-decoration: none;
-		font-family: "M PLUS 1p", sans-serif;
-	}
-	
-	.sidebar{
-		position: fixed; /* 固定する */
-		left: -250px;
-		background-color: rgb(105, 84, 56);
-		width: 250px;
-		height: 100%;
-		transition: all 0.5s;
-	}
-	
-	/* サイドバー内のヘッダー「TeamA」 */
-	.sidebar header{
-		font-size: 22px;
-		color: white;
-		text-align: center;
-		line-height: 70px;
-		background: burlywood;
-		/* user-select: none; */
-	}
-	
-	/* 各リンク部分 */
-	.sidebar ul a {
-		display: block;
-		height: 100%;
-		width: 100%;
-		line-height: 50px;
-		color: white;
-		font-size: 15px;
-		padding-left: 40px;
-		border-top: 1px solid rgba(255,255,255,0.1);
-		/*border-bottom: 1px solid navajowhite;*/
-		transition: 0.4s;
-	}
-	
-	ul li:hover a {
-		padding-left: 50px;
-	}
-	
-	.sidebar ul a i {
-		margin-right: 16px;
-	}
-	
-	.sidebar ul p{
-		color: whitesmoke;
-	}
-	
-	/* ▽▽▽　トグルセクション　▽▽▽ */
-	#check{
-		display: none;
-	}
-	
-	label #hambargerButton,
-	label #cancel{
-		position: absolute;
-		cursor: pointer;
-		background: #b66f2d;
-		border-radius: 3px;
-	}
-	
-	label #hambargerButton{
-		left: 40px;
-		top: 25px;
-		font-size: 25px;
-		color: white;
-		padding: 6px 12px;
-		transition: all 0.5s;
-	}
-	
-	label #cancel{
-		z-index: 10;
-		left: -195px;
-		top: 17px;
-		font-size: 30px;
-		color: white;
-		padding: 4px 9px;
-		transition: all 0.5s;
-	}
-	
-	#check:checked ~ .sidebar{
-		left: 0px;
-	}
-	
-	#check:checked ~ label #hambargerButton{
-		left: 250px;
-		opacity: 0;
-		pointer-events: none;
-	}
-	
-	#check:checked ~ label #cancel{
-		left: 195px;
-	}
-		
-	
-	/*サイドバー開いたときにメイン部分もスライドする*/
-	#check:checked ~ main {	
-		margin-left: 250px;
-	}
-	
-	main {
-		background-position: center;
-		text-align:  left;    /* 文字左寄せ */
-    	height: 100vh;
-    	background-size: cover;
-    	padding:  50px;        /* 余白指定 */
-    	/*border: solid 2px;      /* 枠線指定 */
-    	transition: all 0.5s; /* トランジション(動き)*/
-	}
+
+    /* フォントインポート */
+    @import url('https://fonts.googleapis.com/css2?family=M+PLUS+1p&display=swap');
+
+    /* ▽▽▽　全体の背景色とフォント　▽▽▽ */
+    body {
+        background-color: rgb(244, 213, 128);
+        font-family: "M PLUS 1p", sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* ▽▽▽　グローバルナビメニュー　▽▽▽ */
+    #gnav ul {
+        list-style: none;
+        padding-left: 0;
+    }
+
+    #gnav ul li a {
+        text-decoration: none;
+        display: block;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        color: rgb(128, 64, 0);
+    }
+
+    #gnav ul li a:hover {
+        opacity: 0.7;
+    }
+
+    #gnav > ul {
+        display: flex;
+    }
+
+    #gnav > ul > li {
+        width: 6rem;
+        position: relative;
+        padding: 10px 0;
+    }
+
+    #gnav > ul > li > a {
+        padding: 5px 10px;
+    }
+
+    /* gnav_childのスタイル */
+    .gnav_child {
+        display: none; /* 初期状態は非表示 */
+        position: absolute; /* 絶対配置 */
+        top: 100%; /* 親要素の下に配置 */
+        left: 0;
+        background-color: #fff;
+        padding: 0;
+        margin: 0;
+        border: 1px solid #ccc;
+        border-radius: 10px; /* 丸角 */
+        overflow: hidden; /* 子要素の丸角を適用するために必要 */
+        transition: opacity 0.3s, transform 0.3s visibility, 0.3s; /* トランジションを追加 */
+        opacity: 0; /* 初期状態は非表示 */
+        transform: translateY(-10px); /* 初期状態は少し上に移動して非表示 */
+    }
+
+    /* 親要素がホバーされたときにgnav_childを表示 */
+    #gnav > ul > li:hover .gnav_child {
+        display: block;
+        opacity: 1; /* 不透明にする */
+        transform: translateY(0); /* 上から下へトランジション */
+        visibility: visible; /* 表示する */
+    }
+
+    /* ドロップダウンリストのリンクスタイル */
+    .gnav_child li {
+        list-style-type: none;
+        text-align: center;
+        padding: 10px;
+    }
+
+    .gnav_child li a {
+        text-decoration: none;
+        color: #333; /* リンクの色 */
+        display: block;
+    }
+
+    /* ホバー時のリンクの背景色 */
+    .gnav_child li:hover {
+        background-color: #f0f0f0;
+    }
+
+    /* ヘッダー */
+    header {
+        width: 100%;
+        padding: 5px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0px 3px 10px 2px rgba(25, 26, 26, 0.2);
+        background-color:rgb(248, 215, 139);
+    }
+
+    .teamA {
+        display: inline-block;
+        position: relative;
+        margin: calc(3.5em / 2) 0 calc(3.5em / 4) calc(3.5em / 2);
+        color: #ffffff;
+        line-height: 1;
+    }
+
+    .teamA::before {
+        position: absolute;
+        bottom: calc(-3.5em / 4);
+        left: calc(-3.5em / 2);
+        z-index: -1;
+        width: 3.5em;
+        height: 3.5em;
+        border-radius: 50%;
+        background: #df8430;
+        content: '';
+    }
+   
+    .footer-2 {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 25px 10px 10px;
+    background-color: #f4d580;
+}
+
+.footer-2__logo {
+    width: 130px;
+    height: 30px;
+}
+
+.footer-2__list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0 1.5em;
+    list-style-type: none;
+    margin: 0 0 .5em;
+    padding: .5em;
+}
+
+.footer-2__sns-icon {
+    width: 21px;
+    height: 21px;
+}
+
+.footer-2__copyright {
+    margin: 0;
+    color: #ffffffb3;
+    font-weight: 200;
+    font-size: .8em;
+}

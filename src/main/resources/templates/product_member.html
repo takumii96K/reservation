@@ -6,119 +6,217 @@
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 <title>メンバー紹介</title>
-<link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="../static/style.css"> <!-- staticディレクトリからの相対パス -->
+<link rel="stylesheet" href="original-anime.css">
+<link rel="stylesheet" href ="https://cdn.skypack.dev/sanitize.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 <style>
-	
-	/* ▽▽▽ プロフィール見出し ▽▽▽ */
-	.heading-22 {
-    	padding: .5em .7em;
-    	border-left: 5px solid #c7620f;
-    	background-color: #fbee9d;
-    	color: #4e4646;
-    	font-size: 20px;
+	/* ▽▽▽ 全体の背景色とフォント ▽▽▽ */
+	body {
+    	background-color: rgb(244, 213, 128);
+    	font-family: "M PLUS 1p", sans-serif;
 	}
 	
-	/* ▽▽▽ メンバープロフィール ▽▽▽ */
-	.profile {
-		background: #FFF;
-		width: 300px;
-		padding: 2rem;
-		border: 1px solid #1a1a1a;
+	/*グローバルナビメニュー*/
+	#gnav ul {
+    	list-style: none;
+    	padding-left: 0;
+	}
+	
+	#gnav ul li a {
+    	text-decoration: none;
+    	display: block;
+    	width: 100%;
+    	height: 100%;	
+    	text-align: center;
+    	color: rgb(128, 64, 0);
+	}
+	
+	#gnav ul li a:hover {
+    	opacity: 0.7;
+	}
+	
+	#gnav > ul {
+    	display: flex;
+	}
+	
+	#gnav > ul > li {
+    	width: 6rem;
+    	position: relative;
+    	padding: 10px 0;
+	}
+	
+	#gnav > ul > li > a {
+    	padding: 5px 10px;
+	}	
+
+/*子階層*/
+	.gnav_child {
+    	visibility: hidden;
+    	width: 100%;
+    	position: absolute;
+    	left: 0;
+    	top: 95%;
+    	background: #fff;
+    	-webkit-box-shadow: 0px 3px 10px 2px rgba(25, 26, 26, 0.3);
+    	box-shadow: 0px 3px 10px 2px rgba(25, 26, 26, 0.3);
+    	border-radius: 5px;
+    	z-index: 0;
+    	transition: all .5s cubic-bezier(0.075, 0.82, 0.165, 1);
+    	transform: scaleY(0);
+    	transform-origin: center top;
+    	opacity: 0;
+	}
+
+/*子階層ドロップダウン*/
+	#gnav > ul > li:hover .gnav_child {
+    	visibility: visible;
+    	opacity: 1;
+    	transform: scaleY(1);
+	}
+
+/*子階層の▲の装飾*/
+	.gnav_child::before {
+    	content: "";
+    	display: block;
+    	position: absolute;
+    	top: -9px;
+    	left: 50%;
+    	transform: translateX(-50%);
+    	width: 0;
+    	height: 0;
+    	border-style: solid;
+    	border-width: 0 10px 10px 10px;
+   		border-color: transparent transparent #fff transparent;
+   		filter: drop-shadow(0 0px 5px rgba(25, 26, 26, 0.3));
+    	z-index: -1;
+	}
+	
+	.gnav_child li {
+    	background: #fff;
+	}
+
+	/*子階層の背景の角丸設定*/
+	.gnav_child > li:first-child {
+    	border-top-left-radius: 5px;
+    	border-top-right-radius: 5px;
+	}
+	
+	.gnav_child > li:last-child {
+    	border-bottom-left-radius: 5px;
+    	border-bottom-right-radius: 5px;
+	}
+
+	.gnav_child a {
+    	padding: 10px 5px; 
+	}
+
+
+/*その他の設定*/
+	* {
+    	box-sizing: border-box;
+	}
+	
+	body {
+    	margin: 0;
+    	padding: 0;
+    	height: 500px;
+    	min-width: 800px;
+	}
+
+
+	/*ヘッダー*/
+	header {
+    	width: 100%;
+    	padding: 5px 20px;
+    	display: flex;
+    	justify-content: space-between;
+    	align-items: center;
+    	-webkit-box-shadow: 0px 3px 10px 2px rgba(25, 26, 26, 0.2);
+    	box-shadow: 0px 3px 10px 2px rgba(25, 26, 26, 0.2);
+    	background-color:rgb(255, 252, 132);
+	}
+	
+	/*△△△　以上固定ヘッダー　△△△*/
+	
+	/* ▽▽▽ 見出し ▽▽▽ */
+	h1 {
+		position: relative;
 		display: inline-block;
-    	vertical-align: top; /* 上揃えにする */
-    	margin-right: 40px; /* プロフィール間　横のスペース */
-    	margin-top: 40px; /* プロフィール間　縦のスペース */
+		padding: 0 55px;
+  		text-align: center; /* 中央揃え */
+  		color: rgb(128, 64, 0);
+	}
+		
+	h1:before, h1:after {
+		content: '';
+		position: absolute;
+		top: 50%;
+		display: inline-block;
+		width: 45px;
+		height: 1px;
+		background-color: black;
+	}
+
+		h1:before {
+	  		left:0;
+	}
+	
+	h1:after {
+	  right: 0;
+	}
+		
+	/* ▽▽▽ メンバープロフィール ▽▽▽ */
+	.profile-group {
+    	display: flex;
+    	flex-wrap: wrap;
+    	justify-content: center; /* 中央揃え */
+    	gap: 20px; /* プロフィール間の間隔 */
+   		margin: 50px 10% 50px 10%;
+	}
+
+	.profile {
+    	background: #FFF;
+    	width: calc(50% - 10px); /* 2列にするために50%に設定し、間隔を考慮して適宜調整 */
+    	padding: 4rem;
+    	border: 1px solid #1a1a1a;
     	text-align: center; /* 中央揃え */
 	}
 
 	.profile__img {
-		display: block;
-		width: 160px;
-		height: 160px;
-		border-radius:50%;
-		margin: 0 auto;
-		width: 100px; /* 画像の幅 */
-		height: 100px; /* 画像の高さ */
+    	display: block;
+    	width: 100px; /* 画像の幅 */
+    	height: 100px; /* 画像の高さ */
     	border-radius: 50%; /* 丸い形にする */
     	object-fit: cover; /* 画像のアスペクト比を維持しつつ枠にフィット */
+    	margin: 0 auto 10px; /* 上下にマージンを追加して中央揃え */
 	}
 
 	.profile__name {
-		text-align:center;
-		font-weight:bold;
-		font-size:1.2rem;
-		margin: 1rem auto 1rem;
-		letter-spacing:.1rem;
-		font-weight: bold; /* 太字 */
-		margin-top: 5px; /* プロフィール名と説明文の間のスペース */
+    	font-weight: bold; /* 太字 */
+    	margin: 0 0 5px; /* 下部のマージンを設定 */
 	}
 
 	.profile__desc {
-		line-height:1.6rem;
-		margin-top: 5px; /* 説明文と次のプロフィールの間のスペース */
+    	line-height: 1.6rem;
+    	margin: 0; /* 説明文のマージンをリセット */
 	}
 	
-	.profile-group + .heading-22 {
-    	margin-top: 40px; /* 余白の大きさを調整します */
-	}
-	
-	
-
-	/* デモ用の調整 */
-	body {
-	padding: 50px 20px;
-	}
 	
 </style>
 </head>
 <body>
 	
-	<!-- ▽▽▽　トグルセクション　▽▽▽ -->
-	<input type="checkbox" id="check">
-	<label for="check">
-		<i class="fas fa-bars" id="hambargerButton"></i>
-		<i class="fas fa-times" id="cancel"></i>
-	</label>
-	
-	<!-- ▽▽▽　サイドバーセクション　▽▽▽ -->
-	<div class="sidebar">
-		<header>Team A</header>
-		<ul>
-			<!-- メニュー画面リンク -->
-			<li>
-				<a href="/product_menu.html"><i class="fa fa-cutlery" aria-hidden="true"></i>menu</a>
-			</li>
-			
-			<!-- 店舗情報画面リンク（ダミー） -->
-			<li>
-				<a href="#"><i class="fa fa-map-marker" aria-hidden="true"></i>store information</a>
-			</li>
-			
-			<!-- メンバー紹介画面リンク -->
-			<li>
-				<a href="product_member.html"><i class="fa fa-users" aria-hidden="true"></i>member</a>
-			</li>
-			
-			<!-- カートの中身画面リンク（どうする？要相談） -->
-			<li>
-				<a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i>cart</a>
-				<!-- カートの中身を表示するセクション -->
-				<div id="cart-items">
-<!--				<p th:text="${product.productName} + ' ' + ${product.productPrice} + '円'"></p>-->
-				</div>
-				<p>合計金額: <span id="cart-total">0</span>円</p>
-			</li>
-		</ul>
-	</div>
+		<!-- 固定ヘッダーフラグメントの挿入 -->
+    <div th:replace="header.html :: header"></div>
 	
 	<!-- ▽▽▽ メインページ ▽▽▽ -->
 	<main>
-		<h2 class="ttl_line2">Members</h2>
+		<!-- 見出し -->
+		<h1>Member</h1>
 		
 	<!-- ▽▽▽ メンバープロフィール ▽▽▽ -->
 	<!-- バックエンド2人 -->
-	<h2 class="heading-22">back end</h2>
 	<div class="profile-group">
 		<div class="profile">
 			<img class="profile__img" src="https://1.bp.blogspot.com/-tVeC6En4e_E/X96mhDTzJNI/AAAAAAABdBo/jlD_jvZvMuk3qUcNjA_XORrA4w3lhPkdQCNcBGAsYHQ/s400/onepiece01_luffy.png">
@@ -133,7 +231,6 @@
 	</div>
 	
 	<!-- フロントエンド4人 -->
-	<h2 class="heading-22">front end</h2>
 	<div class="profile-group">
 		<div class="profile">
 			<img class="profile__img" src="https://1.bp.blogspot.com/-VACf4WfKNOk/X-Fcx7DWraI/AAAAAAABdE8/KT0UudaIHrMtbFvjC02yLuPLNBZurGYpQCNcBGAsYHQ/s400/onepiece17_doflamingo.png">

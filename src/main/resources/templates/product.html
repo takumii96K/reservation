@@ -1,30 +1,176 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta id="csrfToken" name="_csrf" th:content="${_csrf.token}"/>
     <meta id="csrfHeaderName" name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title>商品選択画面</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../static/style.css"> <!-- staticディレクトリからの相対パス -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Arial', sans-serif;
-            background-color: #f5f5f5;
-        }
+		
+	/* ▽▽▽ 全体の背景色とフォント ▽▽▽ */
+	body {
+    	background-color: rgb(244, 213, 128);
+    	font-family: "M PLUS 1p", sans-serif;
+	}
+	
+	/*グローバルナビメニュー*/
+	#gnav ul {
+    	list-style: none;
+    	padding-left: 0;
+	}
+	
+	#gnav ul li a {
+    	text-decoration: none;
+    	display: block;
+    	width: 100%;
+    	height: 100%;	
+    	text-align: center;
+    	color: rgb(128, 64, 0);
+	}
+	
+	#gnav ul li a:hover {
+    	opacity: 0.7;
+	}
+	
+	#gnav > ul {
+    	display: flex;
+	}
+	
+	#gnav > ul > li {
+    	width: 6rem;
+    	position: relative;
+    	padding: 10px 0;
+	}
+	
+	#gnav > ul > li > a {
+    	padding: 5px 10px;
+	}	
 
-        header {
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            padding: 20px 0;
-        }
+/*子階層*/
+	.gnav_child {
+    	visibility: hidden;
+    	width: 100%;
+    	position: absolute;
+    	left: 0;
+    	top: 95%;
+    	background: #fff;
+    	-webkit-box-shadow: 0px 3px 10px 2px rgba(25, 26, 26, 0.3);
+    	box-shadow: 0px 3px 10px 2px rgba(25, 26, 26, 0.3);
+    	border-radius: 5px;
+    	z-index: 0;
+    	transition: all .5s cubic-bezier(0.075, 0.82, 0.165, 1);
+    	transform: scaleY(0);
+    	transform-origin: center top;
+    	opacity: 0;
+	}
 
-        h1, h3 {
+/*子階層ドロップダウン*/
+	#gnav > ul > li:hover .gnav_child {
+    	visibility: visible;
+    	opacity: 1;
+    	transform: scaleY(1);
+	}
+
+/*子階層の▲の装飾*/
+	.gnav_child::before {
+    	content: "";
+    	display: block;
+    	position: absolute;
+    	top: -9px;
+    	left: 50%;
+    	transform: translateX(-50%);
+    	width: 0;
+    	height: 0;
+    	border-style: solid;
+    	border-width: 0 10px 10px 10px;
+   		border-color: transparent transparent #fff transparent;
+   		filter: drop-shadow(0 0px 5px rgba(25, 26, 26, 0.3));
+    	z-index: -1;
+	}
+	
+	.gnav_child li {
+    	background: #fff;
+	}
+
+	/*子階層の背景の角丸設定*/
+	.gnav_child > li:first-child {
+    	border-top-left-radius: 5px;
+    	border-top-right-radius: 5px;
+	}
+	
+	.gnav_child > li:last-child {
+    	border-bottom-left-radius: 5px;
+    	border-bottom-right-radius: 5px;
+	}
+
+	.gnav_child a {
+    	padding: 10px 5px; 
+	}
+
+
+/*その他の設定*/
+	* {
+    	box-sizing: border-box;
+	}
+	
+	body {
+    	margin: 0;
+    	padding: 0;
+    	height: 500px;
+    	min-width: 800px;
+	}
+
+
+	/*ヘッダー*/
+	header {
+    	width: 100%;
+    	padding: 5px 20px;
+    	display: flex;
+    	justify-content: space-between;
+    	align-items: center;
+    	-webkit-box-shadow: 0px 3px 10px 2px rgba(25, 26, 26, 0.2);
+    	box-shadow: 0px 3px 10px 2px rgba(25, 26, 26, 0.2);
+    	background-color:rgb(255, 252, 132);
+	}
+	
+	/*△△△　以上固定ヘッダー　△△△*/
+	
+	/* ▽▽▽ 見出し ▽▽▽ */
+	h1 {
+		position: relative;
+		display: inline-block;
+		padding: 0 55px;
+  		text-align: center; /* 中央揃え */
+  		color: rgb(128, 64, 0);
+	}
+		
+	h1:before, h1:after {
+		content: '';
+		position: absolute;
+		top: 50%;
+		display: inline-block;
+		width: 45px;
+		height: 1px;
+		background-color: black;
+	}
+
+		h1:before {
+	  		left:0;
+	}
+	
+	h1:after {
+	  right: 0;
+	}
+	
+	/* △△△ 見出し △△△ */
+
+	
+	/* ▽▽▽　メイン　▽▽▽ */
+        h3 {
             margin: 0;
             padding: 10px 0;
         }
@@ -39,7 +185,7 @@
         .menu-item {
             background-color: #fff;
             margin: 15px;
-            width: 30%;
+            width: calc(33.33% - 30px); /* 画面幅に応じて調整 */
             box-shadow: 0 2px 4px rgba(0,0,0,.2);
             transition: transform .2s;
             position: relative; /* この変更を加えます */
@@ -71,124 +217,142 @@
             margin-top: 5px;
             margin-bottom: 15px; /* ボタンとの間隔 */
         }
+	
+	/* ▽▽▽　次ページボタン　▽▽▽ */
+	.button-36 {
+	    display: flex;
+	    justify-content: center;
+	    align-items: center;
+	    width: 250px;
+	    margin: 0 auto;
+	    padding: .9em 2em;
+	    border: 1px solid #c06e2a;
+	    border-radius: 5px;
+	    background-color: #fff;
+	    color: #c06e2a;
+	    font-size: 1em;
+	}
+	
+	.button-36:hover {
+	    border: none;
+	    background-color: #c06e2a;
+	    color: #fff;
+	    font-weight: 600;
+	}
+	
+	.button-36::after {
+	    transform: rotate(45deg);
+	    width: 5px;
+	    height: 5px;
+	    margin-left: 10px;
+	    border-top: 2px solid #c06e2a;
+	    border-right: 2px solid #c06e2a;
+	    content: '';
+	}
+	
+	.button-36:hover::after {
+	    border-color: #fff;
+	    text-decoration-color: bisque;
+	}
+	
+	.button-36 a {
+		color:chocolate;
+	}
 
-        button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            width: 100%; /* ボタンの幅を広げる */
-            margin-bottom: 15px; /* 下部のマージン */
-        }
+	#message-container {
+	     display: none; /* 最初は非表示に */
+	     margin-bottom: 20px;
+	 }
+	 
+	 /* ▽▽▽　フッター　▽▽▽ */
+	   .footer-2 {
+	    display: flex;
+	    align-items: center;
+	    flex-direction: column;
+	    padding: 25px 10px 10px;
+	    background-color: #f4d580;
+	}
+	
+	.footer-2__logo {
+	    width: 130px;
+	    height: 30px;
+	}
+	
+	.footer-2__list {
+	    display: flex;
+	    justify-content: center;
+	    align-items: center;
+	    gap: 0 1.5em;
+	    list-style-type: none;
+	    margin: 0 0 .5em;
+	    padding: .5em;
+	}
+	
+	.footer-2__sns-icon {
+	    width: 21px;
+	    height: 21px;
+	}
+	
+	.footer-2__copyright {
+	    margin: 0;
+	    color: #ffffffb3;
+	    font-weight: 200;
+	    font-size: .8em;
+	}
 
-        button:hover {
-            background-color: #45a049;
-        }
-
-        #message-container {
-            display: none; /* 最初は非表示に */
-            margin-bottom: 20px;
-        }
 
     </style>
 </head>
 <body>
 	
-	<!-- ▽▽▽　トグルセクション　▽▽▽ -->
-<!--	<input type="checkbox" id="check">-->
-<!--	<label for="check">-->
-<!--		<i class="fas fa-bars" id="hambargerButton"></i>-->
-<!--		<i class="fas fa-times" id="cancel"></i>-->
-<!--	</label>-->
-	
-	<!-- ▽▽▽　サイドバーセクション　▽▽▽ -->
-	<div th:replace="sidebar.html :: sidebar"></div>
-<!--	<div class="sidebar">-->
-<!--		<header>Team A</header>-->
-<!--		<ul>-->
-<!--			&lt;!&ndash; トップページリンク &ndash;&gt;-->
-<!--			<li>-->
-<!--				<a href="/takeout/top"><i class="fa fa-map-marker" aria-hidden="true"></i>-->
-<!--				<span class="material-symbols-outlined">home</span>home</a>-->
-<!--			</li>-->
-<!--			-->
-<!--			&lt;!&ndash; メニュー画面リンク &ndash;&gt;-->
-<!--			<li>-->
-<!--				<a href="product.html"><i class="fa fa-cutlery" aria-hidden="true"></i>-->
-<!--				<span class="material-symbols-outlined">restaurant</span>menu</a>-->
-<!--			</li>-->
-<!--			-->
-<!--			&lt;!&ndash; 店舗情報画面リンク（ダミー） &ndash;&gt;-->
-<!--			<li>-->
-<!--				<a href="#"><i class="fa fa-map-marker" aria-hidden="true"></i>-->
-<!--				<span class="material-symbols-outlined">store</span>store information</a>-->
-<!--			</li>-->
-<!--			-->
-<!--			&lt;!&ndash; メンバー紹介画面リンク &ndash;&gt;-->
-<!--			<li>-->
-<!--				<a href="/takeout/product/member"><i class="fa fa-users" aria-hidden="true"></i>-->
-<!--				<span class="material-symbols-outlined">group</span>member</a>-->
-<!--			</li>-->
-<!--			-->
-<!--			&lt;!&ndash; カートの中身画面リンク（どうする？要相談） &ndash;&gt;-->
-<!--			<li>-->
-<!--				<a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i>-->
-<!--				<span class="material-symbols-outlined">shopping_cart</span>cart</a>-->
-<!--				&lt;!&ndash; カートの中身を表示するセクション &ndash;&gt;-->
-<!--				<div id="cart-items">-->
-<!--&lt;!&ndash;				<p th:text="${products.productName} + ' ' + ${products.productPrice} + '円'"></p>&ndash;&gt;-->
-<!--				</div>-->
-<!--				<p>合計金額: <span id="cart-total">0</span>円</p>-->
-<!--			</li>-->
-<!--		</ul>-->
-<!--	</div>-->
-	
-	<!-- ▽▽▽ 見出し ▽▽▽ -->
-	<main>
-	<h2 class="ttl_line2">Menu</h2>
-	
-	<!-- ▽▽▽ 商品一覧表示＆個数選択 ▽▽▽ -->
-		<div class="wrap">
-		<div class="main">
-			<div class="main_content">
-                    <h3>商品を選択してください</h3>
-                    <div class="menu-container">
-                        <div class="menu-item">
-                            <form>
-                                <ul>
-                                    <!-- 商品リストを動的に表示 -->
-                                    <li th:each="product : ${products}">
-                                        <div class="product-image">
-                                            <img th:src="${product.imageUrl}" th:alt="${product.productName}" />
-                                        </div>
-                                        <div class="product-details">
-                                            <span th:text="${product.productName}">Product Name</span> -
-                                            <span th:text="${product.productPrice}">Price</span>
-                                            <label>
-                                                <input type="number" name="quantity" min="1" value="1" class="quantity-input" />
-                                            </label>
-                                            <input type="hidden" name="productId" th:value="${product.productId}" />
-                                            <button type="button" onclick="addToCart(this)">カートに追加</button>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </form>
-                        </div>
+	<!--固定ヘッダーフラグメントの挿入 -->
+    <div th:replace="layout :: header"></div>
+    
+
+	<main class="wrap">
+    <!-- 商品カードを動的に表示 -->
+    <div class="main">
+        <div class="main_content">
+            <h1>Menu</h1>
+            <div class="menu-container">
+                <div class="product-card" th:each="product : ${products}">
+                    <div class="product-image">
+                        <img th:src="${product.imageUrl}" th:alt="${product.productName}" />
                     </div>
+                    <div class="product-details">
+                        <span th:text="${product.productName}">Product Name</span> -
+                        <span th:text="${product.productPrice}">Price</span>
+                        <label>
+                            <input type="number" name="quantity" min="1" value="1" class="quantity-input" />
+                        </label>
+                        <input type="hidden" name="productId" th:value="${product.productId}" />
+                        <button type="button" class="add-to-cart-button" onclick="addToCart(this)">カートに追加</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-			</div>
-		</div>
+</main>
         <div id="message-container">
             <p id="message"></p>
         </div>
 		
 	<!-- ▽▽▽ 次ページに飛ぶボタン ▽▽▽ -->
-	<div class="button019">
-		<a class="sample_button11" href="reservation.html">注文確認(ユーザー情報入力)</a>
-	</div>
+<!--	<div class="button019">-->
+<!--		<a class="sample_button11" href="reservation.html">注文確認(ユーザー情報入力)</a>-->
+<!--	</div>-->
+
+	<button class="button-36">
+		<a href="reservation.html" >注文確認(ユーザー情報入力) </a>
+	</button>  
 		
 	</main>
+	
+	
+	<!--固定フッターフラグメントの挿入 -->
+	<div th:replace="layout :: footer"></div>
+
+	
 
 <script>
     function addToCart(element) {
@@ -228,6 +392,5 @@
         }, 3000);
     }
 </script>
-
 </body>
 </html>
