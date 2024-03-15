@@ -26,7 +26,6 @@ public class ManageController {
     private final ReservationService reservationService;
     private final ProductFormConverter converter;
 
-//	UserRegistrationFormConverter userRegistrationFormConverter=new UserRegistrationFormConverter();
 
 
     /** 商品情報,ユーザー情報,予約情報の一覧を表示 */
@@ -39,7 +38,10 @@ public class ManageController {
 
 
         /** ユーザー情報 */
-        List<User> ulist=userService.getAllUser();
+//        //全ユーザー取得
+//        List<User> ulist2=userService.getAllUser();
+        //authorityKindが1のユーザーのみを取得
+        List<User> ulist=userService. getPeopleWithAuthorityKindOne();
         //表示用「Model」への格納
         model.addAttribute("users", ulist);
 
