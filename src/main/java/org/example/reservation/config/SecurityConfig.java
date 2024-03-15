@@ -25,8 +25,9 @@ public class SecurityConfig {
         http
                 //リクエスト認可の設定
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers(HttpMethod.POST, "/cart/add").permitAll()
                         .requestMatchers(HttpMethod.POST, "/admin/**").hasAnyAuthority("ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/cart/add").permitAll()
+                        .requestMatchers("/cart/checkout", "/user/profile").authenticated()
                         .requestMatchers("/user/**").hasAnyAuthority("ROLE_USER")
                         .anyRequest().permitAll())
                 //ログイン画面の設定

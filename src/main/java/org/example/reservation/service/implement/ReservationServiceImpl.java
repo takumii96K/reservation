@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.example.reservation.entity.Reservation;
 import org.example.reservation.entity.projection.ReservationProductDto;
-import org.example.reservation.form.ReservationForm;
+import org.example.reservation.form.ReservationInputForm;
 import org.example.reservation.repository.JpaReservationRepository;
 import org.example.reservation.service.spec.ReservationService;
 import org.springframework.stereotype.Service;
@@ -23,36 +23,29 @@ public class ReservationServiceImpl implements ReservationService {
 		return repository.findAll();
 	}
 
+	/**
+	 * 予約情報登録
+	 * @param form ReservationInputForm
+	 * @return boolean true/false
+	 */
 	@Override
-	public boolean setReservationRegister(ReservationForm rvForm)
-	{
-		//データベース(reservationテーブル)呼び出し
+	public boolean registerReservation(ReservationInputForm form){
 		Reservation reservation = new Reservation();
-		
-		//予約画面で受け取った値(name,phone,email,date)が全てnullじゃなかった場合true
-		if(rvForm.getName() != null&& !rvForm.getName().isEmpty() && rvForm.getPhone() != null 
-			&& rvForm.getEmail() != null && rvForm.getDate() != null)
-		{
-			//set処理
-			reservation.setCustomerName(rvForm.getName());//名前
-			reservation.setTel(rvForm.getPhone());		//電話番号
-			reservation.setEmail(rvForm.getEmail());   	//メアド
-			reservation.setDateTime(rvForm.getDate());	//日時
+			reservation.setCustomerName(form.getName());
+			reservation.setTel(form.getPhone());
+			reservation.setEmail(form.getEmail());
+			reservation.setDateTime(form.getDate());
 			
-			repository.save(reservation);	//保存
-			
-			return true;
-		}
-		//受け取った値にnullがあった場合false
-		else
-		{
-			return false;
-		}
+		repository.save(reservation);
+		return true;
 	}
 
+	/**
+	 * 管理画面：予約履歴の取得
+	 * @return List<reservationProductDto>
+	 */
 	@Override
 	public List<ReservationProductDto> getReservationProductDtoAll() {
 		return repository.findReservationDetails();
 	}
-
 }

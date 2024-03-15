@@ -63,8 +63,8 @@ public class LoginUserDetailsService implements UserDetailsService, UserService 
     public void registerUser(UserRegistrationForm form) {
 
         //重複チェック
-        if(repository.existsByUserName(form.getName())){
-            throw new DuplicateUserNameException("ユーザーID " + form.getName() + " が重複しています");
+        if(repository.existsByUserName(form.getUserId())){
+            throw new DuplicateUserNameException("ユーザーID " + form.getUserId() + " が重複しています");
         }
         //登録
         repository.save(converter.convertToEntity(form));
@@ -85,29 +85,18 @@ public class LoginUserDetailsService implements UserDetailsService, UserService 
     @Override
     public void updateUser(UserRegistrationForm form) {
         //重複チェック
-        if(repository.existsByUserName(form.getName())){
-            throw new DuplicateUserNameException("ユーザーID " + form.getName() + " が重複しています");
+        if(repository.existsByUserName(form.getUserId())){
+            throw new DuplicateUserNameException("ユーザーID " + form.getUserId() + " が重複しています");
         }
         repository.save(converter.convertToEntity(form)); //false
 
         //登録
         repository.save(converter.convertToEntity(form));
     }
-    
-    
-//    //全ユーザー取得
-//   	@Override
-//   	public List<org.example.reservation.entity.User> getAllUser() {
-//   	//パッケージの名前がUserの前についている
-//   	//securityでUserをimportしている為
-//   		return repository.findAll();
-//   	}
-   	
-   	//authorityKindが1のユーザーのみを取得
-	@Override
-   	public List<org.example.reservation.entity.User> getPeopleWithAuthorityKindOne() {
-   	//パッケージの名前がUserの前についている
-   	//securityでUserをimportしている為
-   		return repository.findPeopleWithAuthorityKindOne();
-	}
+
+    @Override
+    public List<org.example.reservation.entity.User> findUserWithAuthorityKindOne() {
+        return repository.getUserWithAuthorityKindOne();
+    }
+
 }

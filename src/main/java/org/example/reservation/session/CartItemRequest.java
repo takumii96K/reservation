@@ -1,4 +1,4 @@
-package org.example.reservation.form;
+package org.example.reservation.session;
 
 import lombok.Data;
 

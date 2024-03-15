@@ -5,13 +5,12 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
+/**
+ * 予約id/商品id/商品名/予約日時/予約者の名前/電話番号を取得するためのDTOクラス
+ */
 @Data
 @AllArgsConstructor
 public class ReservationProductDto {
-
-    /**
-     * 予約id/商品id/商品名/予約日時/予約者の名前/電話番号でしゅとく
-     */
     private Long reservationId;
     private Long productId;
     private String productName;
