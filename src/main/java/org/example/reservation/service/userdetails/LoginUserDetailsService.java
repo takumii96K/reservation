@@ -1,6 +1,8 @@
 package org.example.reservation.service.userdetails;
 
-import lombok.RequiredArgsConstructor;
+import java.util.Collections;
+import java.util.List;
+
 import org.example.reservation.entity.converter.UserRegistrationFormConverter;
 import org.example.reservation.entity.projection.UserLoginProjection;
 import org.example.reservation.exception.DuplicateUserNameException;
@@ -15,8 +17,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.List;
+import lombok.RequiredArgsConstructor;
 
 /**
  * UserDetailサービス
@@ -92,4 +93,13 @@ public class LoginUserDetailsService implements UserDetailsService, UserService 
         //登録
         repository.save(converter.convertToEntity(form));
     }
+    
+    //全件取得
+   	@Override
+   	public List<org.example.reservation.entity.User> getAllUser() {
+   	//パッケージの名前がUserの前についている
+   	//securityでUserをimportしている為
+   		return repository.findAll();
+   	}
+
 }
