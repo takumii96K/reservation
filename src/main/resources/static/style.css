@@ -1,0 +1,241 @@
+@charset "UTF-8";
+
+    /* フォントインポート */
+    @import url('https://fonts.googleapis.com/css2?family=M+PLUS+1p&display=swap');
+
+    /* ▽▽▽　全体の背景色とフォント　▽▽▽ */
+    body {
+		text-align: center; /* コンテンツを中央揃えにする */
+        background-color: rgb(244, 213, 128);
+        font-family: "M PLUS 1p", sans-serif;
+        margin-top: 100px;
+        padding: 0;
+    }
+    
+    main{
+		padding-bottom: 100px;
+	}
+	
+    .wrap {
+        text-align: center; /* テキストを中央揃えにする */
+    }
+    
+    /* 各テーブルのスタイル */
+	table {
+	    margin: 0 auto; /* テーブルを中央揃えにする */
+	    width: 80%; /* テーブルの幅を指定 */
+	    border-collapse: collapse; /* セルの境界線を重ねる */
+	}
+	
+
+    
+    /*△△△　全体の背景色とフォント　△△△*/
+
+
+    /* ▽▽▽　ヘッダー　▽▽▽ */
+
+    /* 見出し */
+    header {
+        width: 100%;
+        padding: 5px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0px 3px 10px 2px rgba(25, 26, 26, 0.2);
+        background-color:rgb(248, 215, 139);
+    }
+    
+    .header {
+	    position: fixed; /* ヘッダーを固定 */
+	    top: 0; /* 上部に配置 */
+	    left: 0;
+	    width: 100%;
+	    z-index: 1000; /* 他の要素より手前に表示 */
+	}
+	
+    .teamA {
+	    text-transform: none;
+	}
+	
+	.teamA a {
+    	text-decoration: none; /* リンクの下線をなくす */
+	}
+    
+	.teamA span {
+	  background-color: rgb(174, 87, 0);
+	  color: #fff;
+	  margin: 0 0.03em;
+	  display: inline-block;
+	  width: 1.7em;
+	  height: 1.7em;
+	  line-height: 1.7;
+	  border-radius: 100vh;
+	}
+	
+	/* totalのテキストスタイル */
+	div p {
+	    font-size: 1.2em; /* フォントサイズを設定 */
+	    font-weight: bold; /* フォントを太字にする */
+	    color: rgb(174, 87, 0); /* テキストの色を設定 */
+	}
+	
+	/* totalの数字のスタイル */
+	div span {
+	    font-size: 1.2em; /* フォントサイズを大きくする */
+	    color: rgb(174, 87, 0); /* テキストの色を設定 */
+	}	
+     
+
+	
+    /* グローバルナビゲーション */
+    #gnav ul {
+        list-style: none;
+        padding-left: 0;
+    }
+
+    #gnav ul li a {
+        text-decoration: none;
+        display: block;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        color: rgb(128, 64, 0);
+    }
+
+    #gnav ul li a:hover {
+        opacity: 0.7;
+    }
+
+    #gnav > ul {
+        display: flex;
+    }
+
+    #gnav > ul > li {
+        width: 6rem;
+        position: relative;
+        padding: 10px 0;
+    }
+
+    #gnav > ul > li > a {
+        padding: 5px 10px;
+    }
+
+    /* 子階層のスタイル */
+    .gnav_child {
+        display: none; /* 初期状態は非表示 */
+        position: absolute; /* 絶対配置 */
+        top: 100%; /* 親要素の下に配置 */
+        left: 0;
+        background-color: #fff;
+        padding: 0;
+        margin: 0;
+        border: 1px solid #ccc;
+        border-radius: 10px; /* 丸角 */
+        overflow: hidden; /* 子要素の丸角を適用するために必要 */
+        transition: opacity 0.3s, transform 0.3s visibility, 0.3s; /* トランジションを追加 */
+        opacity: 0; /* 初期状態は非表示 */
+        transform: translateY(-10px); /* 初期状態は少し上に移動して非表示 */
+    }
+
+    /* 親要素がホバーされたときにgnav_childを表示 */
+    #gnav > ul > li:hover .gnav_child {
+        display: block;
+        opacity: 1; /* 不透明にする */
+        transform: translateY(0); /* 上から下へトランジション */
+        visibility: visible; /* 表示する */
+    }
+
+    /* ドロップダウンリストのリンクスタイル */
+    .gnav_child li {
+        list-style-type: none;
+        text-align: center;
+        padding: 10px;
+    }
+
+    .gnav_child li a {
+        text-decoration: none;
+        color: #333; /* リンクの色 */
+        display: block;
+    }
+
+    /* ホバー時のリンクの背景色 */
+    .gnav_child li:hover {
+        background-color: #f0f0f0;
+    }
+
+
+    /*△△△　ヘッダー　△△△*/
+    
+    
+    /* ▽▽▽ 見出し ▽▽▽ */
+    .midashi {
+	    margin-top: 20px; /* 上余白を設定 */
+	    margin-bottom: 20px; /* 下余白を設定 */
+	}
+    
+	h1 {
+		position: relative;
+		display: inline-block;
+		padding: 50px 70px;
+  		text-align: center; /* 中央揃え */
+  		color: rgb(128, 64, 0);
+	}
+		
+	h1:before, h1:after {
+		content: '';
+		position: absolute;
+		top: 50%;
+		display: inline-block;
+		width: 45px;
+		height: 1px;
+		background-color: black;
+	}
+
+	h1:before {
+	  		left:0;
+	}
+	
+	h1:after {
+	  right: 0;
+	}
+	
+	/* △△△ 見出し △△△ */
+    
+    
+   /* ▽▽▽　フッター　▽▽▽ */
+    .footer-2 {
+	    display: flex;
+	    align-items: center;
+	    flex-direction: column;
+	    padding: 25px 10px 10px;
+	    background-color: #f4d580;
+	}
+
+	.footer-2__logo {
+	    width: 130px;
+	    height: 30px;
+	}
+	
+	.footer-2__list {
+	    display: flex;
+	    justify-content: center;
+	    align-items: center;
+	    gap: 0 1.5em;
+	    list-style-type: none;
+	    margin: 0 0 .5em;
+	    padding: .5em;
+	}
+	
+	.footer-2__sns-icon {
+	    width: 21px;
+	    height: 21px;
+	}
+	
+	.footer-2__copyright {
+	    margin: 0;
+	    color: #ffffffb3;
+	    font-weight: 200;
+	    font-size: .8em;
+	}
+	
+	/*△△△　フッター　△△△*/
