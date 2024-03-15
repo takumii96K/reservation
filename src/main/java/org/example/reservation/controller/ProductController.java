@@ -16,13 +16,12 @@ import java.util.Objects;
 
 /** Productコントローラ */
 @Controller
-//@RequiredArgsConstructor
+@RequiredArgsConstructor
 @RequestMapping("/takeout")
 public class ProductController {
 
-	@Autowired
-	private  ProductService service;
-	private ShoppingCartController controller;
+	private  final ProductService service;
+	private final ShoppingCartController controller;
 //	private final CartSession cartSession;
 
 	// 商品選択画面を表示

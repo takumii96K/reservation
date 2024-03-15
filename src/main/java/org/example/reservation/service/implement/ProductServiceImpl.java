@@ -1,14 +1,12 @@
 package org.example.reservation.service.implement;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
 import org.example.reservation.entity.Product;
-import org.example.reservation.form.ProductForm;
+import org.example.reservation.entity.projection.ProductProjection;
 import org.example.reservation.repository.JpaProductRepository;
 import org.example.reservation.service.spec.ProductService;
-import org.example.reservation.session.CartItem;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -42,20 +40,4 @@ public class ProductServiceImpl implements ProductService {
 		// 更新された商品をデータベースに保存
 		return repository.save(product);
 	}
-
-	@Override
-	public Product getProductById(Long id) {
-		return repository.findById(id).orElse(null);
-	}
-
-	@Override
-	public CartItem registerCartItem(Product product,ProductForm form) {
-		CartItem item = new CartItem();
-		item.setItemId(product.getProductId());
-		item.setItemName(product.getProductName());
-//		item.setPrice(BigDecimal.valueOf(product.getProductPrice()));
-		item.setQuantity(form.getQuantity());
-		return item;
-	}
-
 }
