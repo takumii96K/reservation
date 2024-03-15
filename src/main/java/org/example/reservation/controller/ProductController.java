@@ -1,17 +1,18 @@
 package org.example.reservation.controller;
 
-import jakarta.servlet.http.HttpSession;
-import lombok.RequiredArgsConstructor;
+import java.util.Objects;
+
 import org.example.reservation.form.ProductForm;
 import org.example.reservation.service.spec.ProductService;
-import org.example.reservation.service.spec.ShoppingCartService;
-import org.example.reservation.session.CartSession;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.Objects;
+import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 
 
 /** Productコントローラ */
@@ -20,8 +21,10 @@ import java.util.Objects;
 @RequestMapping("/takeout")
 public class ProductController {
 
+
 	private  final ProductService service;
 	private final ShoppingCartController controller;
+
 //	private final CartSession cartSession;
 
 	// 商品選択画面を表示
