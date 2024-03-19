@@ -1,6 +1,7 @@
 package org.example.reservation.controller;
 
 import java.time.LocalDateTime;
+
 import org.example.reservation.form.ReservationInputForm;
 import org.example.reservation.service.spec.ReservationService;
 import org.springframework.stereotype.Controller;
@@ -10,7 +11,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.RequiredArgsConstructor;
@@ -44,6 +44,7 @@ public class ReservationController {
 	@PostMapping("/takeout/product/confirm")
 	public String showConfirm(@Validated @ModelAttribute("inputReservationForm")
 							  ReservationInputForm form, BindingResult bindingResult) {
+
 
 		//FormValidation check
 		if(bindingResult.hasErrors()) {
