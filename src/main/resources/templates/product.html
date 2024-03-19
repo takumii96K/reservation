@@ -1,45 +1,44 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta id="csrfToken" name="_csrf" th:content="${_csrf.token}"/>
-    <meta id="csrfHeaderName" name="_csrf_header" th:content="${_csrf.headerName}"/>
-    <title>商品選択画面</title>
-    <link rel="stylesheet" href="style.css">
+<title>商品選択画面</title>
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    <link rel="stylesheet" href ="https://cdn.skypack.dev/sanitize.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Arial', sans-serif;
-            background-color: #f5f5f5;
-        }
-
-        header {
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            padding: 20px 0;
-        }
-
-        h1, h3 {
+<style>
+	
+	/* ▽▽▽　メニュー　▽▽▽ */
+        h3 {
             margin: 0;
             padding: 10px 0;
         }
-
-        .menu-container {
+	
+		main{
+			margin-left: 10%;
+			margin-right: 10%;
+		}
+		
+	    .menu-container {
             display: flex;
             flex-wrap: wrap;
             justify-content: space-around;
-            margin-top: 100px; /* ヘッダーの高さに合わせて調整 */
+            margin-top: 20px; /* ヘッダーの高さに合わせて調整 */
+            margin-bottom: 70px;
         }
+        
+        .product-card{
+			width: calc(33.33% - 40px); /* カードの幅 */
+    		/*margin: 30px; /* カード間の余白 */
+			margin: 30px 20px 30px 20px; /* 上右下左の順に余白を指定 */
+		}
 
         .menu-item {
             background-color: #fff;
             margin: 15px;
-            width: 30%;
+            width: calc(33.33% - 30px); /* 画面幅に応じて調整 */
             box-shadow: 0 2px 4px rgba(0,0,0,.2);
             transition: transform .2s;
             position: relative; /* この変更を加えます */
@@ -71,124 +70,121 @@
             margin-top: 5px;
             margin-bottom: 15px; /* ボタンとの間隔 */
         }
+        
+    /* △△△ メニュー △△△ */
+    
+	/* ▽▽▽　次ページボタン　▽▽▽ */
+	.button-36 {
+	    display: flex;
+	    justify-content: center;
+	    align-items: center;
+	    width: 300px;
+	    margin: 0 auto;
+	    padding: .9em 2em;
+	    border: 1px solid #c06e2a;
+	    border-radius: 5px;
+	    background-color: #fff;
+	    color: #c06e2a;
+	    font-size: 1em;
+	}
+	
+	.button-36:hover {
+	    border: none;
+	    background-color: #c06e2a;
+	    font-weight: 600;
+	}
+	
+	.button-36 a {
+	    color: chocolate; /* 通常時の文字色を指定 */
+	    transition: 0.3s;
+	}
+	
+	.button-36:hover a {
+	    color: #fff; /* ホバー時の文字色を白に設定 */
+	    letter-spacing: 5px; /* 文字間隔を2ピクセルに設定 */
+	}	
+	
+	.button-36::after {
+	    transform: rotate(45deg);
+	    width: 5px;
+	    height: 5px;
+	    margin-left: 10px;
+	    border-top: 2px solid #c06e2a;
+	    border-right: 2px solid #c06e2a;
+	    content: '';
+	}
+	
+	.button-36:hover::after {
+	    border-color: #fff;
+	    text-decoration-color: bisque;
+	}
 
-        button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            width: 100%; /* ボタンの幅を広げる */
-            margin-bottom: 15px; /* 下部のマージン */
-        }
 
-        button:hover {
-            background-color: #45a049;
-        }
-
-        #message-container {
-            display: none; /* 最初は非表示に */
-            margin-bottom: 20px;
-        }
-
+	#message-container {
+	     display: none; /* 最初は非表示に */
+	     margin-bottom: 20px;
+	 }
+	 
+	 /* △△△ 次ページボタン △△△ */
+	 
     </style>
 </head>
 <body>
 	
-	<!-- ▽▽▽　トグルセクション　▽▽▽ -->
-<!--	<input type="checkbox" id="check">-->
-<!--	<label for="check">-->
-<!--		<i class="fas fa-bars" id="hambargerButton"></i>-->
-<!--		<i class="fas fa-times" id="cancel"></i>-->
-<!--	</label>-->
-	
-	<!-- ▽▽▽　サイドバーセクション　▽▽▽ -->
-	<div th:replace="sidebar.html :: sidebar"></div>
-<!--	<div class="sidebar">-->
-<!--		<header>Team A</header>-->
-<!--		<ul>-->
-<!--			&lt;!&ndash; トップページリンク &ndash;&gt;-->
-<!--			<li>-->
-<!--				<a href="/takeout/top"><i class="fa fa-map-marker" aria-hidden="true"></i>-->
-<!--				<span class="material-symbols-outlined">home</span>home</a>-->
-<!--			</li>-->
-<!--			-->
-<!--			&lt;!&ndash; メニュー画面リンク &ndash;&gt;-->
-<!--			<li>-->
-<!--				<a href="product.html"><i class="fa fa-cutlery" aria-hidden="true"></i>-->
-<!--				<span class="material-symbols-outlined">restaurant</span>menu</a>-->
-<!--			</li>-->
-<!--			-->
-<!--			&lt;!&ndash; 店舗情報画面リンク（ダミー） &ndash;&gt;-->
-<!--			<li>-->
-<!--				<a href="#"><i class="fa fa-map-marker" aria-hidden="true"></i>-->
-<!--				<span class="material-symbols-outlined">store</span>store information</a>-->
-<!--			</li>-->
-<!--			-->
-<!--			&lt;!&ndash; メンバー紹介画面リンク &ndash;&gt;-->
-<!--			<li>-->
-<!--				<a href="/takeout/product/member"><i class="fa fa-users" aria-hidden="true"></i>-->
-<!--				<span class="material-symbols-outlined">group</span>member</a>-->
-<!--			</li>-->
-<!--			-->
-<!--			&lt;!&ndash; カートの中身画面リンク（どうする？要相談） &ndash;&gt;-->
-<!--			<li>-->
-<!--				<a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i>-->
-<!--				<span class="material-symbols-outlined">shopping_cart</span>cart</a>-->
-<!--				&lt;!&ndash; カートの中身を表示するセクション &ndash;&gt;-->
-<!--				<div id="cart-items">-->
-<!--&lt;!&ndash;				<p th:text="${products.productName} + ' ' + ${products.productPrice} + '円'"></p>&ndash;&gt;-->
-<!--				</div>-->
-<!--				<p>合計金額: <span id="cart-total">0</span>円</p>-->
-<!--			</li>-->
-<!--		</ul>-->
-<!--	</div>-->
-	
-	<!-- ▽▽▽ 見出し ▽▽▽ -->
-	<main>
-	<h2 class="ttl_line2">Menu</h2>
-	
-	<!-- ▽▽▽ 商品一覧表示＆個数選択 ▽▽▽ -->
-		<div class="wrap">
-		<div class="main">
-			<div class="main_content">
-                    <h3>商品を選択してください</h3>
-                    <div class="menu-container">
-                        <div class="menu-item">
-                            <form>
-                                <ul>
-                                    <!-- 商品リストを動的に表示 -->
-                                    <li th:each="product : ${products}">
-                                        <div class="product-image">
-                                            <img th:src="${product.imageUrl}" th:alt="${product.productName}" />
-                                        </div>
-                                        <div class="product-details">
-                                            <span th:text="${product.productName}">Product Name</span> -
-                                            <span th:text="${product.productPrice}">Price</span>
-                                            <label>
-                                                <input type="number" name="quantity" min="1" value="1" class="quantity-input" />
-                                            </label>
-                                            <input type="hidden" name="productId" th:value="${product.productId}" />
-                                            <button type="button" onclick="addToCart(this)">カートに追加</button>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </form>
-                        </div>
+	<!--固定ヘッダーフラグメントの挿入 -->
+    <div th:replace="layout :: header"></div>
+    
+	<!-- 見出し -->
+    <h1 class="midashi">Menu</h1>
+    
+	<main class="wrap">
+    <div class="main">
+        <div class="main_content">
+
+            <!-- 商品カードを動的に表示 -->
+            <div class="menu-container">
+                <div class="product-card" th:each="product : ${products}">
+                    <div class="product-image">
+                        <img th:src="${product.imageUrl}" th:alt="${product.productName}" />
                     </div>
+                    <div class="product-details">
+                        <span th:text="${product.productName}">Product Name</span> -
+                        <span th:text="${product.productPrice}">Price</span>
+                        <label>
+                            <input type="number" name="quantity" min="1" value="1" class="quantity-input" />
+                        </label>
+                        <input type="hidden" name="productId" th:value="${product.productId}" />
+                        <button type="button" class="add-to-cart-button" onclick="addToCart(this)">カートに追加</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-			</div>
-		</div>
+    	
         <div id="message-container">
             <p id="message"></p>
         </div>
 		
-	<!-- ▽▽▽ 次ページに飛ぶボタン ▽▽▽ -->
-	<div class="button019">
-		<a class="sample_button11" href="reservation.html">注文確認(ユーザー情報入力)</a>
-	</div>
+    	<!-- ▽▽▽ 次ページに飛ぶボタン ▽▽▽ -->
+<!--	<div class="button019">-->
+<!--		<a class="sample_button11" href="reservation.html">注文確認(ユーザー情報入力)</a>-->
+<!--	</div>-->
+    	<button class="button-36">
+		<a href="/takeout/product/reservation" >注文確認<br>(ユーザー情報入力) </a>
+	</button>  
 		
+		</main>
 	</main>
+
+
+
+
+	
+	
+	<!--固定フッターフラグメントの挿入 -->
+	<div th:replace="layout :: footer"></div>
+
+	
 
 <script>
     function addToCart(element) {
@@ -228,6 +224,5 @@
         }, 3000);
     }
 </script>
-
 </body>
 </html>

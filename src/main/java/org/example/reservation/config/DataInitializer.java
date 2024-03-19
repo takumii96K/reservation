@@ -38,11 +38,11 @@ public class DataInitializer implements ApplicationRunner {
             admin.setAuthorities(adminProperties.getAuthorities());
 
             // データベース内で同じユーザー名を持つユーザーが存在するか確認
-            if (!repository.existsByUserName(admin.getUserName())) {
+            if (!repository.existsByUserName(admin.getUsername())) {
                 repository.save(admin);
             } else {
                 // 既存のユーザーが見つかった場合の処理
-                System.out.println("Admin user already exists: " + admin.getUserName());
+                System.out.println("Admin user already exists: " + admin.getUsername());
             }
         } catch (DataIntegrityViolationException e) {
             // DataIntegrityViolationExceptionをキャッチした場合の処理

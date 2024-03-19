@@ -3,83 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="_csrf" th:content="${_csrf.token}"/>
-    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
-<title>teamA-トップページ</title>
-<link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+<title>トップページ</title>
+<link rel="stylesheet" type="text/css" href="/style.css">
+<link rel="stylesheet" href ="https://cdn.skypack.dev/sanitize.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 <style>
 	
-	/* 背景 */
-	#check:checked ~ .bg {	
-		margin-left: 250px;
+	/* ▽▽▽ 見出し ▽▽▽ */
+	h1 {
+		position: absolute;
+		    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* 要素を中央に配置 */
+
+		padding: 0 55px;
+  		text-align: center; /* 中央揃え */
+  		color: rgb(255, 255, 255);
+	}
+		
+	h1:before, h1:after {
+		content: '';
+		position: absolute;
+		top: 50%;
+		display: inline-block;
+		width: 45px;
+		height: 1px;
+		background-color: black;
+		transform: translateY(-50%); /* 上下中央揃え */
+	}
+
+		h1:before {
+	  		left:0;
 	}
 	
-	body {
-    	margin: 0;
-    	padding: 0;
-	}
-	main{
-    	width: 100vw; /* ビューポートの幅いっぱいに広がる */
-    	height: 100vh; /* ビューポートの高さいっぱいに広がる */
-    	overflow: hidden; /* 画像がはみ出さないようにオーバーフローを隠す */
-	}
-	.bg {
-    	position: absolute;
-    	top: 0;
-    	left: 0;
-    	width: 100%;
-    	height: 100%;
-    	object-fit: cover; /* 画像が領域に合わせてカバーされるようにする */
-    	z-index: -1; /* レイヤーの一番下に配置 */
+	h1:after {
+	  right: 0;
 	}
 	
+	/* △△△ 見出し △△△ */
+
+
+    /* ▽▽▽　メイン画像部分　▽▽▽ */
+    .wrap {
+        background-image: url("https://plus.unsplash.com/premium_photo-1668618295237-f1d8666812c9?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+        background-size: cover; /* 背景画像をウィンドウに合わせて表示 */
+        background-position: center; /* 背景画像を中央に配置 */
+        height: 100vh; /* 画面の高さいっぱいに表示 */
+    } 
+    
+    
 </style>    
 </head>
 <body>
 	
-	<!-- ▽▽▽　トグルセクション　▽▽▽ -->
-	<input type="checkbox" id="check">
-	<label for="check">
-		<i class="fas fa-bars" id="hambargerButton"></i>
-		<i class="fas fa-times" id="cancel"></i>
-	</label>
-	
-	<!-- ▽▽▽　サイドバーセクション　▽▽▽ -->
-	<div th:replace="sidebar.html :: sidebar"></div>
-<!--	<div class="sidebar">-->
-<!--		<header>Team A</header>-->
-<!--		<ul>-->
-<!--			&lt;!&ndash; メニュー画面リンク &ndash;&gt;-->
-<!--			<li>-->
-<!--				<a href="/takeout/product"><i class="fa fa-cutlery" aria-hidden="true"></i>menu</a>-->
-<!--			</li>-->
-<!--			-->
-<!--			&lt;!&ndash; 店舗情報画面リンク（ダミー） &ndash;&gt;-->
-<!--			<li>-->
-<!--				<a href="#"><i class="fa fa-map-marker" aria-hidden="true"></i>store information</a>-->
-<!--			</li>-->
-<!--			-->
-<!--			&lt;!&ndash; メンバー紹介画面リンク &ndash;&gt;-->
-<!--			<li>-->
-<!--				<a href="/takeout/product/member"><i class="fa fa-users" aria-hidden="true"></i>member</a>-->
-<!--			</li>-->
-<!--			-->
-<!--			&lt;!&ndash; カートの中身画面リンク（どうする？要相談） &ndash;&gt;-->
-<!--			<li>-->
-<!--				<a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i>cart</a>-->
-<!--				&lt;!&ndash; カートの中身を表示するセクション &ndash;&gt;-->
-<!--				<div id="cart-items">-->
-<!--&lt;!&ndash;				<p th:text="${product.productName} + ' ' + ${product.productPrice} + '円'"></p>&ndash;&gt;-->
-<!--				</div>-->
-<!--				<p>合計金額: <span id="cart-total">0</span>円</p>-->
-<!--			</li>-->
-<!--		</ul>-->
-<!--	</div>-->
-<!--	-->
-	<!-- 背景画像挿入 -->
-	<main>
-		<img class="bg" src="https://cdn.pixabay.com/photo/2017/01/13/03/02/burgers-1976198_1280.jpg">	
+	<!--固定ヘッダーフラグメントの挿入 -->
+    <div th:replace="layout :: header"></div>
+    
+    <main class="wrap">
+		<h1 class="midashi">Wellcom!</h1>
 	</main>
+	
+	<!--固定フッターフラグメントの挿入 -->
+	<div th:replace="layout :: footer"></div>
+
 </body>
 </html>

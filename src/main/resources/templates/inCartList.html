@@ -2,10 +2,62 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
 <head>
     <meta charset="UTF-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <meta id="csrfToken" name="_csrf" th:content="${_csrf.token}"/>
+    <meta id="csrfHeaderName" name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title>Shopping Cart</title>
+    <link rel="stylesheet" type="text/css" href="/style.css">
+	<link rel="stylesheet" href ="https://cdn.skypack.dev/sanitize.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+<style>
+
+	/* テーブルのスタイル */
+	table {
+	    margin: 0 auto; /* テーブルを中央揃えにする */
+	    width: 80%; /* テーブルの幅を指定 */
+	    border-collapse: collapse; /* セルの境界線を重ねる */
+	}
+
+	/* テーブルのヘッダー行のスタイル */
+	th {
+	    background-color: rgb(254, 149, 63); /* ヘッダー行の背景色 */
+	    color: #fff; /* ヘッダー行の文字色 */
+	    font-weight: bold; /* ヘッダー行の文字を太字にする */
+	    padding: 10px; /* ヘッダー行の内側の余白 */
+	    border: 1px solid rgb(128, 64, 0); /* 境界線のスタイルを指定 */
+	}
+
+	/* テーブルのデータ行のスタイル */
+	td {
+	    border: 1px solid rgb(174, 87, 0); /* セルの境界線を設定 */
+	    padding: 10px; /* セルの内側の余白 */
+	    text-align: center; /* セル内のテキストを中央揃えにする */
+	}
+
+	/* 奇数行の背景色を設定 */
+	tr:nth-child(odd) {
+	    background-color: rgba(174, 87, 0, 0.1); /* 奇数行の背景色 */
+	}
+
+
+	/* totalテキストのスタイル */
+	div p{
+	    text-align: center; /* テキストを中央揃えにする */
+	    margin-top: 40px; /* 上部の余白を設定 */
+	}
+	div p span {
+		font-size: 40px;
+	}
+
+</style>
 </head>
 <body>
-<h2>Shopping Cart Items:</h2>
+
+	<!--固定ヘッダーフラグメントの挿入 -->
+    <div th:replace="layout :: header"></div>
+
+    <!-- 見出し -->
+    <h1 class="midashi">Shopping Cart Items</h1>
 <div>
     <table>
         <thead>
@@ -16,18 +68,68 @@
             <th>小計</th>
         </tr>
         </thead>
+
         <tbody>
-        <tr th:each="item : ${cartItem}">
-            <td th:text="${item.value.itemName}">商品名</td>
-            <td th:text="${item.value.price}">価格</td>
-            <td th:text="${item.value.quantity}">個数</td>
-            <td th:text="${item.value.price * item.value.quantity}">小計</td>
+        <tr th:each="item : ${cartItem}" th:id="${'item_' + item.value.itemId}" class="cart-item">
+            <td th:text="${item.value.itemName}"></td>
+            <td th:text="${item.value.price}"></td>
+            <td th:text="${item.value.quantity}"></td>
+            <td th:text="${item.value.price * item.value.quantity}"></td>
+            <td><input type="hidden" th:value="${item.value.itemId}" name="itemId"/></td>
         </tr>
         </tbody>
     </table>
 </div>
+
 <div th:object="${total}">
     <p>total: <span th:text="${total}"></span></p>
 </div>
+
+<!--決済ボタン-->
+<div>
+    <button id="#checkoutButton">決済する</button>
+</div>
+
+    <!--固定フッターフラグメントの挿入 -->
+    <div th:replace="layout :: footer"></div>
+
+<script>
+    $(document).ready(function() {
+        $('checkoutButton').click(function() {
+            let csrfToken = $('meta[name="_csrf"]').attr('content'); //csrf
+            let csrfHeaderName = $('meta[name="_csrf_header"]').attr('content');
+
+            // let userId = $('#userId').val(); // ユーザーIDを取得
+            let cartItems = [];
+            $('.cart-item').each(function() {
+                let item = {
+                    itemId: $(this).find('input[name="itemId"]').val(),
+                    itemName: $(this).find('td:first').text(), // 商品名をテキストとして取得
+                    price: parseFloat($(this).find('td:eq(1)').text()), // 価格をテキストとして取得し、数値に変換
+                    quantity: parseInt($(this).find('td:eq(2)').text()), // 数量をテキストとして取得し、整数に変換
+                };
+                cartItems.push(item);
+            });
+
+            $.ajax({
+                url: '/cart/checkout',
+                type: 'POST',
+                contentType: 'application/json',
+                headers: {
+                    [csrfHeaderName]: csrfToken
+                },
+                data: JSON.stringify({items: cartItems}),
+                success: function() {
+                    alert('決済が完了しました。');
+                    window.location.href = '/takeout/top'
+                },
+                error: function() {
+                    alert('決済処理に失敗しました。');
+                }
+            });
+        });
+    });
+</script>
+
 </body>
 </html>

@@ -1,51 +1,38 @@
 package org.example.reservation.controller;
 
-import java.util.List;
-
-import lombok.RequiredArgsConstructor;
-import org.example.reservation.entity.Product;
-import org.example.reservation.entity.converter.ProductFormConverter;
-import org.example.reservation.entity.projection.ReservationProductDto;
-import org.example.reservation.form.ProductForm;
+import org.example.reservation.entity.converter.ProductDtoConverter;
 import org.example.reservation.service.spec.ProductService;
 import org.example.reservation.service.spec.ReservationService;
+import org.example.reservation.service.spec.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+
+import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/takeout")
 public class ManageController {
     /** DI対象 */
     private final ProductService productService;
+    private final UserService userService;
     private final ReservationService reservationService;
-    private final ProductFormConverter converter;
+    private final ProductDtoConverter converter;
 
-//	UserRegistrationFormConverter userRegistrationFormConverter=new UserRegistrationFormConverter();
-
-
-    /** 商品情報,ユーザー情報,予約情報の一覧を表示 */
-    @GetMapping("/manage")
+    /**
+     * 商品情報,ユーザー情報,予約情報の一覧を表示
+     * @param model products:ProductDto, users, reservation
+     * @return view: manage.html
+     */
+    @GetMapping("/takeout/manage")
     public String showList(Model model) {
-        //商品情報
-        List<ProductForm> list = converter.convertToForm(productService.getAllProducts());
-        //表示用「Model」への格納
-        model.addAttribute("products" , list);
+        //
+        model.addAttribute("products" , converter.convertToDtoList(productService.getAllProducts()));
 
-        // ユーザー情報
+        model.addAttribute("users", userService.findUserWithAuthorityKindOne());
 
-
-        //予約情報
-//		List<Reservation> rlist=reservationService.getReservationAll();
-        List<ReservationProductDto> rlist2 = reservationService.getReservationProductDtoAll();
-        //表示用「Model」への格納
-//		model.addAttribute("reservations", rlist);
-        model.addAttribute("reservations2", rlist2);
+        model.addAttribute("reservations", reservationService.getReservationProductDtoAll());
 
         return "/manage";
-
     }
-
 }

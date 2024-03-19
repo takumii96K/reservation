@@ -8,6 +8,7 @@ import org.example.reservation.service.spec.ShoppingCartService;
 import org.example.reservation.session.Cart;
 import org.example.reservation.session.CartItem;
 import org.example.reservation.session.CartSession;
+import org.example.reservation.session.CheckoutRequest;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -70,8 +71,13 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
+    public void checkout(CheckoutRequest request) {
+
+    }
+
+    @Override
     public void submitShopping() {
-        Cart cart =cartSession.getCart();
+        Cart cart = cartSession.getCart();
     }
 
 

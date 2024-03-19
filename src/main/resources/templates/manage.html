@@ -58,7 +58,7 @@
     </thead>
     <tbody>
     <tr th:each="product : ${products}">
-        <td th:text="${product.productId}"></td>
+        <td th:text="*{product.id}"></td>
         <td th:text="${product.productName}"></td>
         <td th:text="${product.productStock}"></td>
 <!--        <td th:text="${product.productPrice}"></td>-->
@@ -77,15 +77,15 @@
         <th>購入した個数</th>
         <th>購入日時</th>
     </tr>
-<!--    <tbody>-->
-<!--    <tr th:each="user : ${users}">-->
-<!--        <td th:text="${user.userId}"></td>-->
-<!--        <td th:text="${user.userName}"></td>-->
+    <tbody>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.userId}"></td>
+        <td th:text="${user.userName}"></td>
 <!--        <td th:text="${user.productId}"></td>-->
 <!--        <td th:text="${user.purchaseQuantity}"></td>-->
 <!--        <td th:text="${user.purchaseDateTime}"></td>-->
-<!--    </tr>-->
-<!--    </tbody>-->
+   </tr>
+       </tbody>
 </table>
 
 <h2>予約情報</h2>

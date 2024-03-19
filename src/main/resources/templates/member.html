@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>メンバー紹介</title>
+<link rel="stylesheet" type="text/css" href="/style.css">
+<link rel="stylesheet" href ="https://cdn.skypack.dev/sanitize.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+<style>
+		
+	/* ▽▽▽ メンバープロフィール ▽▽▽ */
+	.profile-group {
+    	display: flex;
+    	flex-wrap: wrap;
+    	justify-content: center; /* 中央揃え */
+    	gap: 20px; /* プロフィール間の間隔 */
+   		margin: 10px 10% 30px 10%;
+	}
+
+	.profile {
+    	background: #FFF;
+    	width: calc(50% - 10px); /* 2列にするために50%に設定し、間隔を考慮して適宜調整 */
+    	padding:50px;
+    	border: 1px solid #1a1a1a;
+    	text-align: center; /* 中央揃え */
+	}
+
+	.profile__img {
+    	display: block;
+    	width: 100px; /* 画像の幅 */
+    	height: 100px; /* 画像の高さ */
+    	border-radius: 50%; /* 丸い形にする */
+    	object-fit: cover; /* 画像のアスペクト比を維持しつつ枠にフィット */
+    	margin: 0 auto 10px; /* 上下にマージンを追加して中央揃え */
+	}
+
+	.profile__name {
+    	font-weight: bold; /* 太字 */
+    	margin: 0 0 5px; /* 下部のマージンを設定 */
+	}
+
+	.profile__desc {
+    	line-height: 1.6rem;
+    	margin: 0; /* 説明文のマージンをリセット */
+	}
+	
+	/* △△△ メンバープロフィール △△△ */
+	
+</style>
+</head>
+<body>
+	
+		
+	<!--固定ヘッダーフラグメントの挿入 -->
+    <div th:replace="layout :: header"></div>
+    
+    
+    <!-- ▽▽▽ メインページ ▽▽▽ -->
+    <!-- 見出し -->
+	<h1 class="midashi">Member</h1>
+	
+    <main class="wrap">
+		
+	<!-- メンバープロフィール -->
+	<!-- バックエンド2人 -->
+	<div class="profile-group">
+		<div class="profile">
+			<img class="profile__img" src="https://1.bp.blogspot.com/-tVeC6En4e_E/X96mhDTzJNI/AAAAAAABdBo/jlD_jvZvMuk3qUcNjA_XORrA4w3lhPkdQCNcBGAsYHQ/s400/onepiece01_luffy.png">
+			<div class="profile__name">Kawahara Takumi</div>
+			<div class="profile__desc">リーダー</div>
+		</div>
+		<div class="profile">
+			<img class="profile__img" src="https://1.bp.blogspot.com/-LZL7jGWmL3Q/X-FcwoOnE2I/AAAAAAABdEs/qUrY1ClrQrMukkdaEnZK8-Bdob7mOdmQgCNcBGAsYHQ/s400/onepiece13_crocodile.png">
+			<div class="profile__name">Mizokami Hiroyuki</div>
+			<div class="profile__desc">ここに簡単な自己紹介が入ります。</div>
+		</div>
+	</div>
+	
+	<!-- フロントエンド4人 -->
+	<div class="profile-group">
+		
+		<div class="profile">
+			<img class="profile__img" src="https://1.bp.blogspot.com/-VACf4WfKNOk/X-Fcx7DWraI/AAAAAAABdE8/KT0UudaIHrMtbFvjC02yLuPLNBZurGYpQCNcBGAsYHQ/s400/onepiece17_doflamingo.png">
+			<div class="profile__name">Yamamoto Shiho</div>
+			<div class="profile__desc">ここに簡単な自己紹介が入ります。</div>
+		</div>
+		
+		<div class="profile">
+			<img class="profile__img" src="https://1.bp.blogspot.com/--9Rl2O4BBN0/X-Fct8K5mqI/AAAAAAABdEI/yLOziAqJO34fwn73AolVP0e42A2h-ql1QCNcBGAsYHQ/s400/onepiece06_chopper.png">
+			<div class="profile__name">Hayashida Mika</div>
+			<div class="profile__desc">ここに簡単な自己紹介が入ります。</div>
+		</div>
+	</div>
+	
+	<div class="profile-group">
+		<div class="profile">
+			<img class="profile__img" src="https://i.pinimg.com/236x/bd/b3/51/bdb35178e39091b53a8cdae16afa1e03.jpg">
+			<div class="profile__name">Suzuki Manami</div>
+			<div class="profile__desc">ここに簡単な自己紹介が入ります。</div>
+		</div>
+		
+		<div class="profile">
+			<img class="profile__img" src="https://1.bp.blogspot.com/-vIXZ3_KMn9g/X-FcvVKPQSI/AAAAAAABdEc/i8oJKU0UDMM2uQfzemn6oOmJLICo4VcVgCNcBGAsYHQ/s200/onepiece10_jinbe.png">
+			<div class="profile__name">Fujiwara Miu</div>
+			<div class="profile__desc">ここに簡単な自己紹介が入ります。</div>
+		</div>
+	</div>
+
+	</main>
+	<!-- △△△ メインページ △△△ -->
+	
+	<!--固定フッターフラグメントの挿入 -->
+	<div th:replace="layout :: footer"></div>
+	
+	
+	
+
+</body>
+</html>

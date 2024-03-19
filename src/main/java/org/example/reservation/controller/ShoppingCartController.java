@@ -1,8 +1,9 @@
 package org.example.reservation.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.example.reservation.form.CartItemRequest;
+import org.example.reservation.session.CartItemRequest;
 import org.example.reservation.service.spec.ShoppingCartService;
+import org.example.reservation.session.CheckoutRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +28,22 @@ public class ShoppingCartController {
             return ResponseEntity.ok().build(); //true
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("商品をカートに追加する際にエラーが発生しました: " + e.getMessage());
+        }
+    }
+    @PostMapping("/checkout")
+    public ResponseEntity<?> processCheckout(@RequestBody CheckoutRequest request) {
+        System.out.println(request);
+        service.checkout(request);
+        // 決済処理のロジックをここに実装します。
+        // 例えば、カートの情報を取得し、決済を行い、結果を返すなど。
+        try {
+            // 決済サービスを呼び出す
+            // checkoutService.process(checkoutRequest);
+            // 決済が成功した場合
+            return ResponseEntity.ok().body("決済が完了しました。");
+        } catch (Exception e) {
+            // エラーハンドリング
+            return ResponseEntity.badRequest().body("決済処理に失敗しました。");
         }
     }
 

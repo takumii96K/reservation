@@ -1,6 +1,8 @@
 package org.example.reservation.service.userdetails;
 
-import lombok.RequiredArgsConstructor;
+import java.util.Collections;
+import java.util.List;
+
 import org.example.reservation.entity.converter.UserRegistrationFormConverter;
 import org.example.reservation.entity.projection.UserLoginProjection;
 import org.example.reservation.exception.DuplicateUserNameException;
@@ -15,8 +17,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.List;
+import lombok.RequiredArgsConstructor;
 
 /**
  * UserDetailサービス
@@ -62,8 +63,8 @@ public class LoginUserDetailsService implements UserDetailsService, UserService 
     public void registerUser(UserRegistrationForm form) {
 
         //重複チェック
-        if(repository.existsByUserName(form.getName())){
-            throw new DuplicateUserNameException("ユーザーID " + form.getName() + " が重複しています");
+        if(repository.existsByUserName(form.getUserId())){
+            throw new DuplicateUserNameException("ユーザーID " + form.getUserId() + " が重複しています");
         }
         //登録
         repository.save(converter.convertToEntity(form));
@@ -84,12 +85,18 @@ public class LoginUserDetailsService implements UserDetailsService, UserService 
     @Override
     public void updateUser(UserRegistrationForm form) {
         //重複チェック
-        if(repository.existsByUserName(form.getName())){
-            throw new DuplicateUserNameException("ユーザーID " + form.getName() + " が重複しています");
+        if(repository.existsByUserName(form.getUserId())){
+            throw new DuplicateUserNameException("ユーザーID " + form.getUserId() + " が重複しています");
         }
         repository.save(converter.convertToEntity(form)); //false
 
         //登録
         repository.save(converter.convertToEntity(form));
     }
+
+    @Override
+    public List<org.example.reservation.entity.User> findUserWithAuthorityKindOne() {
+        return repository.getUserWithAuthorityKindOne();
+    }
+
 }

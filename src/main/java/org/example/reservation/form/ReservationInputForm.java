@@ -1,14 +1,8 @@
 package org.example.reservation.form;
 
 import java.time.LocalDateTime;
-
-import org.hibernate.validator.constraints.Length;
+import jakarta.validation.constraints.*;
 import org.springframework.format.annotation.DateTimeFormat;
-
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Past;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReservationForm {
+public class ReservationInputForm {
 	
 	//商品ID
 private Integer id;
@@ -28,7 +22,7 @@ private Integer id;
 private String name;
 
 @NotBlank
-@Length(min=10, max=10)
+@Pattern(regexp="\\d{10}", message="電話番号は10桁の数字でなければなりません")
 private String phone;
 
 @NotBlank

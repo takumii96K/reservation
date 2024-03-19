@@ -29,12 +29,9 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
         if (roles.contains("ROLE_ADMIN")) {
             System.out.println("logging-admin");
             response.sendRedirect(request.getContextPath() + "/admin/manage");
-        } else if (roles.contains("ROLE_USER")) {
-            System.out.println("logging-user");
-            response.sendRedirect(request.getContextPath() + "/user/takeout");
         } else {
             System.out.println("logging-else");
-            response.sendRedirect(request.getContextPath() + "/takeout/product"); // デフォルトページ(商品選択画面)
+            response.sendRedirect(request.getContextPath() + "/takeout/top"); // デフォルトページ(top)
         }
 
     }

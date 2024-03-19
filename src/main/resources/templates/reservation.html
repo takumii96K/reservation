@@ -3,16 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>予約確認</title>
+    <link rel="stylesheet" type="text/css" href="/style.css">
+	<link rel="stylesheet" href ="https://cdn.skypack.dev/sanitize.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+<style>
+	
+</style>
 </head>
 <body>
-<h2>注文内容</h2>
-<!--<div th:object="${selectedProducts}">-->
-<!--    <div th:each="item : ${selectedProducts}">-->
-<!--        <p>商品: <span th:text="${item.productName}"></span></p>-->
-<!--        <p>数量: <span th:text="${item.quantity}"></span></p>-->
-<!--        <p>合計金額: <span th:text="${totalAmount}"></span></p>-->
-<!--    </div>-->
-<!--</div>-->
+		
+	<!--固定ヘッダーフラグメントの挿入 -->
+    <div th:replace="layout :: header"></div>
+    
+    <main>
+    <!-- 見出し -->
+    <h1>注文内容</h1>
 
 <h2>注文者情報</h2>
 <form th:action="@{/takeout/product/completeOrder}" th:object="${reservationForm}" method="post">
