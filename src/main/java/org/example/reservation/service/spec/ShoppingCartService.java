@@ -14,5 +14,5 @@ public interface ShoppingCartService {
     Map<Long, CartItem> lookInCart();
     void checkout(CheckoutRequest request);
 
-    void submitShopping();
+    void submitShopping(CheckoutRequest request);
 }

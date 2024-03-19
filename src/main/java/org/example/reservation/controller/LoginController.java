@@ -23,15 +23,11 @@ public class LoginController {
     /**
      * GET:ログイン画面遷移
      * @param model failureMessage
-     * @param error String
+
      * @return view: /user/login.html
      */
     @GetMapping("/login")
-    public String loginForm(Model model, @RequestParam(value = "failure", required = false) String error,RedirectAttributes redirectAttributes) {
-        if (error != null) {
-            model.addAttribute("failureMessage", "IDもしくはパスワードが違います");
-        }
-        redirectAttributes.addFlashAttribute("registrationComplete", "登録が完了しました");
+    public String loginForm(@RequestParam(value = "failure", required = false) Model model) {
         return "/user/login";
     }
 
@@ -50,16 +46,17 @@ public class LoginController {
      * POST:ユーザー登録
      * @param form UserRegistrationForm
      * @param result BindingResult
-     * @param model error
      * @return view:/user/register.html redirect:/user/login
      */
     @PostMapping("/register")
     public String submitForm(@Validated @ModelAttribute("inputRegister") UserRegistrationForm form, BindingResult result,
-                             Model model, RedirectAttributes redirectAttributes) {
+                             RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
+
             return "redirect:/user/register";
         }
-        redirectAttributes.addFlashAttribute("registrationComplete", "登録が完了しました");
+        service.registerUser(form);
+        redirectAttributes.addFlashAttribute("registrationComplete", "登録が完了しました。");
         return "redirect:/user/login";
     }
 

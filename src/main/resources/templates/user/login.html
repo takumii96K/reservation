@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title>ログイン</title>
+	<title>ログイン</title>
     <link rel="stylesheet" type="text/css" href="/style.css">
 	<link rel="stylesheet" href ="https://cdn.skypack.dev/sanitize.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
@@ -13,12 +13,14 @@
 <body>
 	
 	<!--固定ヘッダーフラグメントの挿入 -->
-    <div th:replace="layout :: header"></div>
-    
+    <div th:insert="fragments/layout :: header"></div>
+
     <main class="wrap">
 		<h1 class="midashi">ログイン</h1>
-			
-	<div th:if="${failureMessage != null}" th:text="${failureMessage}"></div>
+		<div th:if="${registrationComplete}">
+			<p th:text="${registrationComplete}"></p>
+		</div>
+<!--	<div th:if="${failureMessage != null}" th:text="${failureMessage}"></div>-->
 	<form th:action="@{/login}" method="post">
 	    <table>
 	        <tr>
@@ -49,7 +51,7 @@
 	</main>
 	
 	<!--固定フッターフラグメントの挿入 -->
-	<div th:replace="layout :: footer"></div>
+	<div th:insert="fragments/layout :: footer"></div>
 
 </body>
 </html>

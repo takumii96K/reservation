@@ -46,6 +46,6 @@ public class ReservationServiceImpl implements ReservationService {
 	 */
 	@Override
 	public List<ReservationProductDto> getReservationProductDtoAll() {
-		return repository.findReservationDetails();
+		return repository.findAllReservationsWithProducts();
 	}
 }

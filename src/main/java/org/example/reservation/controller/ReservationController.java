@@ -1,8 +1,12 @@
 package org.example.reservation.controller;
 
 import java.time.LocalDateTime;
+
+import jakarta.servlet.http.HttpSession;
 import org.example.reservation.form.ReservationInputForm;
 import org.example.reservation.service.spec.ReservationService;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -74,6 +78,14 @@ public class ReservationController {
 		reservationService.registerReservation(form);
 
 		return "/confirmation";
+	}
+
+	@PostMapping("/reservation/submit")
+	public String submitReservation(@ModelAttribute ReservationInputForm form, HttpSession session) {
+		// 予約者情報をセッションに保存
+		session.setAttribute("reservation", form);
+		// 決済画面にリダイレクト
+		return "redirect:/checkout";
 	}
 
 }

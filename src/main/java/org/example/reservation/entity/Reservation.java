@@ -3,15 +3,7 @@ package org.example.reservation.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -44,15 +36,15 @@ public class Reservation {
 	//@NotNull
 	@Column(name="reservation_email")
 	private String email;			//メアド
-	
-	
 
-	
-	@ManyToMany
-	@JoinTable(
-			name = "reservation_product",
-			joinColumns = @JoinColumn(name = "reservation_id"),
-			inverseJoinColumns = @JoinColumn(name = "product_id")
-	)
-	private List<Product> products;
+	@OneToMany(mappedBy = "reservation")
+	private List<Order> orders;
+
+	@Column(name = "status")
+	private String status;  // 予約の状態（"未確定", "確定", "キャンセル" など）
+
+	// ユーザー情報はオプショナルとします
+	@ManyToOne
+	@JoinColumn(name = "user_id", nullable = true)
+	private User user;
 }

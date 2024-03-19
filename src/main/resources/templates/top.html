@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
-<head>
+<head >
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>トップページ</title>
@@ -52,19 +52,19 @@
     } 
     
     
-</style>    
+</style>
 </head>
 <body>
 	
 	<!--固定ヘッダーフラグメントの挿入 -->
-    <div th:replace="layout :: header"></div>
+    <div th:replace="fragments/layout :: header"></div>
     
     <main class="wrap">
 		<h1 class="midashi">Wellcom!</h1>
 	</main>
 	
 	<!--固定フッターフラグメントの挿入 -->
-	<div th:replace="layout :: footer"></div>
+	<div th:replace="fragments/layout :: footer"></div>
 
 </body>
 </html>

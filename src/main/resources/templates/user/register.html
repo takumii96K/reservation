@@ -13,19 +13,20 @@
 <body>
 	
 	<!--固定ヘッダーフラグメントの挿入 -->
-    <div th:replace="layout :: header"></div>
+    <div th:replace="fragments/layout :: header"></div>
     
     <main class="wrap">
 		<h1 class="midashi">ユーザー登録フォーム</h1>
-	
+
 		<form th:action="@{/register}" th:object="${inputRegisterForm}" method="post">
 	    <div>
 	        <label for="username">ユーザー名:</label>
-	        <input type="text" id="username" th:field="*{name}" required>
+	        <input type="text" id="username" th:field="*{userName}" required>
 	    </div>
 	    <div>
 	        <label for="password">パスワード:</label>
 	        <input type="password" id="password" th:field="*{password}" required>
+
 	    </div>
 	    <div>
 	        <label for="phone">電話番号:</label>
@@ -39,7 +40,7 @@
 	</main>
 	
 	<!--固定フッターフラグメントの挿入 -->
-	<div th:replace="layout :: footer"></div>
+	<div th:replace="fragments/layout :: footer"></div>
 
 
 	

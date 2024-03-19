@@ -2,6 +2,7 @@ package org.example.reservation.entity.projection;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
@@ -10,11 +11,14 @@ import java.time.LocalDateTime;
  */
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class ReservationProductDto {
     private Long reservationId;
     private Long productId;
     private String productName;
+    private Integer quantity;
     private LocalDateTime reservationTime;
     private String customerName;
     private String customerTel;
+    private String email;
 }

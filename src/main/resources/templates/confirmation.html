@@ -14,21 +14,17 @@
 <body>
 	
 	<!--固定ヘッダーフラグメントの挿入 -->
-    <div th:replace="layout :: header"></div>
+    <div th:replace="fragments/layout :: header"></div>
     
     <main class="wrap">
 		<h1 class="midashi">「テイクアウト予約」アプリ：予約確定画面</h1>
 		
 		<h3>ご予約が確定いたしました！ありがとうございます！</h3>
-	<form method="POST" th:action="@{takeout/product/resercation/confirm}
-	"th:object="${confirmForm}">
-	<br>
-    <a href="#" th:href="@{/takeout/product/resercation/product}">メニュー画面に戻る</a><br>
-
+    	<a th:href="@{/takeout/product/resercation/product}">メニュー画面に戻る</a><br>
 	</main>
 	
 	<!--固定フッターフラグメントの挿入 -->
-	<div th:replace="layout :: footer"></div>
+	<div th:replace="fragments/layout :: footer"></div>
 
 
 </body>

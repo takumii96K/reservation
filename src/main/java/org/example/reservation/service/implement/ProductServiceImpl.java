@@ -35,7 +35,7 @@ public class ProductServiceImpl implements ProductService {
 		//商品の詳細を更新
 		product.setProductName(productDetails.getProductName());
 		product.setProductPrice(productDetails.getProductPrice());
-		product.setProductStock(productDetails.getProductStock());
+		product.setStock(productDetails.getStock());
 		
 		// 更新された商品をデータベースに保存
 		return repository.save(product);

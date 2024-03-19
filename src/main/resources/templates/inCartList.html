@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6" lang="ja">
 <head>
     <meta charset="UTF-8">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -54,82 +54,46 @@
 <body>
 
 	<!--固定ヘッダーフラグメントの挿入 -->
-    <div th:replace="layout :: header"></div>
+    <div th:replace="fragments/layout :: header"></div>
 
     <!-- 見出し -->
     <h1 class="midashi">Shopping Cart Items</h1>
-<div>
-    <table>
-        <thead>
-        <tr>
-            <th>商品名</th>
-            <th>価格</th>
-            <th>個数</th>
-            <th>小計</th>
-        </tr>
-        </thead>
+    <div>
+        <table>
+            <thead>
+            <tr>
+                <th>商品名</th>
+                <th>価格</th>
+                <th>個数</th>
+                <th>小計</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${cartItems}" class="cart-item"
+                th:data-product-id="${item.value.itemId}"
+                th:data-item-name="${item.value.itemName}"
+                th:data-price="${item.value.price}"
+                th:data-quantity="${item.value.quantity}">
+                <td th:text="${item.value.itemName}"></td>
+                <td th:text="${item.value.price}"></td>
+                <td th:text="${item.value.quantity}"></td>
+                <td th:text="${item.value.price * item.value.quantity}"></td>
+                <td><button class="update-item" th:data-item-id="${item.value.itemId}">更新</button></td>
+                <td><button class="delete-item" th:data-item-id="${item.value.itemId}">削除</button></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--決済ボタン-->
+    <button id="checkoutButton">決済する</button>
 
-        <tbody>
-        <tr th:each="item : ${cartItem}" th:id="${'item_' + item.value.itemId}" class="cart-item">
-            <td th:text="${item.value.itemName}"></td>
-            <td th:text="${item.value.price}"></td>
-            <td th:text="${item.value.quantity}"></td>
-            <td th:text="${item.value.price * item.value.quantity}"></td>
-            <td><input type="hidden" th:value="${item.value.itemId}" name="itemId"/></td>
-        </tr>
-        </tbody>
-    </table>
-</div>
 
-<div th:object="${total}">
-    <p>total: <span th:text="${total}"></span></p>
-</div>
 
-<!--決済ボタン-->
-<div>
-    <button id="#checkoutButton">決済する</button>
-</div>
 
     <!--固定フッターフラグメントの挿入 -->
-    <div th:replace="layout :: footer"></div>
+    <div th:replace="fragments/layout :: footer"></div>
 
-<script>
-    $(document).ready(function() {
-        $('checkoutButton').click(function() {
-            let csrfToken = $('meta[name="_csrf"]').attr('content'); //csrf
-            let csrfHeaderName = $('meta[name="_csrf_header"]').attr('content');
-
-            // let userId = $('#userId').val(); // ユーザーIDを取得
-            let cartItems = [];
-            $('.cart-item').each(function() {
-                let item = {
-                    itemId: $(this).find('input[name="itemId"]').val(),
-                    itemName: $(this).find('td:first').text(), // 商品名をテキストとして取得
-                    price: parseFloat($(this).find('td:eq(1)').text()), // 価格をテキストとして取得し、数値に変換
-                    quantity: parseInt($(this).find('td:eq(2)').text()), // 数量をテキストとして取得し、整数に変換
-                };
-                cartItems.push(item);
-            });
-
-            $.ajax({
-                url: '/cart/checkout',
-                type: 'POST',
-                contentType: 'application/json',
-                headers: {
-                    [csrfHeaderName]: csrfToken
-                },
-                data: JSON.stringify({items: cartItems}),
-                success: function() {
-                    alert('決済が完了しました。');
-                    window.location.href = '/takeout/top'
-                },
-                error: function() {
-                    alert('決済処理に失敗しました。');
-                }
-            });
-        });
-    });
-</script>
-
+<!--    チェックアウト（決済）のjsファイル-->
+    <script th:src="@{/js/checkout.js}"></script>
 </body>
 </html>

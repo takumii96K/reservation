@@ -12,8 +12,8 @@ import org.springframework.stereotype.Repository;
 public interface JpaReservationRepository extends JpaRepository<Reservation, Long>{
 
     @Query("SELECT new org.example.reservation.entity.projection.ReservationProductDto" +
-            "(r.reservationId, p.productId, p.productName, r.dateTime, r.customerName, r.tel) " +
-            "FROM Reservation r " +
-            "JOIN r.products p")
-    List<ReservationProductDto> findReservationDetails();
+            "(rp.reservation.reservationId, rp.product.productId, rp.product.productName, rp.quantity, " +
+             "rp.reservation.dateTime, rp.reservation.customerName, rp.reservation.tel, rp.reservation.email) " +
+            "FROM Order rp")
+    List<ReservationProductDto> findAllReservationsWithProducts();
 }

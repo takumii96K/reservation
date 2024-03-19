@@ -30,9 +30,15 @@ public class ShoppingCartController {
             return ResponseEntity.badRequest().body("商品をカートに追加する際にエラーが発生しました: " + e.getMessage());
         }
     }
+
+    /**
+     *
+     * @param request
+     * @return
+     */
     @PostMapping("/checkout")
-    public ResponseEntity<?> processCheckout(@RequestBody CheckoutRequest request) {
-        System.out.println(request);
+    public ResponseEntity<?> checkout(@RequestBody CheckoutRequest request) {
+        System.out.println("決済を始めます");
         service.checkout(request);
         // 決済処理のロジックをここに実装します。
         // 例えば、カートの情報を取得し、決済を行い、結果を返すなど。
@@ -40,12 +46,15 @@ public class ShoppingCartController {
             // 決済サービスを呼び出す
             // checkoutService.process(checkoutRequest);
             // 決済が成功した場合
-            return ResponseEntity.ok().body("決済が完了しました。");
+            return ResponseEntity.ok().body("決済はまだ完了していません。");
         } catch (Exception e) {
             // エラーハンドリング
             return ResponseEntity.badRequest().body("決済処理に失敗しました。");
         }
     }
+
+
+
 
 //}
 

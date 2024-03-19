@@ -11,12 +11,11 @@ import org.springframework.validation.annotation.Validated;
 public class UserRegistrationForm {
 
     @NotBlank
-    private String userId;
+    private String userName;
 
     @NotBlank
     private String password;
 
     @NotBlank
-    @Pattern(regexp="\\d{10}", message="電話番号は10桁の数字でなければなりません")
     private String tel;
 }

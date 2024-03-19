@@ -34,8 +34,8 @@ public class Product {
 
 	@NotNull
 	@Column(name = "product_stock")
-	private int productStock;	//在庫数
+	private int stock;	//在庫数
 
-	@ManyToMany(mappedBy = "products")
-	private List<Reservation> reservations;
+	@OneToMany(mappedBy = "product")
+	private List<Order> orders;
 }

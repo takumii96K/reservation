@@ -20,6 +20,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http
@@ -27,8 +28,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers(HttpMethod.POST, "/admin/**").hasAnyAuthority("ROLE_ADMIN")
                         .requestMatchers(HttpMethod.POST, "/cart/add").permitAll()
-                        .requestMatchers("/cart/checkout", "/user/profile").authenticated()
                         .requestMatchers("/user/**").hasAnyAuthority("ROLE_USER")
+                        .requestMatchers("/user/profile").authenticated()
+                        .requestMatchers("/cart/checkout").permitAll()
                         .anyRequest().permitAll())
                 //ログイン画面の設定
                 .formLogin(login -> login

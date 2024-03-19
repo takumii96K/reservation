@@ -1,26 +1,28 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta id="csrfToken" name="_csrf" th:content="${_csrf.token}"/>
+    <meta id="csrfHeaderName" name="_csrf_header" th:content="${_csrf.headerName}"/>
 <title>商品選択画面</title>
     <link rel="stylesheet" type="text/css" href="/style.css">
     <link rel="stylesheet" href ="https://cdn.skypack.dev/sanitize.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <style>
-	
+
 	/* ▽▽▽　メニュー　▽▽▽ */
         h3 {
             margin: 0;
             padding: 10px 0;
         }
-	
+
 		main{
 			margin-left: 10%;
 			margin-right: 10%;
 		}
-		
+
 	    .menu-container {
             display: flex;
             flex-wrap: wrap;
@@ -28,7 +30,7 @@
             margin-top: 20px; /* ヘッダーの高さに合わせて調整 */
             margin-bottom: 70px;
         }
-        
+
         .product-card{
 			width: calc(33.33% - 40px); /* カードの幅 */
     		/*margin: 30px; /* カード間の余白 */
@@ -70,9 +72,9 @@
             margin-top: 5px;
             margin-bottom: 15px; /* ボタンとの間隔 */
         }
-        
+
     /* △△△ メニュー △△△ */
-    
+
 	/* ▽▽▽　次ページボタン　▽▽▽ */
 	.button-36 {
 	    display: flex;
@@ -98,12 +100,12 @@
 	    color: chocolate; /* 通常時の文字色を指定 */
 	    transition: 0.3s;
 	}
-	
+
 	.button-36:hover a {
 	    color: #fff; /* ホバー時の文字色を白に設定 */
 	    letter-spacing: 5px; /* 文字間隔を2ピクセルに設定 */
-	}	
-	
+	}
+
 	.button-36::after {
 	    transform: rotate(45deg);
 	    width: 5px;
@@ -126,17 +128,17 @@
 	 }
 	 
 	 /* △△△ 次ページボタン △△△ */
-	 
+
     </style>
 </head>
 <body>
 	
 	<!--固定ヘッダーフラグメントの挿入 -->
-    <div th:replace="layout :: header"></div>
+    <div th:replace="fragments/layout :: header"></div>
     
 	<!-- 見出し -->
     <h1 class="midashi">Menu</h1>
-    
+
 	<main class="wrap">
     <div class="main">
         <div class="main_content">
@@ -160,69 +162,24 @@
             </div>
         </div>
     </div>
-    	
+
         <div id="message-container">
             <p id="message"></p>
         </div>
-		
-    	<!-- ▽▽▽ 次ページに飛ぶボタン ▽▽▽ -->
-<!--	<div class="button019">-->
-<!--		<a class="sample_button11" href="reservation.html">注文確認(ユーザー情報入力)</a>-->
-<!--	</div>-->
+
+        <!--カートへ移動ボタン-->
     	<button class="button-36">
-		<a href="/takeout/product/reservation" >注文確認<br>(ユーザー情報入力) </a>
+		<a href="/inCart/list" >カートを確認<br></a>
 	</button>  
 		
 		</main>
-	</main>
 
-
-
-
-	
 	
 	<!--固定フッターフラグメントの挿入 -->
-	<div th:replace="layout :: footer"></div>
+	<div th:replace="fragments/layout :: footer"></div>
 
 	
 
-<script>
-    function addToCart(element) {
-        let productId = element.closest('.product-details').querySelector('input[name="productId"]').value;
-        let quantity = element.closest('.product-details').querySelector('.quantity-input').value;
-        let csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
-        let csrfHeaderName = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
-
-        $.ajax({
-            url: '/cart/add',
-            type: 'POST',
-            contentType: 'application/json',
-            headers: {
-                'X-CSRF-TOKEN': csrfToken
-            },
-            data: JSON.stringify({
-                productId: productId,
-                quantity: quantity
-            }),
-            success: function() {
-                displayMessage('商品がカートに追加されました!', 'success');
-            },
-            error: function() {
-                displayMessage('商品をカートに追加する際にエラーが発生しました。もう一度お試しください。', 'error');
-            }
-        });
-    }
-
-    function displayMessage(text, type) {
-        let messageContainer = document.getElementById('message-container');
-        let message = document.getElementById('message');
-        messageContainer.style.display = 'block';
-        messageContainer.style.backgroundColor = type === 'success' ? '#4CAF50' : '#f44336';
-        message.textContent = text;
-        setTimeout(function() {
-            messageContainer.style.display = 'none';
-        }, 3000);
-    }
-</script>
+<script th:src="@{/js/addToCart.js}"></script>
 </body>
 </html>

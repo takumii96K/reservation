@@ -10,18 +10,17 @@ import java.util.List;
 
 @Component
 public class ProductDtoConverter{
-
     /**
      * 入力フォームからEntityオブジェクト変換
      * @param form ProductForm
      * @return Product
      */
-    public Product convertToEntity(ProductForm form) {
+    public Product convertToEntityFromForm(Product form) {
         Product product = new Product();
-        form.setName(product.getProductName());
-        form.setImgUrl(form.getImgUrl());
-        form.setPrice(product.getProductPrice());
-        form.setStock(product.getProductStock());
+        form.setProductName(product.getProductName());
+        form.setImageUrl(form.getImageUrl());
+        form.setProductPrice(product.getProductPrice());
+        form.setStock(product.getStock());
         return product;
     }
 
@@ -34,8 +33,16 @@ public class ProductDtoConverter{
         ProductDto dto = new ProductDto();
         dto.setId(entity.getProductId());
         dto.setProductName(entity.getProductName());
-        dto.setProductStock(entity.getProductStock());
+        dto.setStock(entity.getStock());
         return dto;
+    }
+
+    public Product convertToEntity(ProductDto dto){
+        Product product = new Product();
+        product.setProductId(dto.getId());
+        product.setProductName(dto.getProductName());
+        product.setStock(dto.getStock());
+        return product;
     }
 
     /**
@@ -50,7 +57,7 @@ public class ProductDtoConverter{
             ProductDto dto = new ProductDto();
             dto.setId(entity.getProductId());
             dto.setProductName(entity.getProductName());
-            dto.setProductStock(entity.getProductStock());
+            dto.setStock(entity.getStock());
             productDtoList.add(dto);
         }
         return productDtoList;
