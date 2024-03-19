@@ -1,6 +1,7 @@
 package org.example.reservation.controller;
 
 import java.time.LocalDateTime;
+
 import org.example.reservation.form.ReservationForm;
 import org.example.reservation.service.spec.ReservationService;
 import org.springframework.stereotype.Controller;
@@ -35,20 +36,20 @@ public class ReservationController
 	}
 
 	@PostMapping("/confirm")
-	public String showConfirm(@Valid @ModelAttribute("inputReservationForm") ReservationForm rvform,BindingResult bResult,Model model)
+	public String showConfirm(@Valid @ModelAttribute("inputReservationForm") ReservationForm form,BindingResult result,Model model)
 	{
 		// ここでフォームのデータを使用した処理を実行します。
 		// 例えば、予約データをデータベースに保存するなど。
 
 		//エラーがあった場合予約画面にリダイレクト
-		if(bResult.hasErrors())
+		if(result.hasErrors())
 		{
 			return "redirect:/takeout/product/reservation";
 		}
 		else
 		{
 			//setReservationRegisterの戻り値がtrueだった場合
-			if(reservationService.setReservationRegister(rvform))
+			if(reservationService.setReservationRegister(form))
 			{
 				return "/confirmation";//結果表示ページを戻り値として返す
 			}
@@ -69,10 +70,10 @@ public class ReservationController
 
 	//確定画面表示
 	@PostMapping("/completeOrder")
-	public String completeOrderView(ReservationForm rvForm)
+	public String completeOrderView(ReservationForm form)
 	{
 
-		reservationService.setReservationRegister(rvForm);
+		reservationService.setReservationRegister(form);
 
 		return "confirmation";
 
