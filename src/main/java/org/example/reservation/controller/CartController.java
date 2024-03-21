@@ -1,5 +1,6 @@
 package org.example.reservation.controller;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.example.reservation.service.spec.ShoppingCartService;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,6 @@ public class CartController {
     @GetMapping("/list")
     public String InCartPage(Model model){
         model.addAttribute("cartItems", service.lookInCart());
-        model.addAttribute("total", service.calculateTotalPrice());
         return "/inCartList";
     }
 //    @GetMapping("/checkout")

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
 @Component
-public class UserRegistrationFormConverter implements Converter<UserRegistrationForm, User>{
+public class UserRegistrationFormConverter{
 
     private final PasswordEncoder encoder;
     public User convertToEntity(UserRegistrationForm form){

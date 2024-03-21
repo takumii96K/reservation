@@ -2,15 +2,12 @@ package org.example.reservation.controller;
 
 import java.util.Objects;
 
-import org.example.reservation.entity.projection.ProductDto;
+import org.example.reservation.entity.dto.ProductDto;
 import org.example.reservation.service.spec.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 

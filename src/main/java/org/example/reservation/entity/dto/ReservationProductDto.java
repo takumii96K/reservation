@@ -1,4 +1,4 @@
-package org.example.reservation.entity.projection;
+package org.example.reservation.entity.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

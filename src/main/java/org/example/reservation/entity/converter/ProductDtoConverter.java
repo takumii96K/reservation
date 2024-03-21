@@ -1,8 +1,7 @@
 package org.example.reservation.entity.converter;
 
 import org.example.reservation.entity.Product;
-import org.example.reservation.form.ProductForm;
-import org.example.reservation.entity.projection.ProductDto;
+import org.example.reservation.entity.dto.ProductDto;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -62,4 +61,5 @@ public class ProductDtoConverter{
         }
         return productDtoList;
     }
+
 }

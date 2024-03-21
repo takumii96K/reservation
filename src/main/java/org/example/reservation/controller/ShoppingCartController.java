@@ -1,11 +1,15 @@
 package org.example.reservation.controller;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.example.reservation.session.CartItemRequest;
 import org.example.reservation.service.spec.ShoppingCartService;
+import org.example.reservation.session.CartSession;
 import org.example.reservation.session.CheckoutRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class ShoppingCartController {
 
     private final ShoppingCartService service;
+    private final CartSession session;
 
     /**
      * カートに追加ボタン
@@ -21,37 +26,23 @@ public class ShoppingCartController {
      */
     @PostMapping("/add")
     public ResponseEntity<?> addToCart(@RequestBody CartItemRequest cartItemRequest) {
-        System.out.println("メソッド起動");
         try {
-            service.addItemToCart(cartItemRequest.getProductId(), cartItemRequest.getQuantity());
-            System.out.println("成功");
+            service.addItemToCart(cartItemRequest); //カートに追加処理
             return ResponseEntity.ok().build(); //true
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("商品をカートに追加する際にエラーが発生しました: " + e.getMessage());
         }
     }
 
-    /**
-     *
-     * @param request
-     * @return
-     */
     @PostMapping("/checkout")
-    public ResponseEntity<?> checkout(@RequestBody CheckoutRequest request) {
+    public ResponseEntity<?> checkout(HttpSession httpsession , @RequestBody CheckoutRequest request) {
         System.out.println("決済を始めます");
-        service.checkout(request);
-        // 決済処理のロジックをここに実装します。
-        // 例えば、カートの情報を取得し、決済を行い、結果を返すなど。
-        try {
-            // 決済サービスを呼び出す
-            // checkoutService.process(checkoutRequest);
-            // 決済が成功した場合
-            return ResponseEntity.ok().body("決済はまだ完了していません。");
-        } catch (Exception e) {
-            // エラーハンドリング
-            return ResponseEntity.badRequest().body("決済処理に失敗しました。");
-        }
+        httpsession.setAttribute("request", request);
+        httpsession.setAttribute("total", session.getCart().calculateTotalAmount());
+        return ResponseEntity.ok(Map.of("redirectUrl", "/takeout/product/reservation"));
     }
+
+
 
 
 

@@ -45,6 +45,7 @@ $(document).ready(function() {
     });
 });
 
+
 function updateCartItem(itemId, quantity) {
     const csrfToken = $('meta[name="_csrf"]').attr('content');
     const csrfHeaderName = $('meta[name="_csrf_header"]').attr('content');

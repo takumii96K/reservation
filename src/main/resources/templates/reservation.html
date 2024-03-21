@@ -16,8 +16,32 @@
     <div th:insert="fragments/layout :: header"></div>
     
     <main>
+
     <!-- 見出し -->
     <h1>注文内容</h1>
+        <div th:if="${session.request.cartItemRequests != null}">
+        <div>
+            <table>
+                <thead>
+                <tr>
+                    <th>商品ID</th>
+                    <th>個数</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="item : ${session.request.cartItemRequests}">
+                    <td th:text="${item.itemName}"></td>
+                    <td th:text="${item.quantity}"></td>
+                    <td th:text="${item.quantity * item.price}"></td>
+                </tr>
+                </tbody>
+            </table>
+            <h3>合計:
+                <span th:text="${session.total}"></span>
+            </h3>
+        </div>
+        </div>
+
 
 <h2>注文者情報</h2>
 <form th:action="@{/takeout/product/completeOrder}" th:object="${reservationForm}" method="post">

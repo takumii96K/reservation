@@ -38,4 +38,13 @@ public class Product {
 
 	@OneToMany(mappedBy = "product")
 	private List<Order> orders;
+
+	Product(Long productId, String productName, String imageUrl, BigDecimal productPrice, int stock){
+		setProductId(productId);
+		setProductName(productName);
+		setImageUrl(imageUrl);
+		setProductPrice(productPrice);
+		setStock(stock);
+	}
+
 }

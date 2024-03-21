@@ -150,8 +150,8 @@
                         <img th:src="${product.imageUrl}" th:alt="${product.productName}" />
                     </div>
                     <div class="product-details">
-                        <span th:text="${product.productName}">Product Name</span> -
-                        <span th:text="${product.productPrice}">Price</span>
+                        <span class="productName-span" th:text="${product.productName}">Product Name</span> -
+                        <span class="productPrice-span" th:text="${product.productPrice}">Price</span>
                         <label>
                             <input type="number" name="quantity" min="1" value="1" class="quantity-input" />
                         </label>

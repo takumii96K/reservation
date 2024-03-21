@@ -1,18 +1,22 @@
 function addToCart(element) {
     let productId = element.closest('.product-details').querySelector('input[name="productId"]').value;
     let quantity = element.closest('.product-details').querySelector('.quantity-input').value;
-    let csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
-    let csrfHeaderName = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+    let productName = element.closest('.product-details').querySelector('.productName-span').textContent;
+    let productPrice = element.closest('.product-details').querySelector('.productPrice-span').textContent;
 
+    const csrfToken = $('meta[name="_csrf"]').attr('content');
+    const csrfHeaderName = $('meta[name="_csrf_header"]').attr('content');
     $.ajax({
         url: '/cart/add',
         type: 'POST',
         contentType: 'application/json',
         headers: {
-            'X-CSRF-TOKEN': csrfToken
+            [csrfHeaderName]: csrfToken
         },
         data: JSON.stringify({
-            productId: productId,
+            itemId: productId,
+            itemName: productName,
+            price: productPrice,
             quantity: quantity
         }),
         success: function() {

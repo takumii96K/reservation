@@ -22,10 +22,11 @@ $(document).ready(function() {
             headers: {
                 [csrfHeaderName]: csrfToken
             },
-            data: JSON.stringify({items: cartItems}),
+            data: JSON.stringify({cartItemRequests: cartItems}),
             success: function(response) {
-                alert('決済に進みます。');
-                window.location.href = '/takeout/product/reservation';
+                alert('決済はまだ完了していません。');
+                // window.location.href = '/takeout/product/reservation';
+                window.location.href = response.redirectUrl;
             },
             error: function() {
                 alert('処理が失敗しました。');

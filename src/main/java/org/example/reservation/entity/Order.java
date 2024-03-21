@@ -15,7 +15,7 @@ public class Order {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "reservation_id")
+    @JoinColumn(name = "reservation_id" )
     private Reservation reservation;
 
     @ManyToOne
