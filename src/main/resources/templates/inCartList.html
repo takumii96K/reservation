@@ -48,6 +48,12 @@
 	div p span {
 		font-size: 40px;
 	}
+	
+	/*編集テキストのスタイル*/
+	#newQuantityInput 
+	{
+        width: 30px; /* テキストボックスの横幅を指定 */
+    }
 
 </style>
 </head>
@@ -78,7 +84,11 @@
                 <td th:text="${item.value.price}"></td>
                 <td th:text="${item.value.quantity}"></td>
                 <td th:text="${item.value.price * item.value.quantity}"></td>
-                <td><button class="update-item" th:data-item-id="${item.value.itemId}">更新</button></td>
+                <td><input type="text" id="newQuantityInput" style="display: none;" pattern="[1-9]">
+                	<span th:if="${#field.hasErrors('quantity')}" th:errors="*{quantity}" title="1～9の数字のみ入力可能です。"></span>
+                </td>
+                <td><button id="confirmButton" style="display: none;" onclick ="confirmQuantity(this)">確定</button></td>
+                <td><button id="updateButton" class="update-item" th:data-item-id="${item.value.itemId}" onclick="showConfirmButton()">更新</button></td>
                 <td><button class="delete-item" th:data-item-id="${item.value.itemId}">削除</button></td>
             </tr>
             </tbody>
@@ -87,13 +97,44 @@
     <!--決済ボタン-->
     <button id="checkoutButton">決済する</button>
 
-
-
-
     <!--固定フッターフラグメントの挿入 -->
     <div th:replace="fragments/layout :: footer"></div>
 
 <!--    チェックアウト（決済）のjsファイル-->
     <script th:src="@{/js/checkout.js}"></script>
+    
+    <!--更新ボタンを押した後の編集処理-->
+    <script>
+		//更新ボタンが押された時
+		function showConfirmButton()
+		{
+	        //確定ボタンを表示する
+	        document.getElementById("confirmButton").style.display    = "inline-block";
+	        document.getElementById("newQuantityInput").style.display = "inline-block";
+	        document.getElementById("error").style.display = "inline-block"; // エラーメッセージも表示する
+        }
+        
+        //確定ボタンが押された時
+        function confirmQuantity(button)
+        {
+			
+			// 確定ボタンが所属する行の要素を取得
+    		let tableData = button.closest("tr");//rowには<tr>の中に入っている全ての情報(商品のid,name,price,quantity + ボタンの情報)を持っている
+    		
+    		let newQuantity = document.getElementById("newQuantityInput").value;//入力された値を代入
+    		
+ 			//th:data-quantityにnewQuantityの値をセット
+    		tableData.setAttribute("th:data-quantity", newQuantity);
+        	
+        	//確定ボタンを押したときに確定ボタンとテキストを非表示にする
+        	document.getElementById("confirmButton").style.display    = "none";
+        	document.getElementById("newQuantityInput").style.display = "none";
+        	document.getElementById("error").style.display = "none";
+        	//確定完了メッセージを表示
+        	alert("編集完了");
+        	
+        	console.log(tableData);
+		}
+	</script>
 </body>
 </html>
