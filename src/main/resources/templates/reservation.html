@@ -57,7 +57,7 @@
     </div>
     <div>
         <label for="phone">電話番号:</label>										<!--title = エラーメッセージの内容を表示する？-->
-        <input type="tel" id="phone" th:field="*{phone}" required pattern="\d{3}-?\d{4}-?\d{4}" placeholder="001-2345-6789" title="11桁の電話番号を入力してください。"/><!--phone変数に格納-->
+        <input type="tel" id="phone" th:field="*{phone}" pattern="\d{3}-?\d{4}-?\d{4}" placeholder="001-2345-6789" title="11桁の電話番号を入力してください。"/><!--phone変数に格納-->
         <span th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span><!-- 電話番号のエラーメッセージ表示 -->
     </div>
 
@@ -78,6 +78,7 @@
             <label for="datetime">☝受取日時を選択してください☝</label>
      </div>
 
+<!--カレンダー表示処理-->
 <script>
 	$(function () {
         $('#datetime').datetimepicker({
@@ -94,7 +95,7 @@
 				let selectDay = selectDate.getDate();
 
       			//選択した日付(selectDay)が現在の日付(currentDay)と一致するか比較
-      			if(selectDay === currentDay)//過去の場合
+      			if(selectDay === currentDay)
       			{
 					//カレンダーを再表示
 					$('#datetime').datetimepicker
