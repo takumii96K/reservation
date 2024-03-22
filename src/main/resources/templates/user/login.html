@@ -80,15 +80,14 @@
 	<!-- 見出し -->
     <main class="wrap">
 		<h1 class="midashi">Login</h1>
-		
+
 	<!-- エラーメッセージの表示 -->
-	<div th:if="${failureMessage != null}" th:text="${failureMessage}"></div>
-	
-	<!-- 登録完了メッセージの表示 -->
-    <div th:if="${param.complete}">
-        <p th:text="${completeMsg}" style="color: rgb(255, 255, 255);"></p>
-    </div>
-    
+    <p th:if="${failureMessage}" style="color: red;" th:text="${failureMessage}"></p>
+<!--    <div th:if="${failureMessage != null}" th:text="${failureMessage}"></div>-->
+
+    <!-- 完了メッセージの表示 -->
+    <p th:if="${completeMsg}" style="color: red;" th:text="${completeMsg}"></p>
+	   
     <!-- ログインフォーム -->
 	<form class="form1" th:action="@{/login}" method="post">
 	    <table>
