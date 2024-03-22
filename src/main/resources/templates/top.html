@@ -8,6 +8,10 @@
 <link rel="stylesheet" href ="https://cdn.skypack.dev/sanitize.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 <style>
+        body {
+            text-align: center;
+        }
+	
        /* 見出し */
         h1 {
             position: absolute;
@@ -42,14 +46,16 @@
         }
 
         /* 背景画像画像 */
-        .wrap {
+        .bg {
 			position: relative;
 			background-color: rgba(0, 0, 0, 0.5); /* 背景色を半透明の黒に設定 */
-            background-image: url("https://plus.unsplash.com/premium_photo-1668618295237-f1d8666812c9?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+           	background-image: url("https://plus.unsplash.com/premium_photo-1668618295237-f1d8666812c9?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
             background-size: cover;
             background-position: center;
-            height: 100vh;
+            height: 90vh;
+            width: 100%;
             animation: scaleBackground 5s infinite alternate; /* 背景画像の拡大縮小アニメーション */
+            
         }
         
         /* 背景画像の拡大縮小アニメーション */
@@ -61,7 +67,142 @@
                 transform: scale(1.1);
             }
         }
-
+        
+     /* information */
+	.information {
+	    position: relative;
+	    padding: 20px 50px;
+	    margin-top: 40px;
+	    background-color: #f78318;
+	    color: #fff;
+	}
+	
+	.information::before {
+	    position: absolute;
+	    top: 100%;
+	    left: 0;
+	    border-bottom: solid 10px transparent;
+	    border-right: solid 20px #e77308;
+	    content: '';
+	}
+	        
+     /*おしらせ：アコーディオンメニュー*/
+    .home {
+		display: flex;
+		justify-content: center;
+		margin-top: 90px;
+		flex-direction: column; /* 要素を縦に並べる */
+		align-items: center; /* 中央揃え */
+		margin: 90px 0 60px 0;
+	}
+      .accordion-003 {
+		    max-width: 750px;
+		    margin-bottom: 10px;
+		    border-bottom: 1px solid rgb(64, 0, 0); /* accordion-003要素にもborder-bottomを適用 */
+		}
+		
+		.accordion-003 summary {
+		    display: flex;
+		    justify-content: center; /* 中央に配置 */
+		    align-items: center;
+		    /*position: relative;*/
+		    font-size: 17px;
+		    padding: 1em 2em;
+		    color: #3f3131;
+		    font-weight: 600;
+		    cursor: pointer;
+		}
+		
+		.accordion-003 summary::-webkit-details-marker {
+		    display: none;
+		}
+		
+		.accordion-003 summary::after {
+		    transform: translateY(-25%) rotate(45deg);
+		    width: 7px;
+		    height: 7px;
+		    margin-left: 10px;
+		    border-bottom: 3px solid #3f3131b3;
+		    border-right: 3px solid #3f3131b3;
+		    content: '';
+		    transition: transform .3s; /* トランジションを追加 */
+		}
+		
+		.accordion-003[open] summary::after {
+		    transform: rotate(225deg);
+		    transition: transform .5s, opacity .5s;
+		}
+		
+		.accordion-003 p {
+		    transform: translateY(-10px);
+		    opacity: 0;
+		    margin: 0;
+		    padding: .3em 2em 1.5em;
+		    color: #4e4b4b;
+		    transition: transform .5s, opacity .5s;
+		}
+		
+		.accordion-003[open] p {
+		    transform: none;
+		    opacity: 1;
+		}
+		.accordion-003 p {
+		    font-size: 13px; /* Adjust as needed */
+		}
+	
+	/* 広告バナー（ダミー） */
+	.campaign{
+		background-color: darkorange;
+		display: flex;
+		justify-content: center;
+		margin-top: 90px;
+		flex-direction: column; /* 要素を縦に並べる */
+		align-items: center; /* 中央揃え */
+		margin: 90px 0 60px 0;
+	}
+	.campaign .information{
+		background-color: rgb(255, 247, 208);
+		color: rgb(128, 64, 0);
+	}
+  	.ad-container {
+	    display: flex;
+	    flex-direction: column;
+	    align-items: center;
+	    padding: 40px 60px 60px 60px;
+	}
+	
+	.ad-container img {
+	    border-radius: 30px; /* 画像の角を丸くする */
+		width: 800px; /* 画像の横幅を500ピクセルに設定 */
+	    height: 300px; /* 高さを自動調整 */
+	    margin-bottom: 20px; /* 画像間の余白を設定 */
+		opacity: 0; /* 初期状態で不透明度を0に設定 */
+	    transform: scale(0); /* 初期状態で非表示 */
+	}
+	
+	.ad-container img.fade-in {
+    opacity: 1; /* fade-inクラスが適用された場合、不透明度を1に設定してフェードインさせる */
+	}
+	
+	.horizontal-ads {
+	    display: flex;
+	    justify-content: center; /* 横方向の中央揃え */
+	}
+	
+	.horizontal-ads img {
+	    border-radius: 30px; /* 画像の角を丸くする */
+	    max-width:40%; /* 画像の最大幅を設定 */
+	    margin: 20px; /* 画像間の余白を設定 */
+	}
+	.ad-container img.pop {
+		margin: 20px; /* 余白を設定 */
+		animation: popIn 1s ease forwards; /* popInアニメーションを1秒かけて実行 */
+	}
+	@keyframes popIn {
+	  0% { transform: scale(0); opacity: 0; } /* 非表示状態 */
+	  100% { transform: scale(1); opacity: 1; } /* 表示状態 */
+	}
+	
 </style>
 </head>
 <body>
@@ -69,12 +210,101 @@
 	<!--固定ヘッダーフラグメントの挿入 -->
     <div th:replace="fragments/layout :: header"></div>
     
+    <!-- メインコンテンツ -->
     <main class="wrap">
 		<h1 class="midashi">Wellcom!</h1>
+		
+		<!-- 背景画像 -->
+		<div class="bg"></div>
+		
+		<!-- お知らせ -->
+		<div class="home">
+			<h2 class="information">information</h2>
+				<details class="accordion-003">
+					<summary>【2024/03/20】<br>～TeamAの“絶品”がリニューアル！～ <br>『絶品チーズバーガー』 2024年4月1日（月）から販売！</summary>
+			    		<p>『絶品チーズバーガー』をリニューアルし、<br>2024年4月1日（月）から全国のTeamA※1にて販売いたします。
+							※1：一部店舗を除く。
+							<br>
+							TeamAでは、2023年に『絶品チーズバーガー』を発売以来、人気定番商品として多くのお客様からご好評をいただいております。
+							そしてこのたび、『絶品チーズバーガー』をさらに美味しくリニューアルし、4月1日（月）から販売いたします。
+							リニューアルした『絶品チーズバーガー』は、岩塩や胡椒などのシンプルな味付けで肉の甘味と旨味を引き出した100％ビーフパティに、レッドチェダーチーズと4種類（ゴーダ、チェダー、マスカルポーネ、パルメザン）のチーズをブレンドしたとろ～りチーズソースを合わせ、アクセントのからしマヨとともに、ふんわりもっちり食感が特長のバンズで挟みました。
+							<br><br>
+							【新商品概要】<br>
+							販売期間：2024年4月1日（月）～レギュラーメニュー
+							販売店舗：全国のTeamA※1<br>
+							※1：さいたまスーパーアリーナ店を含む一部店舗を除く。<br>
+							*「MMセット」は対象バーガーと『フレンチフライポテトM』、『ドリンクM』のセットです。
+							同価格で『フレンチフライポテトM』を『オニオンフライ（5個入り）』または『チキンからあげっと（3本入り）』に変更いただけます。
+							また、プラス50円で『フレンチフライポテトM』を各種「ふるポテ」に、プラス100円で『フレンチフライポテトL』、『ドリンクL』の「LLセット」に変更いただけます。
+							<br>*表示価格は全て税込です。<br>
+							*一部店舗で価格が異なります。</p>
+				</details>
+				
+				<details class="accordion-003">
+			    	<summary>【2024/01/14】<br>新アプリにおける一部不具合発生のお知らせ</summary>
+			    		<p>お客さま各位<br>
+							いつもTeamAをご利用いただきありがとうございます。<br>
+							2024年1月10日にリニューアルした新アプリにおいて一部不具合が発生しております。
+							早期改善に努めておりますが、以下のいずれかの事象が発生してしまった場合、大変お手数をおかけいたしますが、記載の手順に従って再度お試しいただけるようお願い申し上げます。
+							<br>それに伴いアプリのアップデートをお願いします。
+							アプリを起動いただくと、アップデートのご案内が表示されますので、表示に従いApp storeまたはGoogle Play ストアページにて操作をお願いいたします。
+							アップデート後のアプリ最新バージョンは5.0.3です。<br>※アプリのバージョンはホーム > アカウントのページ最下部に記載がございます。</p>
+				</details>
+				
+				<details class="accordion-003">
+			    	<summary>【2023/12/08】<br>サイトメンテナンスに伴うサービス一部停止のお知らせ</summary>
+			    		<p>お客さま各位<br>
+							いつもTeamAをご利用いただきありがとうございます。<br>
+							以下の内容でサイトメンテナンスを実施いたします。<br>
+							※メンテナンス中はサービスをご利用いただけません。あらかじめご了承ください。<br><br>
+							▼メンテナンス対象<br>
+							・TeamAのネット注文サイト
+							・TeamAの公式アプリ<br><br>
+							▼実施期間<br>
+							・2024年2月5日(月)　0:00am ~ 7:00am<br>
+							メンテナンス中はネット注文のご利用はできません。公式アプリを利用してTeamAカードを表示することもできないためご注意ください。
+							店舗等でスマートフォンからTeamAカードをご利用される場合は、公式サイトのマイページよりモバイルモスカードの表示をお願いいたします。
+							※公式サイトのマイページからモバイルモスカードを表示するためには、事前にTeamAカード情報をTeamA Web会員への登録が必要です。
+							<br>ご不便をおかけいたしますが、ご理解賜りますようお願い申し上げます。</p>
+				</details>
+
+			</div>
+		</div>
+		
+	<!-- キャンペーン -->
+	<div class="campaign">
+		<h2 class="information">campaign</h2>
+		    <div class="ad-container">
+	        <img src="https://banner-hiroba.com/wp-content/uploads/2022/05/c09ee966-a5e4-4a19-ae1d-088816734d33.jpg" alt="Ad 1">
+	        	<div class="horizontal-ads">
+	            	<img src="https://img.pikbest.com/origin/06/68/55/46cpIkbEsTJBS.jpg!w700wp" alt="Ad 3">
+	            	<img src="https://img.pikbest.com/origin/10/12/72/076pIkbEsTbpf.jpg!w700wp" alt="Ad 4">
+	        	</div>
+	        <img src="https://www.shutterstock.com/image-vector/delicious-homemade-burger-chili-bbq-600nw-1804330342.jpg" alt="Ad 2">
+
+	    </div>
+    </div>
+
+		
 	</main>
 	
 	<!--固定フッターフラグメントの挿入 -->
 	<div th:replace="fragments/layout :: footer"></div>
-
+	
+<script>
+        // スクロールまたはページの読み込み時に実行される関数
+        window.addEventListener('scroll', popInImages);
+        window.addEventListener('DOMContentLoaded', popInImages);
+        
+        function popInImages() {
+          const images = document.querySelectorAll('.ad-container img');
+        
+          images.forEach((image) => {
+            // 画像の上端がウィンドウの下端よりも上に位置する場合に、popクラスを追加してアニメーションをトリガー
+            if (image.getBoundingClientRect().top < window.innerHeight) {
+              image.classList.add('pop');
+            }
+          });
+        }</script>
 </body>
 </html>
