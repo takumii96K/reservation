@@ -1,15 +1,55 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
 <head>
-<meta charset="UTF-8">
-<title>「テイクアウト予約」アプリ：予約確定画面</title>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>予約確定</title>
+	<link rel="stylesheet" type="text/css" href="/style.css">
+	<link rel="stylesheet" href ="https://cdn.skypack.dev/sanitize.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+<style>
+	
+	h3{
+		color:peru;
+	}
+	
+    .comp {
+        text-align: center; /* 中央揃え */
+        margin: 0 0 70px; /* 上下に20px、下に40pxの余白 */
+    }
+
+    .comp img {
+        width: 20%; /* 画像の幅を30%に設定 */
+        height: auto; /* アスペクト比を保持 */
+    }	
+	
+</style>
 </head>
 <body>
 	
-<h1>「「テイクアウト予約」アプリ：予約確定画面</h1>
-<h3>ご予約が確定いたしました！ありがとうございます！</h3>
-<form method="POST" th:action="@{takeout/product/resercation/confirm}
-"th:object="${confirmForm}">今日の運勢は強大吉！
+	<!--固定ヘッダーフラグメントの挿入 -->
+    <div th:replace="fragments/layout :: header"></div>
+    
+    <!-- 見出し -->
+    <main class="wrap">
+		<h1 class="midashi">Thank You!!</h1>
+
+		<div class="comp">
+			<img src="https://static-00.iconduck.com/assets.00/process-completed-symbolic-icon-2048x2048-baquwdk1.png">
+		</div>
+		
+		<h3>ご予約が確定いたしました。ご利用ありがとうございます。</h3>
+		<form method="POST" th:action="@{takeout/product/resercation/confirm}" th:object="${confirmForm}">
+	
+	
+	
+		<br>
+		<a href="/takeout/top">Top page</a><br>
+	</main>
+	
+	<!--固定フッターフラグメントの挿入 -->
+	<div th:replace="fragments/layout :: footer"></div>
+
 
 </body>
 </html>

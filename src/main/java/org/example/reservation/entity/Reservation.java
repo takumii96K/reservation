@@ -1,27 +1,20 @@
 package org.example.reservation.entity;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import org.example.reservation.entity.converter.ReservationStatusConverter;
+import org.example.reservation.entity.enumeration.ReservationStatus;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
 @Table(name="reservation")
-@NoArgsConstructor
-@AllArgsConstructor
 public class Reservation {
 
 	@Id
@@ -44,15 +37,31 @@ public class Reservation {
 	//@NotNull
 	@Column(name="reservation_email")
 	private String email;			//メアド
-	
-	
 
-	
-	@ManyToMany
-	@JoinTable(
-			name = "reservation_product",
-			joinColumns = @JoinColumn(name = "reservation_id"),
-			inverseJoinColumns = @JoinColumn(name = "product_id")
-	)
-	private List<Product> products;
+	@JsonManagedReference
+	@OneToMany(mappedBy = "reservation")
+	private List<Order> orders = new ArrayList<>();
+
+	@Column(name = "reservation_status")
+	@Convert(converter = ReservationStatusConverter.class)
+	private ReservationStatus status = ReservationStatus.UNCONFIRMED;  // 予約の状態（"未確定", "確定", "キャンセル" など）
+
+	// ユーザー情報はオプショナル
+	@JsonBackReference
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private User user;
+
+	@Override
+	public String toString() {
+		return "Reservation{" +
+				"reservationId=" + reservationId +
+				", dateTime=" + dateTime +
+				", customerName='" + customerName + '\'' +
+				", tel='" + tel + '\'' +
+				", email='" + email + '\'' +
+				", status=" + status +
+				", userId=" + (user != null ? user.getUserId() : "null") +
+				'}';
+	}
 }

@@ -1,37 +1,49 @@
 package org.example.reservation.controller;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.example.reservation.form.CartItemRequest;
-import org.example.reservation.service.spec.ProductService;
+import org.example.reservation.session.CartItemRequest;
 import org.example.reservation.service.spec.ShoppingCartService;
 import org.example.reservation.session.CartSession;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.source.ConfigurationPropertyName;
+import org.example.reservation.session.CheckoutRequest;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.print.DocFlavor;
-import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/cart")
 public class ShoppingCartController {
 
-
     private final ShoppingCartService service;
+    private final CartSession session;
 
-    @PostMapping("/cart/add")
+    /**
+     * カートに追加ボタン
+     * @param cartItemRequest request(ProductId,Quantity(UserInput))
+     * @return responseパラメータ
+     */
+    @PostMapping("/add")
     public ResponseEntity<?> addToCart(@RequestBody CartItemRequest cartItemRequest) {
-        System.out.println("メソッド起動");
         try {
-            service.addItemToCart(cartItemRequest.getProductId(), cartItemRequest.getQuantity());
-            System.out.println("成功");
+            service.addItemToCart(cartItemRequest); //カートに追加処理
             return ResponseEntity.ok().build(); //true
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("商品をカートに追加する際にエラーが発生しました: " + e.getMessage());
         }
     }
+
+    @PostMapping("/checkout")
+    public ResponseEntity<?> checkout(HttpSession httpsession ,@RequestBody CheckoutRequest request) {
+        httpsession.setAttribute("request", request);
+        httpsession.setAttribute("total", session.getCart().calculateTotalAmount());
+        return ResponseEntity.ok(Map.of("redirectUrl", "/takeout/product/reservation"));
+    }
+
+
+
+
 
 
 //}

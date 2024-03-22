@@ -5,41 +5,140 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta id="csrfToken" name="_csrf" th:content="${_csrf.token}"/>
     <meta id="csrfHeaderName" name="_csrf_header" th:content="${_csrf.headerName}"/>
-    <title>商品選択画面</title>
-    <link rel="stylesheet" href="style.css">
+<title>商品選択画面</title>
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick-theme.css"/>
+    <link rel="stylesheet" href="https://cdn.skypack.dev/sanitize.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Arial', sans-serif;
-            background-color: #f5f5f5;
-        }
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<style>
 
-        header {
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            padding: 20px 0;
-        }
+	/* 全体の余白 */
+	.wrap{
+		margin:0 40px 20px 40px;
+	}
+ 
+	/*スライドショー*/
+	.slider {/*横幅94%で左右に余白を持たせて中央寄せ*/
+	    width:100%;
+	    margin:0 auto;
+	    position: relative; /* スライダーにも相対位置を指定 */
+	    z-index: 0; /* 背面に配置 */	    
+	    opacity: 0; /* 初期状態では非表示にする */
+	    animation: fadeInUp 1.0s ease forwards; /* fadeInUpアニメーションを適用 */
+	}
+	
+	.slider img {
+	    width:60vw;/*スライダー内の画像を60vwにしてレスポンシブ化*/
+	    height:300px;
+	}
+	
+	.slider .slick-slide {
+	  transform: scale(0.8);/*左右の画像のサイズを80%に*/
+	  transition: all .5s;/*拡大や透過のアニメーションを0.5秒で行う*/
+	  opacity: 0.5;/*透過50%*/
+	}
+	
+	.slider .slick-slide.slick-center{
+	  transform: scale(1);/*中央の画像のサイズだけ等倍に*/
+	  opacity: 1;/*透過なし*/
+	}
+	
+	
+	/*矢印の設定*/
+	/*戻る、次へ矢印の位置*/
+	.slick-prev, 
+	.slick-next {
+	    position: absolute;/*絶対配置にする*/
+	    top: 42%;
+	    cursor: pointer;/*マウスカーソルを指マークに*/
+	    outline: none;/*クリックをしたら出てくる枠線を消す*/
+	    border-top: 2px solid #666;/*矢印の色*/
+	    border-right: 2px solid #666;/*矢印の色*/
+	    height: 15px;
+	    width: 15px;
+	    display: none;
+	}
+	
+	.slick-prev {/*戻る矢印の位置と形状*/
+	    left: -1.5%;
+	    transform: rotate(-135deg);
+	}
+	
+	.slick-next {/*次へ矢印の位置と形状*/
+	    right: -1.5%;
+	    transform: rotate(45deg);
+	}
+	
+	/*ドットナビゲーションの設定*/
+	.slick-dots {
+	    text-align:center;
+	  margin:30px 0 0 0;
+	}
+	
+	.slick-dots li {
+	    display:inline-block;
+	  margin:0 5px;
+	}
+	
+	.slick-dots button {
+	    color: transparent;
+	    outline: none;
+	    width:8px;/*ドットボタンのサイズ*/
+	    height:8px;/*ドットボタンのサイズ*/
+	    display:block;
+	    border-radius:50%;
+	    background:#ccc;/*ドットボタンの色*/
+	}
+	
+	.slick-dots .slick-active button{
+	    background:#333;/*ドットボタンの現在地表示の色*/
+	}
 
-        h1, h3 {
+	ul{
+	  margin:0;
+	  padding: 0;
+	  list-style: none;
+	}
+
+
+	/* メニューコンテナ */
+        h3 {
             margin: 0;
             padding: 10px 0;
         }
 
-        .menu-container {
+		main{
+			margin-left: 10%;
+			margin-right: 10%;
+		}
+
+	    .menu-container {
             display: flex;
             flex-wrap: wrap;
+            position: relative; /* 親要素に相対位置を指定 */
+    		z-index: 1; /* スライダーよりも前面に表示 */
             justify-content: space-around;
-            margin-top: 100px; /* ヘッダーの高さに合わせて調整 */
+            margin-top: 150px; /* ヘッダーの高さに合わせて調整 */
+            margin-right: 100px;
+            margin-left: 100px;
+            margin-bottom: 70px;
         }
+
+        .product-card{
+			width: calc(33.33% - 40px); /* カードの幅 */
+    		/*margin: 30px; /* カード間の余白 */
+			margin: 30px 20px 30px 20px; /* 上右下左の順に余白を指定 */
+			box-shadow: 0 2px 4px rgba(0, 0, 0, .2);
+		}
 
         .menu-item {
             background-color: #fff;
             margin: 15px;
-            width: 30%;
+            width: calc(33.33% - 30px); /* 画面幅に応じて調整 */
             box-shadow: 0 2px 4px rgba(0,0,0,.2);
             transition: transform .2s;
             position: relative; /* この変更を加えます */
@@ -71,163 +170,179 @@
             margin-top: 5px;
             margin-bottom: 15px; /* ボタンとの間隔 */
         }
+       
+        /* アニメーション */
+	.product-card {
+	    opacity: 0; /* 初期状態では非表示にする */
+	    animation: fadeInUp 3.0s ease forwards; /* fadeInUpアニメーションを適用 */
+	}
+	
+	@keyframes fadeInUp {
+	    0% {
+	        opacity: 0;
+	        transform: translateY(20px); /* 初期位置を下方向に20px移動 */
+	    }
+	    100% {
+	        opacity: 1;
+	        transform: translateY(0); /* 最終位置まで移動 */
+	    }
+	}
 
-        button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            width: 100%; /* ボタンの幅を広げる */
-            margin-bottom: 15px; /* 下部のマージン */
-        }
+	/* 次ページボタン */
+	.button-36 {
+	    display: flex;
+	    justify-content: center;
+	    align-items: center;
+	    width: 300px;
+	    margin: 0 auto;
+	    padding: .9em 2em;
+	    border: 1px solid #c06e2a;
+	    border-radius: 5px;
+	    background-color: #fff;
+	    color: #c06e2a;
+	    font-size: 1em;
+	}
+	
+	.button-36:hover {
+	    border: none;
+	    background-color: #c06e2a;
+	    font-weight: 600;
+	}
+	
+	.button-36 a {
+	    color: chocolate; /* 通常時の文字色を指定 */
+	    transition: 0.3s;
+	}
 
-        button:hover {
-            background-color: #45a049;
-        }
+	.button-36:hover a {
+	    color: #fff; /* ホバー時の文字色を白に設定 */
+	    letter-spacing: 5px; /* 文字間隔を2ピクセルに設定 */
+	}
 
-        #message-container {
-            display: none; /* 最初は非表示に */
-            margin-bottom: 20px;
-        }
+	.button-36::after {
+	    transform: rotate(45deg);
+	    width: 5px;
+	    height: 5px;
+	    margin-left: 10px;
+	    border-top: 2px solid #c06e2a;
+	    border-right: 2px solid #c06e2a;
+	    content: '';
+	}
+	
+	.button-36:hover::after {
+	    border-color: #fff;
+	    text-decoration-color: bisque;
+	}
+
+	/* エラーメッセージ */
+	#message-container {
+	     display: none; /* 最初は非表示に */
+	     margin-bottom: 20px;
+	 }
 
     </style>
 </head>
 <body>
 	
-	<!-- ▽▽▽　トグルセクション　▽▽▽ -->
-<!--	<input type="checkbox" id="check">-->
-<!--	<label for="check">-->
-<!--		<i class="fas fa-bars" id="hambargerButton"></i>-->
-<!--		<i class="fas fa-times" id="cancel"></i>-->
-<!--	</label>-->
-	
-	<!-- ▽▽▽　サイドバーセクション　▽▽▽ -->
-	<div th:replace="sidebar.html :: sidebar"></div>
-<!--	<div class="sidebar">-->
-<!--		<header>Team A</header>-->
-<!--		<ul>-->
-<!--			&lt;!&ndash; トップページリンク &ndash;&gt;-->
-<!--			<li>-->
-<!--				<a href="/takeout/top"><i class="fa fa-map-marker" aria-hidden="true"></i>-->
-<!--				<span class="material-symbols-outlined">home</span>home</a>-->
-<!--			</li>-->
-<!--			-->
-<!--			&lt;!&ndash; メニュー画面リンク &ndash;&gt;-->
-<!--			<li>-->
-<!--				<a href="product.html"><i class="fa fa-cutlery" aria-hidden="true"></i>-->
-<!--				<span class="material-symbols-outlined">restaurant</span>menu</a>-->
-<!--			</li>-->
-<!--			-->
-<!--			&lt;!&ndash; 店舗情報画面リンク（ダミー） &ndash;&gt;-->
-<!--			<li>-->
-<!--				<a href="#"><i class="fa fa-map-marker" aria-hidden="true"></i>-->
-<!--				<span class="material-symbols-outlined">store</span>store information</a>-->
-<!--			</li>-->
-<!--			-->
-<!--			&lt;!&ndash; メンバー紹介画面リンク &ndash;&gt;-->
-<!--			<li>-->
-<!--				<a href="/takeout/product/member"><i class="fa fa-users" aria-hidden="true"></i>-->
-<!--				<span class="material-symbols-outlined">group</span>member</a>-->
-<!--			</li>-->
-<!--			-->
-<!--			&lt;!&ndash; カートの中身画面リンク（どうする？要相談） &ndash;&gt;-->
-<!--			<li>-->
-<!--				<a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i>-->
-<!--				<span class="material-symbols-outlined">shopping_cart</span>cart</a>-->
-<!--				&lt;!&ndash; カートの中身を表示するセクション &ndash;&gt;-->
-<!--				<div id="cart-items">-->
-<!--&lt;!&ndash;				<p th:text="${products.productName} + ' ' + ${products.productPrice} + '円'"></p>&ndash;&gt;-->
-<!--				</div>-->
-<!--				<p>合計金額: <span id="cart-total">0</span>円</p>-->
-<!--			</li>-->
-<!--		</ul>-->
-<!--	</div>-->
-	
-	<!-- ▽▽▽ 見出し ▽▽▽ -->
-	<main>
-	<h2 class="ttl_line2">Menu</h2>
-	
-	<!-- ▽▽▽ 商品一覧表示＆個数選択 ▽▽▽ -->
-		<div class="wrap">
-		<div class="main">
-			<div class="main_content">
-                    <h3>商品を選択してください</h3>
-                    <div class="menu-container">
-                        <div class="menu-item">
-                            <form>
-                                <ul>
-                                    <!-- 商品リストを動的に表示 -->
-                                    <li th:each="product : ${products}">
-                                        <div class="product-image">
-                                            <img th:src="${product.imageUrl}" th:alt="${product.productName}" />
-                                        </div>
-                                        <div class="product-details">
-                                            <span th:text="${product.productName}">Product Name</span> -
-                                            <span th:text="${product.productPrice}">Price</span>
-                                            <label>
-                                                <input type="number" name="quantity" min="1" value="1" class="quantity-input" />
-                                            </label>
-                                            <input type="hidden" name="productId" th:value="${product.productId}" />
-                                            <button type="button" onclick="addToCart(this)">カートに追加</button>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </form>
-                        </div>
+	<!--固定ヘッダーフラグメントの挿入 -->
+    <div th:replace="fragments/layout :: header"></div>
+    
+	<!-- 見出し -->
+    <h1 class="midashi">Menu</h1>
+    
+    <!-- メインコンテンツ -->
+	<main class="wrap">
+	<div class="main">	
+	<div class="main_content">
+		
+	<!-- スライドショー -->
+	<ul class="slider">
+	  <li><img src="https://images.pexels.com/photos/2619970/pexels-photo-2619970.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt=""></li>
+	  <li><img src="https://images.pexels.com/photos/2271107/pexels-photo-2271107.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt=""></li>
+	  <li><img src="https://images.pexels.com/photos/3944308/pexels-photo-3944308.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt=""></li>
+	  <li><img src="https://images.pexels.com/photos/1639557/pexels-photo-1639557.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt=""></li>
+	  <li><img src="https://images.pexels.com/photos/1893555/pexels-photo-1893555.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt=""></li>
+	  <li><img src="https://images.pexels.com/photos/1437812/pexels-photo-1437812.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt=""></li>
+	<!-- スライドショー関連のリンク --></ul>
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+	<script src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/6-1-7/js/6-1-7.js"></script>
+    
+
+            <!-- 商品カードを動的に表示 -->
+            <div class="menu-container">
+                <div class="product-card" th:each="product : ${products}">
+                    <div class="product-image">
+                        <img th:src="${product.imageUrl}" th:alt="${product.productName}" />
                     </div>
+                    <div class="product-details">
+                        <span class="productName-span" th:text="${product.productName}">Product Name</span> -
+                        <span class="productPrice-span" th:text="${product.productPrice}">Price</span>
+                        <label>
+                            <input type="number" name="quantity" min="1" value="1" class="quantity-input" />
+                        </label>
+                        <input type="hidden" name="productId" th:value="${product.productId}" />
+                        <button type="button" class="add-to-cart-button" onclick="addToCart(this)">カートに追加</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-			</div>
-		</div>
+
         <div id="message-container">
             <p id="message"></p>
         </div>
-		
-	<!-- ▽▽▽ 次ページに飛ぶボタン ▽▽▽ -->
-	<div class="button019">
-		<a class="sample_button11" href="reservation.html">注文確認(ユーザー情報入力)</a>
-	</div>
-		
-	</main>
 
+        <!--カートへ移動ボタン-->
+    	<button class="button-36">
+            <a th:href="@{/inCart/list}">カートを確認<br></a>
+	</button>  
+		
+		</main>
+
+	
+	<!--固定フッターフラグメントの挿入 -->
+	<div th:replace="fragments/layout :: footer"></div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick.min.js"></script>
 <script>
-    function addToCart(element) {
-        let productId = element.closest('.product-details').querySelector('input[name="productId"]').value;
-        let quantity = element.closest('.product-details').querySelector('.quantity-input').value;
-        let csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
-        let csrfHeaderName = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+	
+	// スライドショーの自動再生
+	 $('.slider').slick({
+	    autoplay: true,//自動的に動き出すか。初期値はfalse。
+	    infinite: true,//スライドをループさせるかどうか。初期値はtrue。
+	    speed: 300,//スライドのスピード。初期値は300。
+	    slidesToShow: 3,//スライドを画面に3枚見せる
+	    slidesToScroll: 1,//1回のスクロールで1枚の写真を移動して見せる
+	    prevArrow: '<div class="slick-prev"></div>',//矢印部分PreviewのHTMLを変更
+	    nextArrow: '<div class="slick-next"></div>',//矢印部分NextのHTMLを変更
+	    centerMode: true,//要素を中央ぞろえにする
+	    variableWidth: true,//幅の違う画像の高さを揃えて表示
+	    dots: true,//下部ドットナビゲーションの表示
+	  });
 
-        $.ajax({
-            url: '/cart/add',
-            type: 'POST',
-            contentType: 'application/json',
-            headers: {
-                'X-CSRF-TOKEN': csrfToken
-            },
-            data: JSON.stringify({
-                productId: productId,
-                quantity: quantity
-            }),
-            success: function() {
-                displayMessage('商品がカートに追加されました!', 'success');
-            },
-            error: function() {
-                displayMessage('商品をカートに追加する際にエラーが発生しました。もう一度お試しください。', 'error');
-            }
-        });
+    function plusSlides(n) {
+        $('.slideshow-container').slick('slickGoTo', n);
     }
-
-    function displayMessage(text, type) {
-        let messageContainer = document.getElementById('message-container');
-        let message = document.getElementById('message');
-        messageContainer.style.display = 'block';
-        messageContainer.style.backgroundColor = type === 'success' ? '#4CAF50' : '#f44336';
-        message.textContent = text;
-        setTimeout(function() {
-            messageContainer.style.display = 'none';
-        }, 3000);
-    }
+ 
+    //カードフェードインアニメーション
+	window.addEventListener('scroll', function() {
+    let productCards = document.querySelectorAll('.product-card');
+    let windowHeight = window.innerHeight;
+    
+    productCards.forEach(function(card, index) {
+        let cardTop = card.getBoundingClientRect().top;
+        let delay = index * 0.5; // 大きな遅延を設定
+        if (cardTop < windowHeight) {
+            setTimeout(function() {
+                card.style.animation = 'fadeInUp 0.5s ease forwards'; // アニメーションを適用
+				}, delay * 1000); // ミリ秒単位に変換して適用
+        	}
+    	});
+	});
 </script>
-
+    <script th:src="@{/js/addToCart.js}"></script>
 </body>
 </html>

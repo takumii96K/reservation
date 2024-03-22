@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6" lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <meta id="csrfToken" name="_csrf" th:content="${_csrf.token}"/>
+    <meta id="csrfHeaderName" name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" type="text/css" href="/style.css">
+	<link rel="stylesheet" href ="https://cdn.skypack.dev/sanitize.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+<style>
+
+	/* テーブルのスタイル */
+	table {
+	    margin: 0 auto; /* テーブルを中央揃えにする */
+	    width: 80%; /* テーブルの幅を指定 */
+	    border-collapse: collapse; /* セルの境界線を重ねる */
+	}
+
+	/* テーブルのヘッダー行のスタイル */
+	th {
+	    background-color: rgb(254, 149, 63); /* ヘッダー行の背景色 */
+	    color: #fff; /* ヘッダー行の文字色 */
+	    font-weight: bold; /* ヘッダー行の文字を太字にする */
+	    padding: 10px; /* ヘッダー行の内側の余白 */
+	    border: 1px solid rgb(128, 64, 0); /* 境界線のスタイルを指定 */
+	}
+
+	/* テーブルのデータ行のスタイル */
+	td {
+	    border: 1px solid rgb(174, 87, 0); /* セルの境界線を設定 */
+	    padding: 10px; /* セルの内側の余白 */
+	    text-align: center; /* セル内のテキストを中央揃えにする */
+	}
+
+	/* 奇数行の背景色を設定 */
+	tr:nth-child(odd) {
+	    background-color: rgba(174, 87, 0, 0.1); /* 奇数行の背景色 */
+	}
+
+
+	/* totalテキストのスタイル */
+	div p{
+	    text-align: center; /* テキストを中央揃えにする */
+	    margin-top: 40px; /* 上部の余白を設定 */
+	}
+	div p span {
+		font-size: 40px;
+	}
+
+	/*編集テキストのスタイル*/
+	#newQuantityInput
+	{
+        width: 30px; /* テキストボックスの横幅を指定 */
+    }
+
+</style>
+</head>
+<body>
+
+	<!--固定ヘッダーフラグメントの挿入 -->
+    <div th:replace="fragments/layout :: header"></div>
+
+    <!-- 見出し -->
+    <h1 class="midashi">Shopping Cart Items</h1>
+    <div>
+        <table>
+            <thead>
+            <tr>
+                <th>商品名</th>
+                <th>価格</th>
+                <th>個数</th>
+                <th>小計</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${cartItems}" class="cart-item"
+                th:data-product-id="${item.value.itemId}"
+                th:data-item-name="${item.value.itemName}"
+                th:data-price="${item.value.price}"
+                th:data-quantity="${item.value.quantity}">
+                <td th:text="${item.value.itemName}"></td>
+                <td th:text="${item.value.price}"></td>
+                <td th:text="${item.value.quantity}"></td>
+                <td th:text="${item.value.price * item.value.quantity}"></td>
+
+                <td><button id="updateButton" class="update-item" th:data-item-id="${item.value.itemId}" onclick="showConfirmButton()">更新</button></td>
+                <td><button class="delete-item" th:data-item-id="${item.value.itemId}">削除</button></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--決済ボタン-->
+    <button id="checkoutButton">決済する</button>
+
+
+    <!--固定フッターフラグメントの挿入 -->
+    <div th:replace="fragments/layout :: footer"></div>
+
+<!--    チェックアウト（決済）のjsファイル-->
+    <script th:src="@{/js/checkout.js}"></script>
+
+    <!--更新ボタンを押した後の編集処理-->
+    <script>
+		//更新ボタンが押された時
+		function showConfirmButton()
+		{
+	        //確定ボタンを表示する
+	        document.getElementById("confirmButton").style.display    = "inline-block";
+	        document.getElementById("newQuantityInput").style.display = "inline-block";
+	        document.getElementById("error").style.display = "inline-block"; // エラーメッセージも表示する
+        }
+
+        //確定ボタンが押された時
+        function confirmQuantity(button)
+        {
+
+			// 確定ボタンが所属する行の要素を取得
+    		let tableData = button.closest("tr");//rowには<tr>の中に入っている全ての情報(商品のid,name,price,quantity + ボタンの情報)を持っている
+
+    		let newQuantity = document.getElementById("newQuantityInput").value;//入力された値を代入
+
+ 			//th:data-quantityにnewQuantityの値をセット
+    		tableData.setAttribute("th:data-quantity", newQuantity);
+
+        	//確定ボタンを押したときに確定ボタンとテキストを非表示にする
+        	document.getElementById("confirmButton").style.display    = "none";
+        	document.getElementById("newQuantityInput").style.display = "none";
+        	document.getElementById("error").style.display = "none";
+        	//確定完了メッセージを表示
+        	alert("編集完了");
+
+        	console.log(tableData);
+		}
+	</script>
+</body>
+</html>

@@ -9,12 +9,12 @@ import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
 @Component
-public class UserRegistrationFormConverter implements Converter<UserRegistrationForm, User>{
+public class UserRegistrationFormConverter{
 
     private final PasswordEncoder encoder;
     public User convertToEntity(UserRegistrationForm form){
         User user = new User();
-        user.setUserName(form.getName());
+        user.setUserName(form.getUserName());
         user.setPassword(encoder.encode(form.getPassword()));
         user.setTel(form.getTel());
         //新規ユーザーのため権限はデフォルトでROLE＿USER
@@ -23,7 +23,7 @@ public class UserRegistrationFormConverter implements Converter<UserRegistration
     }
     public UserRegistrationForm convertToDto(User user){
         UserRegistrationForm form = new UserRegistrationForm();
-        form.setName(user.getUserName());
+        form.setUserName(user.getUserName());
         form.setTel(user.getTel());
         //パスワードは取り出すことはない
         return form;

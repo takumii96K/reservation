@@ -1,7 +1,7 @@
 package org.example.reservation.session;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.example.reservation.ResourceNotFoundException;
 
 
 import java.math.BigDecimal;
@@ -9,20 +9,26 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Data
-@AllArgsConstructor
 public class Cart {
     private final Map<Long, CartItem> items = new HashMap<>();
+
+    public CartItem selectById(Long id){
+        if(items.get(id) != null){
+            return items.get(id);
+        }else{
+            throw new ResourceNotFoundException("カートにありません。");
+        }
+    }
 
     /**
      * カートに商品を追加する
      * @param item productからdtoへ変換したitem
-     * @param quantity item.quantity
      */
-    public void addItem(CartItem item, int quantity) {
+    public void addItem(CartItem item) {
         CartItem cartItem = items.get(item.getItemId());
         if (cartItem != null) {
             // 商品が既に存在する場合、数量を更新
-            item.setQuantity(item.getQuantity() + quantity);
+            cartItem.setQuantity(cartItem.getQuantity() + item.getQuantity());
             System.out.println("商品の数量を更新しました");
 
         } else {
@@ -32,7 +38,10 @@ public class Cart {
 
         }
     }
-
+    public void updateItem(Long id, int quantity){
+        CartItem item = selectById(id);
+        item.setQuantity(quantity);
+    }
     /**
      * カートの商品を削除する
      * @param id item.id

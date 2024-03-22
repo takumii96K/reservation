@@ -1,37 +1,126 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
 <head>
-    <title>ログイン</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<title>ログイン</title>
+    <link rel="stylesheet" type="text/css" href="/style.css">
+	<link rel="stylesheet" href ="https://cdn.skypack.dev/sanitize.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+<style>
+        /* フォームスタイル */
+        form {
+            margin-top: 20px;
+        }
+
+        div {
+            margin-bottom: 40px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: rgb(128, 64, 0);
+        }
+        
+        table{
+			margin-bottom: 60px;
+		}
+		
+		.form1{
+			margin-bottom: 100px;
+			text-align: center; /* 中央揃え */
+		}
+		
+		.form2{
+			text-align: center; /* 中央揃え */
+        	white-space: nowrap; /* テキストを折り返さないように */
+    	}
+    	
+    	.form2 form {
+	        display: inline-block;
+   		}
+
+
+
+        input[type="text"],
+        input[type="password"] {
+            width: 40%;
+            padding: 8px;
+            border: 1px solid rgb(128, 64, 0);
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        input[type="submit"] {
+            background-color: rgb(255, 156, 66);
+            color: rgb(128, 64, 0);
+            border: none;
+            padding: 10px 25px;
+            margin-top: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+            border: 1px solid rgb(128, 64, 0); /* 枠線を追加し、白色に設定 */
+            
+        }
+
+        input[type="submit"]:hover {
+            background-color: rgb(170, 85, 0);
+            color: #fff;
+        }
+	
+	
+</style>
 </head>
 <body>
-<h1>ログイン</h1>
-<div th:if="${failureMessage != null}" th:text="${failureMessage}"></div>
-<form th:action="@{/login}" method="post">
-    <table>
-        <tr>
-            <th>ログインID</th>
-            <td><label>
-                <input type="text" name="username"/>
-            </label></td>
-        </tr>
-        <tr>
-            <th>パスワード</th>
-            <td><label>
-                <input type="password" name="password"/>
-            </label></td>
-        </tr>
-    </table>
-    <input type="submit" value="ログイン"/>
-</form>
-<!-- 新しいフォーム部分の追加 -->
-<div>
-    <form th:action="@{/register}" method="get">
-        <input type="submit" value="ユーザー登録"/>
-    </form>
-    <form th:action="@{/takeout/product}" method="get">
-        <input type="submit" value="ゲストで商品選択へ"/>
-    </form>
-</div>
+	
+	<!--固定ヘッダーフラグメントの挿入 -->
+    <div th:insert="fragments/layout :: header"></div>
+
+	<!-- 見出し -->
+    <main class="wrap">
+		<h1 class="midashi">Login</h1>
+
+	<!-- エラーメッセージの表示 -->
+    <p th:if="${failureMessage}" style="color: red;" th:text="${failureMessage}"></p>
+<!--    <div th:if="${failureMessage != null}" th:text="${failureMessage}"></div>-->
+
+    <!-- 完了メッセージの表示 -->
+    <p th:if="${completeMsg}" style="color: red;" th:text="${completeMsg}"></p>
+	   
+    <!-- ログインフォーム -->
+	<form class="form1" th:action="@{/login}" method="post">
+	    <table>
+	        <tr>
+	            <th>ID</th>
+	            <td><label>
+	                <input type="text" name="username"/>
+	            </label><br> <!-- 改行 --></td>
+	        </tr>
+	        <tr>
+	            <th>password</th>
+	            <td><label>
+	                <input type="password" name="password"/>
+	            </label></td>
+	        </tr>
+	    </table>
+	    <input type="submit" value="Login"/>
+	</form>
+	
+	<!-- 別リンク -->
+	<div class="form2">
+	    <form th:action="@{/register}" method="get">
+	        <input type="submit" value="sign up"/>
+	    </form>
+	    
+	    <form th:action="@{/takeout/product}" method="get">
+	        <input type="submit" value="gest menu"/>
+	    </form>
+	</div>
+	</main>
+	
+	<!--固定フッターフラグメントの挿入 -->
+	<div th:insert="fragments/layout :: footer"></div>
+
 </body>
 </html>

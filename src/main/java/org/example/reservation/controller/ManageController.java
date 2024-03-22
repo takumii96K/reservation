@@ -1,54 +1,84 @@
-
 package org.example.reservation.controller;
 
-import java.util.List;
-
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.example.reservation.entity.Product;
-import org.example.reservation.entity.converter.ProductFormConverter;
-import org.example.reservation.entity.projection.ReservationProductDto;
+import org.example.reservation.entity.converter.ProductDtoConverter;
 import org.example.reservation.form.ProductForm;
 import org.example.reservation.service.spec.ProductService;
 import org.example.reservation.service.spec.ReservationService;
+import org.example.reservation.service.spec.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/takeout")
 @RequiredArgsConstructor
+@RequestMapping("/admin")
 public class ManageController {
     /** DI対象 */
     private final ProductService productService;
+    private final UserService userService;
     private final ReservationService reservationService;
+    private final ProductDtoConverter converter;
 
-    ProductFormConverter productFormConverter=new ProductFormConverter();
-//	UserRegistrationFormConverter userRegistrationFormConverter=new UserRegistrationFormConverter();
+    // 商品情報の編集フォーム表示フラグ
+    @Getter
+    private boolean productFormVisible = false;
+
+    // 商品情報の編集フォーム表示フラグのリセット
+    private void resetProductFormVisible() {
+        productFormVisible = false;
+    }
 
 
-    /** 商品情報,ユーザー情報,予約情報の一覧を表示 */
+    /**
+     * 商品情報,ユーザー情報,予約情報の一覧を表示
+     * @param model products:ProductDto, users, reservation
+     * @return view: manage.html
+     */
     @GetMapping("/manage")
     public String showList(Model model) {
         //商品情報
-        List<Product> list=productService.getAllProducts();
-        List<ProductForm> list2=productFormConverter.convertToForm(list);
-        //表示用「Model」への格納
-        model.addAttribute("products" ,list2);
+        model.addAttribute("products" ,converter.convertToDtoList(productService.getAllProducts()));
+        // 商品情報の編集フォーム表示フラグ
+        model.addAttribute("productFormVisible", this.productFormVisible);
 
-        /** ユーザー情報 */
-
-
-        /** 予約情報 */
-//		List<Reservation> rlist=reservationService.getReservationAll();
-        List<ReservationProductDto> rlist2=reservationService.getReservationProductDtoAll();
-        //表示用「Model」への格納
-//		model.addAttribute("reservations", rlist);
-        model.addAttribute("reservations2", rlist2);
-
-
+        model.addAttribute("form", new ProductForm());
+        //authorityKindが1のユーザーのみを取得
+        model.addAttribute("users", userService.findUserWithAuthorityKindOne());
+        //予約情報
+        model.addAttribute("reservations",reservationService.getReservationProductDtoAll());
         return "/manage";
-
     }
+
+    /** 商品情報の編集処理 */
+//    @RequestMapping("/edit-product/{productId}")
+//    public String editProduct(@PathVariable("productId") Long productId, @ModelAttribute ProductForm form,Model model) {
+//            // 編集フォームを表示するためのフラグを設定
+//            productFormVisible = true;
+//
+//            // 編集処理を実装
+//            Product product = converter.convertToEntity(form);
+//            productService.updateProduct(productId, editedProduct);
+//
+//            // 商品情報の編集が完了したのでフラグをリセット
+//            resetProductFormVisible();
+//
+//            // 編集された商品情報をリクエスト属性に追加
+//            model.addAttribute("editedProduct", editedProductForm);
+//
+//            return "redirect:/takeout/manage"; // 商品情報の一覧ページにリダイレクト
+//
+//    }
+
+        /** 商品情報の追加処理 */
+        @PostMapping("/add-product")
+        public String addProduct(@ModelAttribute("form") ProductForm form) {
+            productService.createProduct(form);
+            return "redirect:/manage";
+        }
 
 }
