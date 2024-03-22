@@ -1,12 +1,12 @@
 package org.example.reservation.repository;
 
-import java.util.List;
-
 import org.example.reservation.entity.User;
 import org.example.reservation.entity.projection.UserLoginProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface JpaUserRepository extends JpaRepository<User, Long> {

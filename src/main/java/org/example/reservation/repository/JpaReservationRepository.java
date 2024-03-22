@@ -1,14 +1,13 @@
 package org.example.reservation.repository;
 
-import java.util.List;
-
 import org.example.reservation.entity.Reservation;
 import org.example.reservation.entity.dto.ReservationProductDto;
-
 import org.example.reservation.entity.projection.ReservationProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface JpaReservationRepository extends JpaRepository<Reservation, Long>{

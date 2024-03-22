@@ -1,7 +1,5 @@
 package org.example.reservation.session;
 
-import lombok.Data;
-import org.example.reservation.entity.Product;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 

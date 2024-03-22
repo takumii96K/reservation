@@ -2,12 +2,15 @@ package org.example.reservation.controller;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.example.reservation.session.CartItemRequest;
 import org.example.reservation.service.spec.ShoppingCartService;
+import org.example.reservation.session.CartItemRequest;
 import org.example.reservation.session.CartSession;
 import org.example.reservation.session.CheckoutRequest;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 

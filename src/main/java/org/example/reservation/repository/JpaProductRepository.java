@@ -1,7 +1,6 @@
 package org.example.reservation.repository;
 
 import org.example.reservation.entity.Product;
-import org.example.reservation.entity.dto.ProductDto;
 import org.example.reservation.entity.projection.ProductProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

@@ -2,6 +2,7 @@ package org.example.reservation.entity.enumeration;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+
 import java.util.Arrays;
 
 @Getter

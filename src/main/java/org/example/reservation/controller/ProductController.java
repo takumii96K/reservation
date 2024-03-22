@@ -1,14 +1,13 @@
 package org.example.reservation.controller;
 
-import java.util.Objects;
-
+import lombok.RequiredArgsConstructor;
 import org.example.reservation.entity.dto.ProductDto;
 import org.example.reservation.service.spec.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import lombok.RequiredArgsConstructor;
+import java.util.Objects;
 
 
 /** Productコントローラ */

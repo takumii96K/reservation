@@ -1,5 +1,6 @@
 package org.example.reservation.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.example.reservation.exception.DuplicateUserNameException;
 import org.example.reservation.form.UserRegistrationForm;
 import org.example.reservation.service.spec.UserService;
@@ -11,8 +12,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
