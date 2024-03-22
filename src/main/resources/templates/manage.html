@@ -83,20 +83,20 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="product : ${products}">
-        <td th:text="*{product.id}"></td>
-        <td th:text="${product.productName}"></td>
-        <td th:text="${product.productStock}"></td>
-        <td th:text="${product.productPrice}"></td>
-<!--　　　　<td th:text="${product.quantity}"></td>-->　　
+<!--    <tr th:each="product : ${products}">-->
+<!--        <td th:text="*{product.id}"></td>-->
+<!--        <td th:text="${product.productName}"></td>-->
+<!--        <td th:text="${product.productStock}"></td>-->
+<!--        <td th:text="${product.productPrice}"></td>-->
+<!--&lt;!&ndash;　　　　<td th:text="${product.quantity}"></td>&ndash;&gt;　　-->
 <!--        <td th:text="${product.totalPrice}"></td>-->
 		 <!-- 編集ボタンのセル -->
-         <td>
-            <a th:href="@{/takeout/edit-product/{productId}(productId=${product.id})}">
-             <button class="edit-btn">編集</button>
-            </a>
-         </td>
-    </tr>
+<!--         <td>-->
+<!--            <a th:href="@{/takeout/edit-product/{productId}(productId=${product.id})}">-->
+<!--             <button class="edit-btn">編集</button>-->
+<!--            </a>-->
+<!--         </td>-->
+<!--    </tr>-->
 
     <!-- 編集フォームの行 -->
     <tr th:if="${productFormVisible}">

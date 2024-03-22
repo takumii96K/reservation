@@ -19,26 +19,29 @@ public class LoginController {
 
 	private final UserService service;
 
-	/**
-	 * GET:ログイン画面遷移
-	 * @param model failureMessage
-	 * @param model Modelオブジェクト
-	 * @param error エラーメッセージ
-	 * @param failure エラーメッセージ
-	 * @param complete 完了メッセージ
-	 * @return view: /user/login.html
-	 */
 	@GetMapping("/login")
-	public String loginForm(Model model, @RequestParam(value = "failure", required = false) String failure,
-			@RequestParam(value = "complete", required = false) String complete) {
+	public String loginForm(Model model,
+							@RequestParam(value = "failure", required = false) String failure,
+							@RequestParam(value = "complete", required = false) String complete,
+							@RequestParam(value = "error", required = false) String error) { // この行を追加
 		if (failure != null) {
 			model.addAttribute("failureMessage", "※IDもしくはパスワードが違います");
 		}
 		if (complete != null) {
 			model.addAttribute("completeMsg", "登録が完了しました！");
 		}
+		if (error != null) { // この部分を追加
+			if ("admin_required".equals(error)) {
+				model.addAttribute("errorMessage", "管理者としてログインしてください。");
+			} else if ("login_required".equals(error)) {
+				model.addAttribute("errorMessage", "ログインが必要です。");
+			} else {
+				model.addAttribute("errorMessage", "不明なエラーが発生しました。");
+			}
+		}
 		return "user/login";
 	}
+
 
 	//    public String loginForm(@RequestParam(value = "failure", required = false) Model model) {
 	//        return "/user/login";

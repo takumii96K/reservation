@@ -4,12 +4,15 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.example.reservation.form.ReservationInputForm;
 import org.example.reservation.service.spec.ShoppingCartService;
-import org.example.reservation.session.CheckoutRequest;
+import org.example.reservation.session.CartSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
 
@@ -21,6 +24,7 @@ import java.time.LocalDateTime;
 public class ReservationController {
 
 	private final ShoppingCartService shoppingCartService;
+	private final CartSession cartSession;
 
 	/**
 	 * GET:注文者情報入力画面
@@ -28,9 +32,14 @@ public class ReservationController {
 	 * @return /reservation
 	 */
 	@GetMapping("/takeout/product/reservation")
-	public String showReservationForm(Model model, HttpSession session) {
+	public String showReservationForm(Model model) {
+
+		if(cartSession.getCart().getItems().isEmpty()){
+			return "product";
+		}
 		model.addAttribute("reservationForm", new ReservationInputForm());
-		model.addAttribute("session", session.getAttribute("request"));
+		model.addAttribute("items", cartSession.getCart().getItems());
+		model.addAttribute("total", cartSession.getCart().calculateTotalAmount());
 		return "reservation";
 	}
 
@@ -41,14 +50,17 @@ public class ReservationController {
 	 */
 	@PostMapping("/takeout/product/completeOrder")
 	public String completeOrderView(@Validated @ModelAttribute("inputReservationForm")
-									ReservationInputForm form, BindingResult bindingResult, @SessionAttribute("request") CheckoutRequest request) {
+									ReservationInputForm form, BindingResult bindingResult) {
 		if(!bindingResult.hasErrors()) {
 			//予約をデータベースに登録する。
-			shoppingCartService.finalizeCheckout(request, form);
+			shoppingCartService.finalizeCheckout(cartSession.getCart(), form);
+			//sessionカートの中身を削除する
+			cartSession.resetCart();
 			return "confirmation";
 		}
 		return "redirect:/takeout/product/reservation";
 	}
+
 
 	//カレンダーから日時指定をする
 	@PostMapping("/takeout/product/submitDate")

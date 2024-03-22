@@ -1,7 +1,7 @@
 package org.example.reservation.entity.converter;
 
 import org.example.reservation.entity.Product;
-import org.example.reservation.entity.projection.ProductDto;
+import org.example.reservation.entity.dto.ProductDto;
 import org.example.reservation.form.ProductForm;
 import org.springframework.stereotype.Component;
 
@@ -34,7 +34,7 @@ public class ProductDtoConverter{
         ProductDto dto = new ProductDto();
         dto.setId(entity.getProductId());
         dto.setProductName(entity.getProductName());
-        dto.setProductStock(entity.getStock());
+        dto.setStock(entity.getStock());
         return dto;
     }
 
@@ -42,7 +42,7 @@ public class ProductDtoConverter{
         Product product = new Product();
         product.setProductId(dto.getId());
         product.setProductName(dto.getProductName());
-        product.setStock(dto.getProductStock());
+        product.setStock(dto.getStock());
         return product;
     }
 
@@ -59,8 +59,8 @@ public class ProductDtoConverter{
             ProductDto dto = new ProductDto();
             dto.setId(entity.getProductId());
             dto.setProductName(entity.getProductName());
-            dto.setProductStock(entity.getStock());
-            dto.setProductPrice(entity.getProductPrice());
+            dto.setStock(entity.getStock());
+            dto.setPrice(entity.getProductPrice());
             productDtoList.add(dto);
         }
         return productDtoList;

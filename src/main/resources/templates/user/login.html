@@ -81,11 +81,15 @@
     <main class="wrap">
 		<h1 class="midashi">Login</h1>
 
+		<div th:if="${errorMessage}" class="error">
+			<p th:text="${errorMessage}"></p>
+		</div>
+
 	<!-- エラーメッセージの表示 -->
     <p th:if="${failureMessage}" style="color: red;" th:text="${failureMessage}"></p>
 <!--    <div th:if="${failureMessage != null}" th:text="${failureMessage}"></div>-->
 
-    <!-- 完了メッセージの表示 -->
+		<!-- 完了メッセージの表示 -->
     <p th:if="${completeMsg}" style="color: red;" th:text="${completeMsg}"></p>
 	   
     <!-- ログインフォーム -->
@@ -122,5 +126,17 @@
 	<!--固定フッターフラグメントの挿入 -->
 	<div th:insert="fragments/layout :: footer"></div>
 
+
+	<script>
+		window.onload = function() {
+			const urlParams = new URLSearchParams(window.location.search);
+			const error = urlParams.get('error');
+			if (error === 'admin_required') {
+				alert('管理者としてログインしてください。');
+			} else if (error) {
+				alert('ログインに失敗しました。');
+			}
+		};
+	</script>
 </body>
 </html>

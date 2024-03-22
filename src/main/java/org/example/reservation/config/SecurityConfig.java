@@ -14,7 +14,6 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 
 /**
  * SecurityConfig
- *
  */
 @Configuration
 @EnableWebSecurity
@@ -26,7 +25,7 @@ public class SecurityConfig {
         http
                 //リクエスト認可の設定
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers(HttpMethod.POST, "/admin/**").hasAnyAuthority("ROLE_ADMIN")
+                        .requestMatchers("/admin/**").hasAnyAuthority("ROLE_ADMIN")
                         .requestMatchers(HttpMethod.POST, "/cart/add").permitAll()
                         .requestMatchers("/user/**").hasAnyAuthority("ROLE_USER")
                         .requestMatchers("/user/profile").authenticated()
@@ -47,7 +46,7 @@ public class SecurityConfig {
 
     /**
      * 認証カスタムハンドラー
-     * @return カスタムサクセスハンドラークラスへ
+     * @return AuthenticationSuccessHandler
      */
     @Bean
     public AuthenticationSuccessHandler customLoginSuccessHandler() {
@@ -56,7 +55,7 @@ public class SecurityConfig {
 
     /**
      * パスワードエンコーダー
-     * @return
+     * @return PasswordEncoder
      */
     @Bean
     public PasswordEncoder passwordEncoder() {

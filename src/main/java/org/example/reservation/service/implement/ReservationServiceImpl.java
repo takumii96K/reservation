@@ -2,9 +2,7 @@ package org.example.reservation.service.implement;
 
 import lombok.RequiredArgsConstructor;
 import org.example.reservation.entity.Reservation;
-import org.example.reservation.entity.dto.ReservationDto;
 import org.example.reservation.entity.dto.ReservationProductDto;
-import org.example.reservation.entity.projection.ReservationProjection;
 import org.example.reservation.form.ReservationInputForm;
 import org.example.reservation.repository.JpaReservationRepository;
 import org.example.reservation.service.spec.ReservationService;
@@ -17,12 +15,6 @@ import java.util.List;
 public class ReservationServiceImpl implements ReservationService {
 	
 	private final JpaReservationRepository repository;
-
-	@Override
-	public List<Reservation> getReservationAll()
-	{	
-		return repository.findAll();
-	}
 
 	/**
 	 * 新規予約確定
@@ -47,20 +39,5 @@ public class ReservationServiceImpl implements ReservationService {
 	@Override
 	public List<ReservationProductDto> getReservationProductDtoAll() {
 		return repository.findAllReservationsWithProducts();
-	}
-
-	@Override
-	public ReservationProjection getReservationProjectionById(Long id) {
-		return repository.findReservationProjectionByReservationId(id);
-	}
-
-	@Override
-	public void updateReservation(Reservation reservation) {
-		repository.save(reservation);
-	}
-
-	@Override
-	public void updateReservation(ReservationDto dto) {
-
 	}
 }

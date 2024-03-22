@@ -41,6 +41,7 @@ public class ManageController {
      */
     @GetMapping("/manage")
     public String showList(Model model) {
+
         //商品情報
         model.addAttribute("products" ,converter.convertToDtoList(productService.getAllProducts()));
         // 商品情報の編集フォーム表示フラグ
@@ -51,7 +52,8 @@ public class ManageController {
         model.addAttribute("users", userService.findUserWithAuthorityKindOne());
         //予約情報
         model.addAttribute("reservations",reservationService.getReservationProductDtoAll());
-        return "/manage";
+
+        return "manage";
     }
 
     /** 商品情報の編集処理 */
