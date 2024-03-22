@@ -8,50 +8,60 @@
 <link rel="stylesheet" href ="https://cdn.skypack.dev/sanitize.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 <style>
-	
-	/* ▽▽▽ 見出し ▽▽▽ */
-	h1 {
-		position: absolute;
-		    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); /* 要素を中央に配置 */
+       /* 見出し */
+        h1 {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(1.2);
+            padding: 0 55px;
+            text-align: center;
+            color: rgb(255, 255, 255);
+            opacity: 0; /* 初期状態で非表示 */
+            animation: fadeIn 1s forwards, bounce 1s ease-out; /* フェードインと振動アニメーション */
+        }
+        
+        /* フェードインアニメーション */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
 
-		padding: 0 55px;
-  		text-align: center; /* 中央揃え */
-  		color: rgb(255, 255, 255);
-	}
-		
-	h1:before, h1:after {
-		content: '';
-		position: absolute;
-		top: 50%;
-		display: inline-block;
-		width: 45px;
-		height: 1px;
-		background-color: black;
-		transform: translateY(-50%); /* 上下中央揃え */
-	}
+        /* 振動アニメーション */
+        @keyframes bounce {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1.2);
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
 
-		h1:before {
-	  		left:0;
-	}
-	
-	h1:after {
-	  right: 0;
-	}
-	
-	/* △△△ 見出し △△△ */
-
-
-    /* ▽▽▽　メイン画像部分　▽▽▽ */
-    .wrap {
-        background-image: url("https://plus.unsplash.com/premium_photo-1668618295237-f1d8666812c9?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
-        background-size: cover; /* 背景画像をウィンドウに合わせて表示 */
-        background-position: center; /* 背景画像を中央に配置 */
-        height: 100vh; /* 画面の高さいっぱいに表示 */
-    } 
-    
-    
+        /* メイン画像部分 */
+        .wrap {
+			position: relative;
+			background-color: rgba(0, 0, 0, 0.5); /* 背景色を半透明の黒に設定 */
+            background-image: url("https://plus.unsplash.com/premium_photo-1668618295237-f1d8666812c9?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            animation: scaleBackground 5s infinite alternate; /* 背景画像の拡大縮小アニメーション */
+        }
+        
+        /* 背景画像の拡大縮小アニメーション */
+        @keyframes scaleBackground {
+            from {
+                transform: scale(1);
+            }
+            to {
+                transform: scale(1.1);
+            }
+        }
+        
 </style>    
 </head>
 <body>
