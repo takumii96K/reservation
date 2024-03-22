@@ -7,6 +7,46 @@
 	<link rel="stylesheet" href ="https://cdn.skypack.dev/sanitize.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 <style>
+
+        form {
+            margin-top: 20px;
+        }
+        
+        div {
+            margin-bottom: 40px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: rgb(128, 64, 0);
+        }
+        
+        input[type="text"],
+        input[type="password"] {
+            width: 40%;
+            padding: 8px;
+            border: 1px solid rgb(128, 64, 0);
+            border-radius: 5px;
+            text-align: center;
+        }
+        
+        button[type="submit"] {
+            background-color: rgb(255, 156, 66);
+            color: rgb(128, 64, 0);
+            border: none;
+            padding: 10px 20px;
+            margin-top: 40px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+            border: 1px solid rgb(128, 64, 0); /* 枠線を追加し、白色に設定 */
+        }
+        
+        button[type="submit"]:hover {
+            background-color: rgb(170, 85, 0);
+            color: #fff;
+        }
 	
 </style>
 </head>
@@ -15,28 +55,46 @@
 	<!--固定ヘッダーフラグメントの挿入 -->
     <div th:replace="fragments/layout :: header"></div>
     
+    <!-- 見出し -->
     <main class="wrap">
-		<h1 class="midashi">ユーザー登録フォーム</h1>
+		<h1 class="midashi">Sign up</h1>
+		
+    <!-- ユーザー情報重複エラーメッセージ -->
+    <div th:if="${errorMessage != null}" th:text="${errorMessage}" style="color: red;"></div>
 
-		<form th:action="@{/register}" th:object="${inputRegisterForm}" method="post">
-	    <div>
-	        <label for="username">ユーザー名:</label>
-	        <input type="text" id="username" th:field="*{userName}" required>
-	    </div>
-	    <div>
-	        <label for="password">パスワード:</label>
-	        <input type="password" id="password" th:field="*{password}" required>
+    <!-- ログインフォーム -->
+    <form th:action="@{/register}" th:object="${inputRegisterForm}" method="post">
+		
+		
+        <!-- ユーザー名入力フォーム -->
+        <div>
+            <label for="username">▼ ユーザー名</label>
+            <input type="text" id="userName" th:field="*{userName}" required pattern="[A-Za-z0-9]+" title="※英数字のみ">
+        <!-- ユーザー名のバリデーションエラーメッセージ -->
+        	<div th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}" class="error-message">ユーザー名は英数字で入力してください。</div>
+        </div>
+        
+        <!-- パスワード入力フォーム -->
+        <div>
+            <label for="password">▼ パスワード</label>
+           	<input type="password" id="password" th:field="*{password}" required pattern="[A-Za-z0-9]+" title="※英数字のみ">
+            <!-- パスワードのバリデーションエラーメッセージ -->
+        	<div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error-message">パスワードは必須です。</div>
+        </div>
+        
+        <!-- 電話番号入力フォーム -->
+        <div>
+            <label for="phone">▼ 電話番号 ※ﾊｲﾌﾝ省略</label>
+            <input type="text" id="phone" th:field="*{tel}" name="phone" required pattern="\d{11}" title="※11桁の数字" >
+            <!-- 電話番号のバリデーションエラーメッセージ -->
+            <div th:if="${#fields.hasErrors('tel')}" th:errors="*{tel}" class="error-message">電話番号は11桁の数字で入力してください。</div>        
+        </div>
+        
+        <div>
+            <button type="submit">登録</button>
+        </div>
 
-	    </div>
-	    <div>
-	        <label for="phone">電話番号:</label>
-	        <input type="text" id="phone" th:field="*{tel}" name="phone" pattern="\d{1,4}-\d{1,4}-\d{1,4}"  required>
-	    </div>
-	    <div>
-	        <button type="submit">登録</button>
-	    </div>
-	</form>
-
+    </form>
 	</main>
 	
 	<!--固定フッターフラグメントの挿入 -->

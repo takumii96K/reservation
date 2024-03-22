@@ -1,12 +1,14 @@
 package org.example.reservation.form;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.validation.annotation.Validated;
+import lombok.Setter;
+
 
 @Data
+@Getter @Setter
 @NoArgsConstructor
 public class UserRegistrationForm {
 
