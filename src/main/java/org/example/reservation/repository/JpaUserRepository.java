@@ -16,16 +16,8 @@ public interface JpaUserRepository extends JpaRepository<User, Long> {
 
     //usernameはユニーク制約のためカスタムcheckメソッド
     boolean existsByUserName(String userName);
-    
-//    //全ユーザーを取得
-//    List<User> findAll();
 
-    // authorityKindが1のユーザーのみを取得
-       // @Query("SELECT u FROM User u WHERE u.authorities.code = '1'")
-       //このコードだと動かない。JPQLクエリでEnumの属性にアクセスする方法を変更する必要がある。
-    //Enumのコード値を直接クエリに埋め込む
     @Query("SELECT u FROM User u WHERE u.authorities = org.example.reservation.entity.enumeration.AuthorityKind.ROLE_USER")
-    List<User> findPeopleWithAuthorityKindOne();
-    
+    List<User> getUserWithAuthorityKindOne();
 
 }

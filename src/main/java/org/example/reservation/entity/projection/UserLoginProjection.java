@@ -9,4 +9,5 @@ public interface UserLoginProjection {
     String getUserName();
     String getPassword();
     AuthorityKind getAuthorities();
+
 }

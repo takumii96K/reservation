@@ -6,5 +6,5 @@ public interface ProductProjection {
     Long getProductId();
     String getProductName();
     BigDecimal getProductPrice();
-    int getProductStock();
+    int getStock();
 }

@@ -1,19 +1,17 @@
 package org.example.reservation.form;
 
-import java.math.BigDecimal;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductForm { //入力用
+public class ProductForm {
     private String name;
     private String imgUrl;
     private BigDecimal price;
     private Integer stock;
-
 }
-

@@ -1,37 +1,57 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
 <head>
-    <title>ログイン</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<title>ログイン</title>
+    <link rel="stylesheet" type="text/css" href="/style.css">
+	<link rel="stylesheet" href ="https://cdn.skypack.dev/sanitize.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+<style>
+
+</style>
 </head>
 <body>
-<h1>ログイン</h1>
-<div th:if="${failureMessage != null}" th:text="${failureMessage}"></div>
-<form th:action="@{/login}" method="post">
-    <table>
-        <tr>
-            <th>ログインID</th>
-            <td><label>
-                <input type="text" name="username"/>
-            </label></td>
-        </tr>
-        <tr>
-            <th>パスワード</th>
-            <td><label>
-                <input type="password" name="password"/>
-            </label></td>
-        </tr>
-    </table>
-    <input type="submit" value="ログイン"/>
-</form>
-<!-- 新しいフォーム部分の追加 -->
-<div>
-    <form th:action="@{/register}" method="get">
-        <input type="submit" value="ユーザー登録"/>
-    </form>
-    <form th:action="@{/takeout/product}" method="get">
-        <input type="submit" value="ゲストで商品選択へ"/>
-    </form>
-</div>
+	
+	<!--固定ヘッダーフラグメントの挿入 -->
+    <div th:insert="fragments/layout :: header"></div>
+
+    <main class="wrap">
+		<h1 class="midashi">ログイン</h1>
+		<div th:if="${registrationComplete}">
+			<p th:text="${registrationComplete}"></p>
+		</div>
+<!--	<div th:if="${failureMessage != null}" th:text="${failureMessage}"></div>-->
+	<form th:action="@{/login}" method="post">
+	    <table>
+	        <tr>
+	            <th>ログインID</th>
+	            <td><label>
+	                <input type="text" name="username"/>
+	            </label></td>
+	        </tr>
+	        <tr>
+	            <th>パスワード</th>
+	            <td><label>
+	                <input type="password" name="password"/>
+	            </label></td>
+	        </tr>
+	    </table>
+	    <input type="submit" value="ログイン"/>
+	</form>
+	<!-- 新しいフォーム部分の追加 -->
+	<div>
+	    <form th:action="@{/register}" method="get">
+	        <input type="submit" value="ユーザー登録"/>
+	    </form>
+	    <form th:action="@{/takeout/product}" method="get">
+	        <input type="submit" value="ゲストで商品選択へ"/>
+	    </form>
+	</div>
+
+	</main>
+	
+	<!--固定フッターフラグメントの挿入 -->
+	<div th:insert="fragments/layout :: footer"></div>
+
 </body>
 </html>
