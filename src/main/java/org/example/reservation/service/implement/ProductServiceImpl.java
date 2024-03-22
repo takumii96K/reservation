@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.example.reservation.entity.Product;
-import org.example.reservation.entity.projection.ProductProjection;
 import org.example.reservation.repository.JpaProductRepository;
 import org.example.reservation.service.spec.ProductService;
 import org.springframework.stereotype.Service;
@@ -39,5 +38,10 @@ public class ProductServiceImpl implements ProductService {
 		
 		// 更新された商品をデータベースに保存
 		return repository.save(product);
+	}
+	
+	@Override
+	public Product addNewProduct(Product product) {
+	    return repository.save(product);
 	}
 }

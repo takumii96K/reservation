@@ -28,7 +28,7 @@ public interface UserService {
 //    //全ユーザー取得
 //    List<User> getAllUser();
     
-    //authorityKindが1のユーザーのみを取得
+    //authorityKindが1(ROLE_USER)のユーザーのみを取得
     List<User> getPeopleWithAuthorityKindOne();
  
 

@@ -1,15 +1,22 @@
 package org.example.reservation.entity;
 
-import jakarta.persistence.*;
+import java.io.Serializable;
+
+import org.example.reservation.entity.converter.UserAuthorityConverter;
+import org.example.reservation.entity.enumeration.AuthorityKind;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.example.reservation.entity.converter.UserAuthorityConverter;
-import org.example.reservation.entity.enumeration.AuthorityKind;
-
-import java.io.Serializable;
 
 @Entity
 @Data
@@ -43,5 +50,7 @@ public class User implements Serializable {
     @Convert(converter = UserAuthorityConverter.class)
     @Column(name = "authority_kind")
     private AuthorityKind authorities;
+    
+    
 
 }

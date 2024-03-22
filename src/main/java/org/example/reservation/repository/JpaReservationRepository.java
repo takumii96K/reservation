@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 public interface JpaReservationRepository extends JpaRepository<Reservation, Long>{
 
     @Query("SELECT new org.example.reservation.entity.projection.ReservationProductDto" +
-            "(r.reservationId, p.productId, p.productName, r.dateTime, r.customerName, r.tel) " +
+            "(r.reservationId, p.productId, p.productName, r.dateTime, r.customerName, r.tel, r.email) " +
             "FROM Reservation r " +
             "JOIN r.products p")
     List<ReservationProductDto> findReservationDetails();

@@ -1,13 +1,19 @@
 package org.example.reservation.entity;
 
-import jakarta.persistence.*;
+import java.math.BigDecimal;
+import java.util.List;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.math.BigDecimal;
-import java.util.List;
 
 @Entity
 @Data
@@ -26,7 +32,7 @@ public class Product {
 	private String productName;	//商品名
 
 	@Column(name = "product_url")
-	private String imageUrl;
+	private String imageUrl;   //商品画像
 
 	@NotNull
 	@Column(name = "product_price")
