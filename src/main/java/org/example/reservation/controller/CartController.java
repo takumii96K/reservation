@@ -1,14 +1,10 @@
 package org.example.reservation.controller;
 
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.example.reservation.service.spec.ShoppingCartService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -26,7 +22,7 @@ public class CartController {
     @GetMapping("/list")
     public String InCartPage(Model model){
         model.addAttribute("cartItems", service.lookInCart());
-        return "/inCartList";
+        return "inCartList";
     }
 //    @GetMapping("/checkout")
 //    public String showCheckout(HttpSession session, RedirectAttributes redirectAttributes) {

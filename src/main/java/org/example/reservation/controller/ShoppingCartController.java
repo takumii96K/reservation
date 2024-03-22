@@ -35,8 +35,7 @@ public class ShoppingCartController {
     }
 
     @PostMapping("/checkout")
-    public ResponseEntity<?> checkout(HttpSession httpsession , @RequestBody CheckoutRequest request) {
-        System.out.println("決済を始めます");
+    public ResponseEntity<?> checkout(HttpSession httpsession ,@RequestBody CheckoutRequest request) {
         httpsession.setAttribute("request", request);
         httpsession.setAttribute("total", session.getCart().calculateTotalAmount());
         return ResponseEntity.ok(Map.of("redirectUrl", "/takeout/product/reservation"));

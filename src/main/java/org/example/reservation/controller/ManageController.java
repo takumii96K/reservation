@@ -45,6 +45,7 @@ public class ManageController {
         model.addAttribute("products" ,converter.convertToDtoList(productService.getAllProducts()));
         // 商品情報の編集フォーム表示フラグ
         model.addAttribute("productFormVisible", this.productFormVisible);
+
         model.addAttribute("form", new ProductForm());
         //authorityKindが1のユーザーのみを取得
         model.addAttribute("users", userService.findUserWithAuthorityKindOne());

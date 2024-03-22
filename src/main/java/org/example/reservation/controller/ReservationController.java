@@ -31,7 +31,7 @@ public class ReservationController {
 	public String showReservationForm(Model model, HttpSession session) {
 		model.addAttribute("reservationForm", new ReservationInputForm());
 		model.addAttribute("session", session.getAttribute("request"));
-		return "/reservation";
+		return "reservation";
 	}
 
 	/**
@@ -45,7 +45,7 @@ public class ReservationController {
 		if(!bindingResult.hasErrors()) {
 			//予約をデータベースに登録する。
 			shoppingCartService.finalizeCheckout(request, form);
-			return "/confirmation";
+			return "confirmation";
 		}
 		return "redirect:/takeout/product/reservation";
 	}
