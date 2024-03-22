@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class IntoCartConverter{
 
-    public Product convertToEntity(CartItem dto) {
+    public Product dtoToEntity(CartItem dto) {
         Product product = new Product();
         product.setProductId(dto.getItemId());
         product.setProductName(dto.getItemName());
@@ -16,11 +16,18 @@ public class IntoCartConverter{
         return product;
     }
 
-    public CartItem convertToDto(ProductProjection record) {
+    public CartItem recordToItem(ProductProjection record) {
         CartItem item = new CartItem();
         item.setItemName(record.getProductName());
         item.setItemId(record.getProductId());
         item.setPrice(record.getProductPrice());
+        return item;
+    }
+    public CartItem entityToItem(Product product){
+        CartItem item = new CartItem();
+        item.setItemId(product.getProductId());
+        item.setItemName(product.getProductName());
+        item.setPrice(product.getProductPrice());
         return item;
     }
 }

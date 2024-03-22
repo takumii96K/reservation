@@ -1,37 +1,38 @@
 CREATE TABLE IF NOT EXISTS public.product
 (
-    product_id bigint NOT NULL,
-    product_name character varying COLLATE pg_catalog."default" NOT NULL,
-    product_price integer NOT NULL,
-    product_stock integer NOT NULL,
-    CONSTRAINT product_pkey PRIMARY KEY (product_id)
+    product_id SERIAL PRIMARY KEY NOT NULL,
+    product_name VARCHAR NOT NULL,
+    product_price INTEGER NOT NULL,
+    product_stock INTEGER NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS public.reservation
 (
-    reservation_id bigint NOT NULL,
-    customer_name character varying COLLATE pg_catalog."default" NOT NULL,
-    reservation_time time with time zone NOT NULL,
-    customer_tel character varying COLLATE pg_catalog."default",
-    reservation_email character varying COLLATE pg_catalog."default" NOT NULL,
-    CONSTRAINT reservation_pkey PRIMARY KEY (reservation_id)
+    reservation_id SERIAL PRIMARY KEY NOT NULL,
+    customer_name VARCHAR NOT NULL,
+    reservation_time TIMESTAMP WITH TIME ZONE NOT NULL,
+    customer_tel VARCHAR,
+    reservation_email VARCHAR NOT NULL,
+    user_id BIGINT,
+    reservation_status VARCHAR NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES public.user_table (user_id)
 );
 
 CREATE TABLE IF NOT EXISTS public.user_table
 (
-    user_id bigint NOT NULL,
-    user_name character varying COLLATE pg_catalog."default" NOT NULL,
-    user_password character varying COLLATE pg_catalog."default" NOT NULL,
-    user_tel character varying COLLATE pg_catalog."default" NOT NULL,
-    authority_kind character varying COLLATE pg_catalog."default" NOT NULL,
-    CONSTRAINT user_table_pkey PRIMARY KEY (user_id)
+    user_id SERIAL PRIMARY KEY NOT NULL,
+    user_name VARCHAR NOT NULL,
+    user_password VARCHAR NOT NULL,
+    user_tel VARCHAR NOT NULL,
+    authority_kind VARCHAR NOT NULL
 );
 
--- reservation_product 中間テーブルの作成
-CREATE TABLE IF NOT EXISTS reservation_product (
-                                                   reservation_id bigint NOT NULL,
-                                                   product_id bigint NOT NULL,
-                                                   FOREIGN KEY (reservation_id) REFERENCES reservation (reservation_id),
-                                                   FOREIGN KEY (product_id) REFERENCES product (product_id),
-                                                   PRIMARY KEY (reservation_id, product_id)
+CREATE TABLE IF NOT EXISTS public.reservation_product
+(
+    id SERIAL PRIMARY KEY,
+    reservation_id BIGINT NOT NULL,
+    product_id BIGINT NOT NULL,
+    purchased_quantity INT NOT NULL,
+    FOREIGN KEY (reservation_id) REFERENCES public.reservation (reservation_id),
+    FOREIGN KEY (product_id) REFERENCES public.product (product_id)
 );

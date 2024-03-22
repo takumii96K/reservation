@@ -8,15 +8,22 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.reservation.entity.converter.UserAuthorityConverter;
 import org.example.reservation.entity.enumeration.AuthorityKind;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Data
 @Table(name ="user_table")
 @NoArgsConstructor
 @AllArgsConstructor
-public class User implements Serializable {
+public class User implements Serializable{
 
     /* ユーザーID (PK)*/
     @Id
@@ -31,7 +38,6 @@ public class User implements Serializable {
 
     /* パスワード */
     @NotBlank
-
     @Column(name ="user_password", nullable = false)
     private String password;
 
@@ -43,5 +49,8 @@ public class User implements Serializable {
     @Convert(converter = UserAuthorityConverter.class)
     @Column(name = "authority_kind")
     private AuthorityKind authorities;
+
+    @OneToMany(mappedBy = "user")
+    private List<Reservation> reservations;
 
 }

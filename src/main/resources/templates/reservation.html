@@ -60,26 +60,56 @@
 <body>
 		
 	<!--固定ヘッダーフラグメントの挿入 -->
-    <div th:replace="layout :: header"></div>
+    <div th:insert="fragments/layout :: header"></div>
     
     <main>
-    <!-- 見出し -->
-    <h1>注文者情報</h1>
+
+	<!-- 見出し -->
+    <h1>Reservation form</h1>
     
+    <!-- 予約確認 -->
+        <div th:if="${session.request.cartItemRequests != null}">
+        <div>
+            <table>
+                <thead>
+                <tr>
+                    <th>商品ID</th>
+                    <th>個数</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="item : ${session.request.cartItemRequests}">
+                    <td th:text="${item.itemName}"></td>
+                    <td th:text="${item.quantity}"></td>
+                    <td th:text="${item.quantity * item.price}"></td>
+                </tr>
+                </tbody>
+            </table>
+            <h3>合計:
+                <span th:text="${session.total}"></span>
+            </h3>
+        </div>
+        </div>
+     
+	<!-- 注文者情報入力フォーム -->
+	<h2>注文者情報</h2>    
 	<form th:action="@{/takeout/product/completeOrder}" th:object="${reservationForm}" method="post">
-	    <div>
-	        <label for="name">お名前:</label>
-	        <input type="text" id="name" th:field="*{name}" required /><!--th:fieldでth:object(reservationFormクラス)のname変数に値を格納する処理-->
+		    
+		<div>
+		<label for="name">お名前:</label>	<!--title=エラーメッセージの内容、pattern=入力時の条件を書く(正規表現を書く)--> <!--(?!\s*$)=空文字のみ入力時エラーを返す、[a-zA-Z\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF\s]+ = 英語(小文字、大文字)ひらがな、カタカナ、漢字、空白の入力を指定-->
+	        <input type="text" id="name" th:field="*{name}" required pattern="^(?!\s*$)[a-zA-Z\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF\s]+" placeholder="ご本人様のお名前" title="お名前入力時、数字や記号はご利用できません。また、空文字のみの場合も有効ではありません。"/><!--th:fieldでth:object(reservationFormクラス)のname変数に値を格納する処理-->
 	        <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span><!-- 名前のエラーメッセージ表示 -->
 	    </div>																		<!--requiredはフィールドに値が必須であることを示す、空だった場合エラーメッセージを返す-->
+	    
 	    <div>
 	        <label for="email">E-mail:</label>
-	        <input type="email" id="email" th:field="*{email}" required/><!--email変数に格納-->
+	        <input type="email" id="email" th:field="*{email}" required placeholder="test@gmail.com等" /><!--email変数に格納-->
 	        <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span><!-- メールのエラーメッセージ表示 -->
 	    </div>
+	    
 	    <div>
-	        <label for="phone">電話番号:</label>
-	        <input type="tel" id="phone" th:field="*{phone}" required/><!--phone変数に格納-->
+	        <label for="phone">電話番号:</label>										<!--title = エラーメッセージの内容を表示する？-->
+	        <input type="tel" id="phone" th:field="*{phone}" pattern="\d{3}-?\d{4}-?\d{4}" placeholder="001-2345-6789" title="11桁の電話番号を入力してください。"/><!--phone変数に格納-->
 	        <span th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span><!-- 電話番号のエラーメッセージ表示 -->
 	    </div>
 	
@@ -88,17 +118,12 @@
 	    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
 	        <div>
-	        <input type="text" id="datetime" th:field="*{date}" autocomplete="off" required/><!--date変数に格納-->
+	        	<input type="text" id="datetime" th:field="*{date}" autocomplete="off" required title="過去の日時は指定できません"/><!--date変数に格納-->
 	        </div>
-	        <div>
-				<span th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></span><!-- 日時のエラーメッセージ表示 -->
-	<!--            エラー表示-->
-	<!--            <ul th:if="${#fields.hasErrors('*')}">-->
-	<!--                <li th:each="err:${#fields.errors('*')}" th:text="${err}"></li>-->
-	<!--            </ul>-->
-	
-	            <label for="datetime">☝受取日時を選択してください☝</label>
-	        </div>
+	     <div>
+			<span th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></span><!-- 日時のエラーメッセージ表示 -->
+			<label for="datetime">☝受取日時を選択してください☝</label>
+		 </div>
 	
 	
 	    <script>
@@ -108,6 +133,7 @@
 	    </script>
 	
 	    <button type="submit">注文を確定☺</button>
+	    
 	
 	
 	    <br>
@@ -118,6 +144,61 @@
 	    
 	    <!--固定フッターフラグメントの挿入 -->
 			<div th:replace="layout :: footer"></div>
-	
+
+	</form>
+    </main>
+    
+<!--カレンダー表示処理-->
+<script>
+	$(function () {
+        $('#datetime').datetimepicker({
+            format:'Y-m-d H:i',
+            minDate: 0, // 今日以降の日付を選択可能にする
+            onChangeDateTime: function (dp, $input)
+            {
+				//現在の日付を取得する
+				let currentDate = new Date();
+				let currentDay = currentDate.getDate();
+
+				//選択された日付情報を取得
+				let selectDate = new Date($input.val());
+				let selectDay = selectDate.getDate();
+
+      			//選択した日付(selectDay)が現在の日付(currentDay)と一致するか比較
+      			if(selectDay === currentDay)
+      			{
+					//カレンダーを再表示
+					$('#datetime').datetimepicker
+					({
+						format:'Y-m-d H:i',
+						minDate: 0,
+						minTime: 0,
+						//時間指定(時間指定するとUIが消されないのでスクロールバグを回避できる)
+						allowTimes: ['00:00','01:00','02:00','03:00','04:00','05:00',
+          						     '06:00','07:00','08:00','09:00','10:00','11:00',
+          						     '12:00','13:00','14:00','15:00','16:00','17:00',
+          						     '18:00','19:00','20:00','21:00','22:00','23:00','24:00']
+       				 })
+				}
+				else//現在の日付以外だった場合
+				{
+					//再表示
+					$('#datetime').datetimepicker
+					({
+          				format:'Y-m-d H:i',
+          				minTime: '00:00',//選べる時間を0～24時に設定
+          				//時間指定
+          				allowTimes: ['00:00','01:00','02:00','03:00','04:00','05:00',
+          						     '06:00','07:00','08:00','09:00','10:00','11:00',
+          						     '12:00','13:00','14:00','15:00','16:00','17:00',
+          						     '18:00','19:00','20:00','21:00','22:00','23:00','24:00']
+       				 })
+				}
+
+      		}
+        });
+     });
+</script>
+
 </body>
 </html>

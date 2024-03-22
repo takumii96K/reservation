@@ -4,14 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CartItem {
-    private Long itemId;
-    private Integer quantity;
-    private String itemName;
-    private BigDecimal price;
+public class CheckoutRequest {
+    List<CartItemRequest> cartItemRequests;
 }

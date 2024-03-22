@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta id="csrfToken" name="_csrf" th:content="${_csrf.token}"/>
+    <meta id="csrfHeaderName" name="_csrf_header" th:content="${_csrf.headerName}"/>
 <title>商品選択画面</title>
     <link rel="stylesheet" type="text/css" href="/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick.css"/>
@@ -13,13 +15,13 @@
     <script src="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
-	
+
+	/* 全体の余白 */
 	.wrap{
 		margin:0 40px 20px 40px;
 	}
  
-	/*スライダー*/
-	
+	/*スライドショー*/
 	.slider {/*横幅94%で左右に余白を持たせて中央寄せ*/
 	    width:100%;
 	    margin:0 auto;
@@ -47,7 +49,6 @@
 	
 	
 	/*矢印の設定*/
-	
 	/*戻る、次へ矢印の位置*/
 	.slick-prev, 
 	.slick-next {
@@ -73,7 +74,6 @@
 	}
 	
 	/*ドットナビゲーションの設定*/
-	
 	.slick-dots {
 	    text-align:center;
 	  margin:30px 0 0 0;
@@ -97,26 +97,25 @@
 	.slick-dots .slick-active button{
 	    background:#333;/*ドットボタンの現在地表示の色*/
 	}
-	
-	
+
 	ul{
 	  margin:0;
 	  padding: 0;
 	  list-style: none;
 	}
 
-          	
-	/* ▽▽▽　メニュー　▽▽▽ */
+
+	/* メニューコンテナ */
         h3 {
             margin: 0;
             padding: 10px 0;
         }
-	
+
 		main{
 			margin-left: 10%;
 			margin-right: 10%;
 		}
-		
+
 	    .menu-container {
             display: flex;
             flex-wrap: wrap;
@@ -128,7 +127,7 @@
             margin-left: 100px;
             margin-bottom: 70px;
         }
-        
+
         .product-card{
 			width: calc(33.33% - 40px); /* カードの幅 */
     		/*margin: 30px; /* カード間の余白 */
@@ -171,7 +170,7 @@
             margin-top: 5px;
             margin-bottom: 15px; /* ボタンとの間隔 */
         }
-        
+       
         /* アニメーション */
 	.product-card {
 	    opacity: 0; /* 初期状態では非表示にする */
@@ -187,11 +186,9 @@
 	        opacity: 1;
 	        transform: translateY(0); /* 最終位置まで移動 */
 	    }
-}
-        
-    /* △△△ メニュー △△△ */
-    
-	/* ▽▽▽　次ページボタン　▽▽▽ */
+	}
+
+	/* 次ページボタン */
 	.button-36 {
 	    display: flex;
 	    justify-content: center;
@@ -216,12 +213,12 @@
 	    color: chocolate; /* 通常時の文字色を指定 */
 	    transition: 0.3s;
 	}
-	
+
 	.button-36:hover a {
 	    color: #fff; /* ホバー時の文字色を白に設定 */
 	    letter-spacing: 5px; /* 文字間隔を2ピクセルに設定 */
-	}	
-	
+	}
+
 	.button-36::after {
 	    transform: rotate(45deg);
 	    width: 5px;
@@ -236,20 +233,19 @@
 	    border-color: #fff;
 	    text-decoration-color: bisque;
 	}
-	/* △△△ 次ページボタン △△△ */
 
+	/* エラーメッセージ */
 	#message-container {
 	     display: none; /* 最初は非表示に */
 	     margin-bottom: 20px;
 	 }
-	 
 
     </style>
 </head>
 <body>
 	
 	<!--固定ヘッダーフラグメントの挿入 -->
-    <div th:replace="layout :: header"></div>
+    <div th:replace="fragments/layout :: header"></div>
     
 	<!-- 見出し -->
     <h1 class="midashi">Menu</h1>
@@ -267,7 +263,7 @@
 	  <li><img src="https://images.pexels.com/photos/1639557/pexels-photo-1639557.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt=""></li>
 	  <li><img src="https://images.pexels.com/photos/1893555/pexels-photo-1893555.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt=""></li>
 	  <li><img src="https://images.pexels.com/photos/1437812/pexels-photo-1437812.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt=""></li>
-	<!--/slider--></ul>
+	<!-- スライドショー関連のリンク --></ul>
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 	<script src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/6-1-7/js/6-1-7.js"></script>
@@ -280,8 +276,8 @@
                         <img th:src="${product.imageUrl}" th:alt="${product.productName}" />
                     </div>
                     <div class="product-details">
-                        <span th:text="${product.productName}">Product Name</span> -
-                        <span th:text="${product.productPrice}">Price</span>
+                        <span class="productName-span" th:text="${product.productName}">Product Name</span> -
+                        <span class="productPrice-span" th:text="${product.productPrice}">Price</span>
                         <label>
                             <input type="number" name="quantity" min="1" value="1" class="quantity-input" />
                         </label>
@@ -292,54 +288,46 @@
             </div>
         </div>
     </div>
-    	
+
         <div id="message-container">
             <p id="message"></p>
         </div>
-		
-    	<!-- ▽▽▽ 次ページに飛ぶボタン ▽▽▽ -->
-<!--	<div class="button019">-->
-<!--		<a class="sample_button11" href="reservation.html">注文確認(ユーザー情報入力)</a>-->
-<!--	</div>-->
+
+        <!--カートへ移動ボタン-->
     	<button class="button-36">
-		<a href="/takeout/product/reservation" >注文確認<br>(ユーザー情報入力) </a>
+		<a href="/inCart/list" >カートを確認<br></a>
 	</button>  
 		
 		</main>
-	</main>
 
-
-
-
-	
 	
 	<!--固定フッターフラグメントの挿入 -->
-	<div th:replace="layout :: footer"></div>
+	<div th:replace="fragments/layout :: footer"></div>
 
-	
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick.min.js"></script>
 <script>
 	
-// スライドショーの自動再生
-  $('.slider').slick({
-    autoplay: true,//自動的に動き出すか。初期値はfalse。
-    infinite: true,//スライドをループさせるかどうか。初期値はtrue。
-    speed: 300,//スライドのスピード。初期値は300。
-    slidesToShow: 3,//スライドを画面に3枚見せる
-    slidesToScroll: 1,//1回のスクロールで1枚の写真を移動して見せる
-    prevArrow: '<div class="slick-prev"></div>',//矢印部分PreviewのHTMLを変更
-    nextArrow: '<div class="slick-next"></div>',//矢印部分NextのHTMLを変更
-    centerMode: true,//要素を中央ぞろえにする
-    variableWidth: true,//幅の違う画像の高さを揃えて表示
-    dots: true,//下部ドットナビゲーションの表示
-  });
+	// スライドショーの自動再生
+	 $('.slider').slick({
+	    autoplay: true,//自動的に動き出すか。初期値はfalse。
+	    infinite: true,//スライドをループさせるかどうか。初期値はtrue。
+	    speed: 300,//スライドのスピード。初期値は300。
+	    slidesToShow: 3,//スライドを画面に3枚見せる
+	    slidesToScroll: 1,//1回のスクロールで1枚の写真を移動して見せる
+	    prevArrow: '<div class="slick-prev"></div>',//矢印部分PreviewのHTMLを変更
+	    nextArrow: '<div class="slick-next"></div>',//矢印部分NextのHTMLを変更
+	    centerMode: true,//要素を中央ぞろえにする
+	    variableWidth: true,//幅の違う画像の高さを揃えて表示
+	    dots: true,//下部ドットナビゲーションの表示
+	  });
 
     function plusSlides(n) {
         $('.slideshow-container').slick('slickGoTo', n);
     }
     
-    	
+    //商品カード	
     function addToCart(element) {
         let productId = element.closest('.product-details').querySelector('input[name="productId"]').value;
         let quantity = element.closest('.product-details').querySelector('.quantity-input').value;
@@ -378,7 +366,7 @@
     }
  
     //カードフェードインアニメーション
-window.addEventListener('scroll', function() {
+	window.addEventListener('scroll', function() {
     let productCards = document.querySelectorAll('.product-card');
     let windowHeight = window.innerHeight;
     
@@ -388,10 +376,10 @@ window.addEventListener('scroll', function() {
         if (cardTop < windowHeight) {
             setTimeout(function() {
                 card.style.animation = 'fadeInUp 0.5s ease forwards'; // アニメーションを適用
-            }, delay * 1000); // ミリ秒単位に変換して適用
-        }
-    });
-});
+				}, delay * 1000); // ミリ秒単位に変換して適用
+        	}
+    	});
+	});
 </script>
 </body>
 </html>

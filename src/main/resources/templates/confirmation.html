@@ -28,27 +28,27 @@
 <body>
 	
 	<!--固定ヘッダーフラグメントの挿入 -->
-    <div th:replace="layout :: header"></div>
+    <div th:replace="fragments/layout :: header"></div>
     
+    <!-- 見出し -->
     <main class="wrap">
 		<h1 class="midashi">Thank You!!</h1>
-		
+
 		<div class="comp">
 			<img src="https://static-00.iconduck.com/assets.00/process-completed-symbolic-icon-2048x2048-baquwdk1.png">
 		</div>
 		
 		<h3>ご予約が確定いたしました。ご利用ありがとうございます。</h3>
-	<form method="POST" th:action="@{takeout/product/resercation/confirm}" th:object="${confirmForm}">
+		<form method="POST" th:action="@{takeout/product/resercation/confirm}" th:object="${confirmForm}">
 	
 	
 	
-	<br>
-    <a href="/takeout/top">トップページへ</a><br>
-
+		<br>
+		<a href="/takeout/top">Top page</a><br>
 	</main>
 	
 	<!--固定フッターフラグメントの挿入 -->
-	<div th:replace="layout :: footer"></div>
+	<div th:replace="fragments/layout :: footer"></div>
 
 
 </body>

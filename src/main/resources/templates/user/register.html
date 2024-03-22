@@ -53,8 +53,9 @@
 <body>
 	
 	<!--固定ヘッダーフラグメントの挿入 -->
-    <div th:replace="layout :: header"></div>
+    <div th:replace="fragments/layout :: header"></div>
     
+    <!-- 見出し -->
     <main class="wrap">
 		<h1 class="midashi">Sign up</h1>
 		
@@ -64,12 +65,13 @@
     <!-- ログインフォーム -->
     <form th:action="@{/register}" th:object="${inputRegisterForm}" method="post">
 		
+		
         <!-- ユーザー名入力フォーム -->
         <div>
             <label for="username">▼ ユーザー名</label>
-            <input type="text" id="name" th:field="*{name}" required pattern="[A-Za-z0-9]+" title="※英数字のみ">
+            <input type="text" id="userName" th:field="*{userName}" required pattern="[A-Za-z0-9]+" title="※英数字のみ">
         <!-- ユーザー名のバリデーションエラーメッセージ -->
-        	<div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="error-message">ユーザー名は英数字で入力してください。</div>
+        	<div th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}" class="error-message">ユーザー名は英数字で入力してください。</div>
         </div>
         
         <!-- パスワード入力フォーム -->
@@ -93,11 +95,10 @@
         </div>
 
     </form>
-
 	</main>
 	
 	<!--固定フッターフラグメントの挿入 -->
-	<div th:replace="layout :: footer"></div>
+	<div th:replace="fragments/layout :: footer"></div>
 
 
 	

@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
 <head>
-<meta charset="UTF-8">
-<title>共通レイアウト</title>
-<link rel="stylesheet" type="text/css" th:href="@{/static/style.css}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" th:href="@{/style.css}">
 <link rel="stylesheet" href ="https://cdn.skypack.dev/sanitize.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <style>
 	
 </style>
+    <title></title>
 </head>
 <body>	
 		
@@ -29,12 +31,12 @@
 	            <ul>
 	                <li><a href="/takeout/product"><span class="material-symbols-outlined">restaurant</span></a></li>
 	                <li><a href="/inCart/list"><span class="material-symbols-outlined">shopping_cart</span></a></li>
-	                <li><a href="/takeout/product_member"><span class="material-symbols-outlined">group</span></a></li>
+	                <li><a href="/takeout/member"><span class="material-symbols-outlined">group</span></a></li>
 	                <li>
-	                    <a href="#"><span class="material-symbols-outlined">account_circle</span></a>
+	                    <a href="/login"><span class="material-symbols-outlined">account_circle</span></a>
 	                    <ul class="gnav_child">
 	                        <li><a href="/login">Login</a></li>
-	                        <li><a href="/register?">SignUp</a></li>
+	                        <li><a href="/register">SignUp</a></li>
 	                        <li><a href="#">MyPage</a></li>
 	                    </ul>
 	                </li>

@@ -34,8 +34,17 @@ public class Product {
 
 	@NotNull
 	@Column(name = "product_stock")
-	private int productStock;	//在庫数
+	private int stock;	//在庫数
 
-	@ManyToMany(mappedBy = "products")
-	private List<Reservation> reservations;
+	@OneToMany(mappedBy = "product")
+	private List<Order> orders;
+
+	Product(Long productId, String productName, String imageUrl, BigDecimal productPrice, int stock){
+		setProductId(productId);
+		setProductName(productName);
+		setImageUrl(imageUrl);
+		setProductPrice(productPrice);
+		setStock(stock);
+	}
+
 }

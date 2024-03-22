@@ -1,7 +1,7 @@
 package org.example.reservation.session;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.example.reservation.ResourceNotFoundException;
 
 
 import java.math.BigDecimal;
@@ -12,6 +12,13 @@ import java.util.Map;
 public class Cart {
     private final Map<Long, CartItem> items = new HashMap<>();
 
+    public CartItem selectById(Long id){
+        if(items.get(id) != null){
+            return items.get(id);
+        }else{
+            throw new ResourceNotFoundException("カートにありません。");
+        }
+    }
 
     /**
      * カートに商品を追加する
@@ -31,7 +38,10 @@ public class Cart {
 
         }
     }
-
+    public void updateItem(Long id, int quantity){
+        CartItem item = selectById(id);
+        item.setQuantity(quantity);
+    }
     /**
      * カートの商品を削除する
      * @param id item.id

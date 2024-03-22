@@ -132,7 +132,7 @@
         border: 1px solid #ccc;
         border-radius: 10px; /* 丸角 */
         overflow: hidden; /* 子要素の丸角を適用するために必要 */
-        transition: opacity 0.3s, transform 0.3s visibility, 0.3s; /* トランジションを追加 */
+        transition: opacity 0.3s, transform 0.3s, visibility, 0.3s; /* トランジションを追加 */
         opacity: 0; /* 初期状態は非表示 */
         transform: translateY(-10px); /* 初期状態は少し上に移動して非表示 */
     }
