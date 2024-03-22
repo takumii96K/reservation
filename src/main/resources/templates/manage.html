@@ -16,11 +16,11 @@
         
         /* 商品情報の見出しと表の間隔を調整 */
 		h2:first-of-type {
-   			 margin-bottom:0px; /* 商品情報の見出しの下の余白を調整 */
+   			 margin-bottom:0; /* 商品情報の見出しの下の余白を調整 */
 		}
 
 		h2:first-of-type + table {
-   			 margin-top: 0px; /* 商品情報の表の上の余白を調整 */
+   			 margin-top: 0; /* 商品情報の表の上の余白を調整 */
 		}
 		
 		/* 各項目の間隔を調整 */
@@ -69,7 +69,7 @@
 </head>
 <body>
 <h2>商品情報</h2>
-<table border="1">
+<table>
     <thead>
     <tr>
         <th>商品ID</th>
@@ -83,20 +83,20 @@
     </tr>
     </thead>
     <tbody>
-<!--    <tr th:each="product : ${products}">-->
-<!--        <td th:text="*{product.id}"></td>-->
-<!--        <td th:text="${product.productName}"></td>-->
-<!--        <td th:text="${product.productStock}"></td>-->
-<!--        <td th:text="${product.productPrice}"></td>-->
-<!--&lt;!&ndash;　　　　<td th:text="${product.quantity}"></td>&ndash;&gt;　　-->
-<!--        <td th:text="${product.totalPrice}"></td>-->
-		 <!-- 編集ボタンのセル -->
-<!--         <td>-->
-<!--            <a th:href="@{/takeout/edit-product/{productId}(productId=${product.id})}">-->
-<!--             <button class="edit-btn">編集</button>-->
-<!--            </a>-->
-<!--         </td>-->
-<!--    </tr>-->
+    <tr th:each="product : ${products}">
+        <td th:text="*{product.id}"></td>
+        <td th:text="${product.productName}"></td>
+        <td th:text="${product.stock}"></td>
+        <td th:text="${product.price}"></td>
+<!--　　　　<td th:text="${product.quantity}"></td>-->　　
+<!--        <td th:text="${product.}"></td>-->
+		  編集ボタンのセル
+         <td>
+            <a th:href="@{/takeout/edit-product/{productId}(productId=${product.id})}">
+             <button class="edit-btn">編集</button>
+            </a>
+         </td>
+    </tr>
 
     <!-- 編集フォームの行 -->
     <tr th:if="${productFormVisible}">
@@ -138,7 +138,7 @@
 
 
 <h2>ユーザー情報</h2>
-<table border="1">
+<table >
 
     <thead>
     <tr>
@@ -178,7 +178,7 @@
 
 
 <h2>予約情報</h2>
-<table border="1">
+<table>
     <thead>
     <tr>
         <th>予約ID</th>

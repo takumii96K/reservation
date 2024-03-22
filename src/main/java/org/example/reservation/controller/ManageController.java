@@ -56,7 +56,6 @@ public class ManageController {
         return "manage";
     }
 
-    /** 商品情報の編集処理 */
 //    @RequestMapping("/edit-product/{productId}")
 //    public String editProduct(@PathVariable("productId") Long productId, @ModelAttribute ProductForm form,Model model) {
 //            // 編集フォームを表示するためのフラグを設定
