@@ -1,25 +1,27 @@
 package org.example.reservation.entity.converter;
 
-import org.example.reservation.entity.Product;
-import org.example.reservation.entity.dto.ProductDto;
-import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import org.example.reservation.entity.Product;
+import org.example.reservation.entity.projection.ProductDto;
+import org.example.reservation.form.ProductForm;
+import org.springframework.stereotype.Component;
+
 @Component
 public class ProductDtoConverter{
+
     /**
      * 入力フォームからEntityオブジェクト変換
      * @param form ProductForm
      * @return Product
      */
-    public Product convertToEntityFromForm(Product form) {
+    public Product convertToEntity(ProductForm form) {
         Product product = new Product();
-        form.setProductName(product.getProductName());
-        form.setImageUrl(form.getImageUrl());
-        form.setProductPrice(product.getProductPrice());
-        form.setStock(product.getStock());
+        product.setProductName(form.getName());
+        product.setProductStock(form.getStock());
+        product.setProductPrice(form.getPrice());
+        product.setImageUrl(form.getImgUrl());
         return product;
     }
 
@@ -44,6 +46,7 @@ public class ProductDtoConverter{
         return product;
     }
 
+
     /**
      * DBから全件取得したDtoリスト
      * @param allEntity List<Product>
@@ -57,6 +60,8 @@ public class ProductDtoConverter{
             dto.setId(entity.getProductId());
             dto.setProductName(entity.getProductName());
             dto.setStock(entity.getStock());
+            dto.setProductStock(entity.getProductStock());
+            dto.setProductPrice(entity.getProductPrice());
             productDtoList.add(dto);
         }
         return productDtoList;

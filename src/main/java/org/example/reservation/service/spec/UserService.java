@@ -14,5 +14,12 @@ public interface UserService {
 
     void updateUser(UserRegistrationForm form);
 
+//    //全ユーザー取得
+//    List<User> getAllUser();
+
+    //authorityKindが1(ROLE_USER)のユーザーのみを取得
+    List<User> getPeopleWithAuthorityKindOne();
+
+
     List<User> findUserWithAuthorityKindOne();
 }

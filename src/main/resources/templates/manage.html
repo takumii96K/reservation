@@ -13,12 +13,35 @@
             border-bottom: 1px solid #ddd;
             padding-bottom: 5px;
         }
+        
+        /* 商品情報の見出しと表の間隔を調整 */
+		h2:first-of-type {
+   			 margin-bottom:0px; /* 商品情報の見出しの下の余白を調整 */
+		}
 
+		h2:first-of-type + table {
+   			 margin-top: 0px; /* 商品情報の表の上の余白を調整 */
+		}
+		
+		/* 各項目の間隔を調整 */
+        h2:not(:first-of-type) {
+            margin-top: 50px; /* 各項目の上の余白を調整 */
+        }
+
+        /* 最後の項目の下の余白を削除 */
+        h2:last-of-type {
+            margin-bottom: 10px; /* 最後の項目の下の余白を調整 */
+        }
+
+        
+ 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 10px;
-            table-layout: fixed; /* 列幅を固定するための設定 */
+            margin-top: 20px;
+            margin-bottom: 20px; /* 下の余白を追加 */
+            table-layout: auto; /* 列幅をセルの内容に合わせて自動調整 */
+ /*          table-layout: fixed;  /* 列幅を固定するための設定 */  
         }
 
         th, td {
@@ -52,8 +75,11 @@
         <th>商品ID</th>
         <th>商品名</th>
         <th>在庫数</th>
+        <th>商品金額</th>
         <th>売上個数</th>
         <th>売上金額</th>
+        <!-- 編集ボタンの列 -->
+        <th>編集</th>
     </tr>
     </thead>
     <tbody>
@@ -61,11 +87,55 @@
         <td th:text="*{product.id}"></td>
         <td th:text="${product.productName}"></td>
         <td th:text="${product.productStock}"></td>
-<!--        <td th:text="${product.productPrice}"></td>-->
+        <td th:text="${product.productPrice}"></td>
+<!--　　　　<td th:text="${product.quantity}"></td>-->　　
 <!--        <td th:text="${product.totalPrice}"></td>-->
+		 <!-- 編集ボタンのセル -->
+         <td>
+            <a th:href="@{/takeout/edit-product/{productId}(productId=${product.id})}">
+             <button class="edit-btn">編集</button>
+            </a>
+         </td>
     </tr>
+    <!-- 編集フォームの行 -->
+    <tr th:if="${productFormVisible}">
+       <td><input type="text" th:field="*{editedProduct.id}" /></td>
+       <td><input type="text" th:field="*{editedProduct.productName}" /></td>
+       <td><input type="text" th:field="*{editedProduct.productStock}" /></td>
+<!--       <td><input type="text" th:field="*{editedProduct.productPrice}" /></td>
+       <td><input type="text" th:field="*{editedProduct.totalPrice}" /></td> -->
+       <td><button type="submit">保存</button></td> 
+</tr>
     </tbody>
 </table>
+
+
+<h2>商品登録</h2>
+<form th:action="@{/takeout/add-product}" method="post" style="display: flex; flex-direction: row;">
+	
+    <div style="margin-right: 20px;">
+        <label for="productName" style="width: 100px;">商品名:</label>
+        <input type="text" id="productName" name="name" style="font-size: 16px;">
+    </div>
+    
+    <div style="margin-right: 20px;">
+        <label for="productStock" style="width: 100px;">在庫数:</label>
+        <input type="text" id="productStock" name="stock" style="font-size: 16px;">
+    </div>
+    
+    <div style="margin-right: 20px;">
+        <label for="productPrice" style="width: 100px;">商品金額:</label>
+        <input type="text" id="productPrice" name="price" style="font-size: 16px;">
+    </div>
+    
+    <div style="margin-right: 20px;">
+        <label for="productUrl" style="width: 100px;">商品画像:</label>
+        <input type="text" id="productUrl" name="imgUrl" style="font-size: 16px;">
+    </div>
+    
+    <button type="submit" class="edit-btn">登録</button>
+</form>
+
 
 <h2>ユーザー情報</h2>
 <table border="1">
@@ -76,17 +146,41 @@
         <th>商品ID</th>
         <th>購入した個数</th>
         <th>購入日時</th>
+        <th>編集</th>
     </tr>
     <tbody>
     <tr th:each="user : ${users}">
         <td th:text="${user.userId}"></td>
         <td th:text="${user.userName}"></td>
-<!--        <td th:text="${user.productId}"></td>-->
-<!--        <td th:text="${user.purchaseQuantity}"></td>-->
-<!--        <td th:text="${user.purchaseDateTime}"></td>-->
-   </tr>
+  <!--      <td th:text="${user.productId}"></td>
+        <td th:text="${user.purchaseQuantity}"></td>
+        <td th:text="${user.purchaseDateTime}"></td> -->
+        
+          <!-- 編集ボタンを表示 -->
+        <td>
+            <a th:href="@{'/edit-user/' + ${user.userId}}">
+                <button class="edit-btn">編集</button>
+            </a>
+        </td>
+       </tr>
+          <!-- 新規ユーザーの空の行 -->
+        <tr th:if="${newUserVisible}">
+            <td>新規</td>
+            <td><input type="text" th:field="*{newUser.userName}" /></td>
+<!--            <td><input type="text" th:field="*{newUser.productId}" /></td>
+            <td><input type="text" th:field="*{newUser.purchaseQuantity}" /></td>
+            <td><input type="text" th:field="*{newUser.purchaseDateTime}" /></td> -->
+            
+        </tr>
+    </tbody>
+</table>
+<!-- 編集ボタン -->
+<form style="margin-top: 10px;" th:action="@{/add-user}" method="post">
+    <button type="submit">新規ユーザー追加</button>
+</form>
        </tbody>
 </table>
+
 
 <h2>予約情報</h2>
 <table border="1">
@@ -96,22 +190,23 @@
         <th>予約者名</th>
         <th>予約日時</th>
         <th>TEL</th>
-        <th>商品ID</th>
         <th>E-mail</th>
+        <th>商品ID</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="reservation : ${reservations2}">
+    <tr th:each="reservation : ${reservations}">
         <td th:text="${reservation.reservationId}"></td>
         <td th:text="${reservation.customerName}"></td>
         <td th:text="${reservation.reservationTime}"></td>
         <td th:text="${reservation.customerTel}"></td>
-        <!--                <td th:text="${reservation.email}"></td> -->
+        <td th:text="${reservation.email}"></td>
         <!-- 商品IDの列はここで表示 -->
         <td th:text="${reservation.productId}"></td>
     </tr>
     </tbody>
 </table>
+
 
 
 </body>
