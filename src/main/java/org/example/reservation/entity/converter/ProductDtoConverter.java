@@ -1,12 +1,12 @@
 package org.example.reservation.entity.converter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.example.reservation.entity.Product;
 import org.example.reservation.entity.projection.ProductDto;
 import org.example.reservation.form.ProductForm;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class ProductDtoConverter{
@@ -19,7 +19,7 @@ public class ProductDtoConverter{
     public Product convertToEntity(ProductForm form) {
         Product product = new Product();
         product.setProductName(form.getName());
-        product.setProductStock(form.getStock());
+        product.setStock(form.getStock());
         product.setProductPrice(form.getPrice());
         product.setImageUrl(form.getImgUrl());
         return product;
@@ -34,7 +34,7 @@ public class ProductDtoConverter{
         ProductDto dto = new ProductDto();
         dto.setId(entity.getProductId());
         dto.setProductName(entity.getProductName());
-        dto.setStock(entity.getStock());
+        dto.setProductStock(entity.getStock());
         return dto;
     }
 
@@ -42,7 +42,7 @@ public class ProductDtoConverter{
         Product product = new Product();
         product.setProductId(dto.getId());
         product.setProductName(dto.getProductName());
-        product.setStock(dto.getStock());
+        product.setStock(dto.getProductStock());
         return product;
     }
 
@@ -59,8 +59,7 @@ public class ProductDtoConverter{
             ProductDto dto = new ProductDto();
             dto.setId(entity.getProductId());
             dto.setProductName(entity.getProductName());
-            dto.setStock(entity.getStock());
-            dto.setProductStock(entity.getProductStock());
+            dto.setProductStock(entity.getStock());
             dto.setProductPrice(entity.getProductPrice());
             productDtoList.add(dto);
         }

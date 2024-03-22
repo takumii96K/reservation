@@ -5,6 +5,7 @@ import org.example.reservation.ResourceNotFoundException;
 import org.example.reservation.entity.Product;
 import org.example.reservation.entity.dto.ProductDto;
 import org.example.reservation.entity.projection.ProductProjection;
+import org.example.reservation.form.ProductForm;
 import org.example.reservation.repository.JpaProductRepository;
 import org.example.reservation.service.spec.ProductService;
 import org.example.reservation.session.CartItemRequest;
@@ -64,7 +65,13 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public Product addNewProduct(Product product) {
-	    return repository.save(product);
+	public void createProduct(ProductForm form) {
+		Product product = new Product();
+		product.setProductName(form.getName());
+		product.setProductPrice(form.getPrice());
+		product.setStock(form.getStock());
+		product.setImageUrl(form.getImgUrl());
+		repository.save(product);
 	}
+
 }

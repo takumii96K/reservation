@@ -97,21 +97,21 @@
             </a>
          </td>
     </tr>
+
     <!-- 編集フォームの行 -->
     <tr th:if="${productFormVisible}">
-       <td><input type="text" th:field="*{editedProduct.id}" /></td>
-       <td><input type="text" th:field="*{editedProduct.productName}" /></td>
-       <td><input type="text" th:field="*{editedProduct.productStock}" /></td>
-<!--       <td><input type="text" th:field="*{editedProduct.productPrice}" /></td>
-       <td><input type="text" th:field="*{editedProduct.totalPrice}" /></td> -->
-       <td><button type="submit">保存</button></td> 
-</tr>
+        <td><label><input type="text" th:field="${form.name}" /></label></td>
+        <td><label><input type="text" th:field="*{form.stock}" /></label></td>
+        <td><label><input type="text" th:field="*{form.price}" /></label></td>
+        <td><label><input type="text" th:field="*{form.imgUrl}" /></label></td>
+        <td><button type="submit">保存</button></td>
+    </tr>
     </tbody>
 </table>
 
 
 <h2>商品登録</h2>
-<form th:action="@{/takeout/add-product}" method="post" style="display: flex; flex-direction: row;">
+<form th:action="@{/manage/add-product}" method="post" style="display: flex; flex-direction: row;">
 	
     <div style="margin-right: 20px;">
         <label for="productName" style="width: 100px;">商品名:</label>
@@ -139,6 +139,7 @@
 
 <h2>ユーザー情報</h2>
 <table border="1">
+
     <thead>
     <tr>
         <th>ユーザーID</th>
@@ -148,13 +149,12 @@
         <th>購入日時</th>
         <th>編集</th>
     </tr>
+
+
     <tbody>
     <tr th:each="user : ${users}">
         <td th:text="${user.userId}"></td>
         <td th:text="${user.userName}"></td>
-  <!--      <td th:text="${user.productId}"></td>
-        <td th:text="${user.purchaseQuantity}"></td>
-        <td th:text="${user.purchaseDateTime}"></td> -->
         
           <!-- 編集ボタンを表示 -->
         <td>
@@ -164,22 +164,17 @@
         </td>
        </tr>
           <!-- 新規ユーザーの空の行 -->
-        <tr th:if="${newUserVisible}">
-            <td>新規</td>
-            <td><input type="text" th:field="*{newUser.userName}" /></td>
-<!--            <td><input type="text" th:field="*{newUser.productId}" /></td>
-            <td><input type="text" th:field="*{newUser.purchaseQuantity}" /></td>
-            <td><input type="text" th:field="*{newUser.purchaseDateTime}" /></td> -->
-            
-        </tr>
+
+
     </tbody>
+
 </table>
+
+
 <!-- 編集ボタン -->
 <form style="margin-top: 10px;" th:action="@{/add-user}" method="post">
     <button type="submit">新規ユーザー追加</button>
 </form>
-       </tbody>
-</table>
 
 
 <h2>予約情報</h2>
