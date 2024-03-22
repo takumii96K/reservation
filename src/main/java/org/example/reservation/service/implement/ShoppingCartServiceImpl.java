@@ -1,11 +1,8 @@
 package org.example.reservation.service.implement;
 
 import lombok.RequiredArgsConstructor;
-import org.example.reservation.entity.Order;
 import org.example.reservation.entity.Product;
 import org.example.reservation.entity.Reservation;
-import org.example.reservation.entity.converter.IntoCartConverter;
-import org.example.reservation.entity.converter.ProductDtoConverter;
 import org.example.reservation.entity.enumeration.ReservationStatus;
 import org.example.reservation.form.ReservationInputForm;
 import org.example.reservation.service.spec.OrderService;
@@ -20,8 +17,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.Map;
 
 @Service
@@ -33,7 +29,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     private final ReservationService reservationService;
 
     private final CartSession cartSession;
-    private final IntoCartConverter cartConverter;
     private final ModelMapper modelMapper;
 
 
@@ -47,11 +42,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
 
-    /**
-     * 商品をカートから削除
-     *
-     * @param id item.id
-     */
     @Override
     public void removeItemFromCart(Long id) {
         cartSession.getCart().removeItem(id);
@@ -90,27 +80,18 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     public void finalizeCheckout(CheckoutRequest request, ReservationInputForm form) {
 
-        //リクエストから商品idに応じた各orderの作成
-        List<Order> orders = orderService.createOrders(request);
-
-        //productに各orderをjoin List<Product> savedProducts
-        orders.forEach(order -> {
-            productService.addOrder(request, order);
-        });
-
-        //reservationの登録
-        Reservation temporaryReservation = reservationService.createTemporaryReservation(form);
+        //reservationの新規作成
+        Reservation createReservation = reservationService.createReservation(form);
         //statusを確定に変更
-        temporaryReservation.setStatus(ReservationStatus.CONFIRMED);
-        //reservation-orderのjoinを登録して、reservationを確定する
-        reservationService.savedReservation(temporaryReservation,orders);
+        createReservation.setStatus(ReservationStatus.CONFIRMED);
         //確定後在庫更新
         productService.updateProductStock(request);
 
+        for (CartItemRequest cartItem : request.getCartItemRequests()) {
+            Product product = productService.getProductByRequest(cartItem);
+            orderService.createOrder(cartItem, product, createReservation);
+        }
+
     }
-
-
-
-
 
 }

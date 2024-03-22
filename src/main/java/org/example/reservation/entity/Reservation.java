@@ -1,21 +1,20 @@
 package org.example.reservation.entity;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.example.reservation.entity.converter.ReservationStatusConverter;
 import org.example.reservation.entity.enumeration.ReservationStatus;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
 @Table(name="reservation")
-@NoArgsConstructor
-@AllArgsConstructor
 public class Reservation {
 
 	@Id
@@ -39,15 +38,30 @@ public class Reservation {
 	@Column(name="reservation_email")
 	private String email;			//メアド
 
+	@JsonManagedReference
 	@OneToMany(mappedBy = "reservation")
-	private List<Order> orders;
+	private List<Order> orders = new ArrayList<>();
 
 	@Column(name = "reservation_status")
 	@Convert(converter = ReservationStatusConverter.class)
 	private ReservationStatus status = ReservationStatus.UNCONFIRMED;  // 予約の状態（"未確定", "確定", "キャンセル" など）
 
-	// ユーザー情報はオプショナルとします
+	// ユーザー情報はオプショナル
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
+
+	@Override
+	public String toString() {
+		return "Reservation{" +
+				"reservationId=" + reservationId +
+				", dateTime=" + dateTime +
+				", customerName='" + customerName + '\'' +
+				", tel='" + tel + '\'' +
+				", email='" + email + '\'' +
+				", status=" + status +
+				", userId=" + (user != null ? user.getUserId() : "null") +
+				'}';
+	}
 }

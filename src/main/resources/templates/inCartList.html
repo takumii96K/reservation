@@ -84,10 +84,7 @@
                 <td th:text="${item.value.price}"></td>
                 <td th:text="${item.value.quantity}"></td>
                 <td th:text="${item.value.price * item.value.quantity}"></td>
-                <td><input type="text" id="newQuantityInput" style="display: none;" pattern="[1-9]">
-                	<span th:if="${#field.hasErrors('quantity')}" th:errors="*{quantity}" title="1～9の数字のみ入力可能です。"></span>
-                </td>
-                <td><button id="confirmButton" style="display: none;" onclick ="confirmQuantity(this)">確定</button></td>
+
                 <td><button id="updateButton" class="update-item" th:data-item-id="${item.value.itemId}" onclick="showConfirmButton()">更新</button></td>
                 <td><button class="delete-item" th:data-item-id="${item.value.itemId}">削除</button></td>
             </tr>

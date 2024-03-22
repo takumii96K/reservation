@@ -1,5 +1,6 @@
 package org.example.reservation.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -8,15 +9,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.reservation.entity.converter.UserAuthorityConverter;
 import org.example.reservation.entity.enumeration.AuthorityKind;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Entity
 @Data
@@ -50,7 +46,11 @@ public class User implements Serializable{
     @Column(name = "authority_kind")
     private AuthorityKind authorities;
 
+    /**
+     *
+     */
+    @JsonManagedReference
     @OneToMany(mappedBy = "user")
-    private List<Reservation> reservations;
+    private List<Reservation> reservations = new ArrayList<>();
 
 }
