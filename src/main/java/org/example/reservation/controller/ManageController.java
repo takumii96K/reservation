@@ -33,7 +33,6 @@ public class ManageController {
         productFormVisible = false;
     }
 
-
     /**
      * 商品情報,ユーザー情報,予約情報の一覧を表示
      * @param model products:ProductDto, users, reservation

@@ -53,5 +53,4 @@ public class DataInitializer implements ApplicationRunner {
             System.err.println("An error occurred while inserting admin user: " + e.getMessage());
         }
     }
-
 }

@@ -5,10 +5,7 @@ import org.example.reservation.service.spec.ShoppingCartService;
 import org.example.reservation.session.CartItemRequest;
 import org.example.reservation.session.CartSession;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -44,17 +41,12 @@ public class ShoppingCartController {
     }
 
     @DeleteMapping("/delete/{itemId}")//1行削除
-    public ResponseEntity<?> deleteProduct(@PathVariable Long itemId)
-    {
-    	System.out.print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-    	//session.getCart().getItems().remove(productId)
-
+    public ResponseEntity<?> deleteProduct(@PathVariable Long itemId) {
         // 受け取ったIDを使用して商品の削除を処理
     	session.getCart().removeItem(itemId);
         // 適切なレスポンスを返します
         return ResponseEntity.ok("商品が正常に削除されました");
     }
-
 
 
     @PostMapping("/update")
