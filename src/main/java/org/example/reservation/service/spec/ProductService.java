@@ -13,7 +13,6 @@ public interface ProductService {
 	 * @return 商品リスト
 	 */
 	List<Product> getAllProducts();
-
 	List<Product> updateProductStock(Cart cart);
 	void createProduct(ProductForm form);
 	Product selectOneRandomProduct();//商品のランダム取得
