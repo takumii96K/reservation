@@ -2,7 +2,6 @@ package org.example.reservation.repository;
 
 import org.example.reservation.entity.Reservation;
 import org.example.reservation.entity.dto.ReservationProductDto;
-import org.example.reservation.entity.projection.ReservationProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -11,8 +10,6 @@ import java.util.List;
 
 @Repository
 public interface JpaReservationRepository extends JpaRepository<Reservation, Long>{
-
-    ReservationProjection findReservationProjectionByReservationId(Long id);
 
     @Query("SELECT new org.example.reservation.entity.dto.ReservationProductDto" +
             "(rp.reservation.reservationId, rp.product.productId, rp.product.productName, rp.quantity, " +

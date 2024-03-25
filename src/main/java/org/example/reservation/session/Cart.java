@@ -1,7 +1,7 @@
 package org.example.reservation.session;
 
 import lombok.Data;
-import org.example.reservation.ResourceNotFoundException;
+import org.example.reservation.exception.ResourceNotFoundException;
 
 
 import java.math.BigDecimal;

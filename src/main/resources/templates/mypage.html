@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>マイページ</title>
+    <link rel="stylesheet" type="text/css" href="/style.css">
+</head>
+<body>
+<div class="mypage-container">
+    <h1>マイページ</h1>
+    <div class="user-info" >
+        <h2>ユーザー情報</h2>
+        <p>名前: <span th:text="${user.}"></span></p>
+        <p>メール: <span th:text="${user.email}"></span></p>
+        <!-- パスワード変更や個人情報編集へのリンク -->
+        <a href="/edit-profile">個人情報の編集</a>
+        <a href="/change-password">パスワードの変更</a>
+    </div>
+    <div class="order-history">
+        <h2>注文履歴</h2>
+        <!-- 注文履歴リスト -->
+        <div th:each="order : ${user.orders}">
+            <p>注文日: <span th:text="${order.date}"></span></p>
+            <p>総額: <span th:text="${order.total}"></span></p>
+            <!-- 詳細ページへのリンク -->
+            <a th:href="@{/order/{id}(id=${order.id})}">注文詳細</a>
+        </div>
+    </div>
+    <div class="address-management">
+        <h2>配送先住所</h2>
+        <!-- 配送先住所リスト -->
+        <div th:each="address : ${user.addresses}">
+            <p th:text="${address.street} + ' ' + ${address.city} + ' ' + ${address.zip}"></p>
+            <!-- 編集・削除リンク -->
+            <a th:href="@{/edit-address/{id}(id=${address.id})}">編集</a>
+            <a th:href="@{/delete-address/{id}(id=${address.id})}">削除</a>
+        </div>
+        <a href="/add-address">新しい住所を追加</a>
+    </div>
+</div>
+</body>
+</html>

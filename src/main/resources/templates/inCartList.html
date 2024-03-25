@@ -82,7 +82,11 @@
                 th:data-quantity="${item.value.quantity}">
                 <td th:text="${item.value.itemName}"></td>
                 <td th:text="${#numbers.formatDecimal(item.value.price, 0, 'COMMA', 0, 'POINT')} + '円'">></td>
-                <td th:text="${item.value.quantity}"></td>
+                <td>
+                    <label>
+                        <input type="number" th:value="${item.value.quantity}" class="item-quantity" th:id="'quantity-' + ${item.value.itemId}" />
+                    </label>
+                </td>
                 <td th:text="${#numbers.formatDecimal((item.value.price * item.value.quantity), 0, 'COMMA', 0, 'POINT')} + '円'"></td>
 
                 <td><button id="updateButton" class="update-item" th:data-item-id="${item.value.itemId}" onclick="showConfirmButton()">更新</button></td>
@@ -137,7 +141,6 @@
 	            }
         });
     });
-
 	</script>
 </body>
 </html>

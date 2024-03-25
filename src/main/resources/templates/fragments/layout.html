@@ -17,6 +17,7 @@
 <!--	 ヘッダー -->
 	<div th:fragment="header" class="header">
 	    <header>
+
 	        <h2 class="teamA">
 				<a href="/takeout/top">
 					<span>T</span>
@@ -26,7 +27,7 @@
 					<span>A</span>
 				</a>
 			</h2>
-	        
+
 	        <nav id="gnav">
 	            <ul>
 	                <li><a href="/takeout/product"><span class="material-symbols-outlined">restaurant</span></a></li>
@@ -37,7 +38,13 @@
 	                    <ul class="gnav_child">
 	                        <li><a href="/login">Login</a></li>
 	                        <li><a href="/register">SignUp</a></li>
-	                        <li><a href="#">MyPage</a></li>
+                            <li>            <!-- ログアウト用のフォーム -->
+                                <form th:action="@{/logout}" method="post" style="display: inline;">
+                                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                                    <a href="javascript:;" onclick="parentNode.submit();">Logout</a>
+                                </form>
+                            </li>
+	                        <li><a href="/user/profile">MyPage</a></li>
 	                    </ul>
 	                </li>
 	            </ul>
@@ -113,6 +120,5 @@
     	<p class="footer-2__copyright">@ 2024 teamA groupwork presentation.</p>
 	</footer>
 	</div>
-
 </body>
 </html>

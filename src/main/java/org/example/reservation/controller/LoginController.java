@@ -1,9 +1,12 @@
 package org.example.reservation.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.example.reservation.config.UserDetailsIml;
 import org.example.reservation.exception.DuplicateUserNameException;
 import org.example.reservation.form.UserRegistrationForm;
 import org.example.reservation.service.spec.UserService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,7 +32,7 @@ public class LoginController {
 	 */
 	@GetMapping("/login")
 	public String loginForm(Model model,
-							@RequestParam Map<String, String> params) { // すべてのリクエストパラメータをマップとして受け取る
+                            @RequestParam Map<String, String> params, Authentication authentication) { // すべてのリクエストパラメータをマップとして受け取る
 
 		// ログイン失敗メッセージ
 		if (params.containsKey("failure")) {
@@ -55,6 +58,10 @@ public class LoginController {
 			}
 		}
 
+        if (authentication != null && authentication.isAuthenticated()) {
+            // ユーザーが既にログインしている場合は、ホームページにリダイレクト
+            return "redirect:/takeout/top";
+        }
 		return "user/login";
 	}
 
@@ -87,6 +94,12 @@ public class LoginController {
 			redirectAttributes.addFlashAttribute("error", "※IDが重複しています");
 			return "redirect:/register";
 		}
+	}
+	@GetMapping("/user/profile")
+	public String myPage(@AuthenticationPrincipal UserDetailsIml userDetails, Model model) {
+		model.addAttribute("user", userDetails);
+		// 例: 注文履歴、お気に入り商品など
+		return "mypage";
 	}
 
 }

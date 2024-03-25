@@ -16,5 +16,6 @@ public interface ShoppingCartService {
     void deleteItem(CartItemRequest request);
 
     void updateQuantity(CartItemRequest request);
+
     CartSession getSession();
 }

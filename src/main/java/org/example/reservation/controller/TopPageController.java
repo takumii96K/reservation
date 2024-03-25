@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/takeout") //TopURL
 public class TopPageController {
 
-
     @GetMapping("/top") //home
     public String topPage(Model model){
         model.addAttribute("title", "トップページ");
@@ -20,4 +19,5 @@ public class TopPageController {
     public String memberPage(){
         return "member";
     }
+
 }
