@@ -147,9 +147,11 @@
 	    <br>
 	    <a href="/takeout/product">メニュー画面に戻る</a><br>
 	    </form>
-	    </main>
-
-
+	    
+	<!--トップへ戻るボタンフラグメントの挿入 -->
+    <div th:replace="fragments/layout :: toTop"></div>
+    
+</main>
 	<!--固定フッターフラグメントの挿入 -->
 	<div th:insert="fragments/layout :: footer"></div>
 
@@ -204,6 +206,5 @@
         });
      });
 </script>
-
 </body>
 </html>

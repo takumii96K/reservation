@@ -14,7 +14,7 @@
 </head>
 <body>	
 		
-<!--	 ヘッダー -->
+<!--▽▽▽ヘッダー▽▽▽ -->
 	<div th:fragment="header" class="header">
 	    <header>
 	        <h2 class="teamA">
@@ -45,7 +45,14 @@
 	    </header>
 	</div>   
 	
-<!--	 ▽▽▽　フッター　▽▽▽ -->
+<!--▽▽▽　トップへ戻るボタン　▽▽▽ -->
+	<div th:fragment="toTop">
+	    <div class="for-scroll"></div>
+	    <div id="js-scroll-top" class="scroll-top">TOP</div>
+	</div>
+	
+	
+<!--▽▽▽　フッター　▽▽▽ -->
 	
 	<div th:fragment="footer">
    	<footer class="footer-2">
@@ -113,6 +120,19 @@
     	<p class="footer-2__copyright">@ 2024 teamA groupwork presentation.</p>
 	</footer>
 	</div>
+	
+<script>
+    /**
+     * トップへ戻るボタン
+     */
+    const PageTopBtn = document.getElementById('js-scroll-top');
+    PageTopBtn.addEventListener('click', () =>{
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });  
+</script>		     
 
 </body>
 </html>

@@ -201,8 +201,30 @@
 	
 	/* △△△ 見出し △△△ */
 	
+	/* ▽▽▽トップへ戻るボタン ▽▽▽*/
+	.for-scroll{
+	  height: 1500px;
+	}
 	
-    
+	.scroll-top {
+	  position: fixed;
+	  right: 25px;
+	  bottom: 25px;
+	  z-index: 100;
+	  background-color: rgb(179, 89, 0);
+	  width: 50px;
+	  height: 50px;
+	  border-radius: 50%;
+	  color: #fff;
+	  line-height: 50px;
+	  text-align: center;
+	}
+	.scroll-top:hover {
+	  cursor: pointer;
+	  opacity: 0.7;
+	}
+
+    /* △△△ トップへ戻るボタン △△△ */
     
    /* ▽▽▽　フッター　▽▽▽ */
     .footer-2 {

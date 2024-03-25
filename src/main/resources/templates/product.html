@@ -20,7 +20,7 @@
 	.wrap{
 		margin:0 40px 20px 40px;
 	}
- 
+		 
 	/*スライドショー*/
 	.slider {/*横幅94%で左右に余白を持たせて中央寄せ*/
 	    width:100%;
@@ -246,7 +246,7 @@
 	
 	<!--固定ヘッダーフラグメントの挿入 -->
     <div th:replace="fragments/layout :: header"></div>
-    
+       
 	<!-- 見出し -->
     <h1 class="midashi">Menu</h1>
     
@@ -296,9 +296,12 @@
         <!--カートへ移動ボタン-->
     	<button class="button-36">
             <a th:href="@{/inCart/list}">カートを確認<br></a>
-	</button>  
+	</button> 
+	
+	<!--トップへ戻るボタンフラグメントの挿入 -->
+    <div th:replace="fragments/layout :: toTop"></div>
 		
-		</main>
+</main>
 
 	
 	<!--固定フッターフラグメントの挿入 -->
@@ -308,7 +311,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick.min.js"></script>
 <script>
-	
+		
 	// スライドショーの自動再生
 	 $('.slider').slick({
 	    autoplay: true,//自動的に動き出すか。初期値はfalse。
