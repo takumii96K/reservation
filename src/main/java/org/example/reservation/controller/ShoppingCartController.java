@@ -5,6 +5,13 @@ import org.example.reservation.service.spec.ShoppingCartService;
 import org.example.reservation.session.CartItemRequest;
 import org.example.reservation.session.CartSession;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -32,7 +39,6 @@ public class ShoppingCartController {
         }
     }
 
-
     @PostMapping("/checkout")
     public ResponseEntity<?> checkout() {
         if(session.getCart().getItems().isEmpty()){
@@ -49,13 +55,38 @@ public class ShoppingCartController {
         return ResponseEntity.ok("商品が正常に削除されました");
     }
 
-    @PostMapping("/update")
-    public ResponseEntity<?> updateQuantity(@RequestBody CartItemRequest cartItemRequest){
-        try {
-            service.updateQuantity(cartItemRequest);//カートから指定idの商品を更新
-            return ResponseEntity.ok().build(); //true
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("カートを更新する際にエラーが発生しました: " + e.getMessage());
-        }
+    @PutMapping("/update/{itemId}/{itemQuantity}")
+    public ResponseEntity<?> updateProduct(@PathVariable Long itemId, @PathVariable int itemQuantity)
+    {
+        // 商品の更新処理
+        session.getCart().updateItem(itemId, itemQuantity);
+        // 適切なレスポンスを返します
+        return ResponseEntity.ok("商品が正常に更新されました");
     }
-}
+
+//}
+
+//カートに追加ボタンを押すたびに特定の商品をセッションに追加する
+//    @PostMapping("/cart/add")
+//    public String addToCart(@ModelAttribute("inputProduct") ProductForm form, Model model) {
+//        //(form)に埋め込まれた指定idの商品を取得
+//        Product product = service.getProductById(form.getProductId()); //idがこないhtmlに問題あり
+//        //productをcartItemとしてCartに追加する
+//        session.getCart().addItem(service.registerCartItem(product, form));
+//        model.addAttribute("cart", session);
+//        return "redirect:/takeout/product";
+//    }
+
+//    /**
+//     * クライアントへレスポンスするオブジェクト
+//     */
+//    @Data
+//    @AllArgsConstructor
+//    public static class CartResponse {
+//        private List<CartItem> items;
+////        private int itemCount = items.size();
+////        private BigDecimal totalPrice;
+//
+//    }
+//}
+    }
