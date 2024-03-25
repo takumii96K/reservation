@@ -55,29 +55,4 @@ public class ShoppingCartController {
         return ResponseEntity.ok("商品が正常に更新されました");
     }
 
-//}
-
-//カートに追加ボタンを押すたびに特定の商品をセッションに追加する
-//    @PostMapping("/cart/add")
-//    public String addToCart(@ModelAttribute("inputProduct") ProductForm form, Model model) {
-//        //(form)に埋め込まれた指定idの商品を取得
-//        Product product = service.getProductById(form.getProductId()); //idがこないhtmlに問題あり
-//        //productをcartItemとしてCartに追加する
-//        session.getCart().addItem(service.registerCartItem(product, form));
-//        model.addAttribute("cart", session);
-//        return "redirect:/takeout/product";
-//    }
-
-//    /**
-//     * クライアントへレスポンスするオブジェクト
-//     */
-//    @Data
-//    @AllArgsConstructor
-//    public static class CartResponse {
-//        private List<CartItem> items;
-////        private int itemCount = items.size();
-////        private BigDecimal totalPrice;
-//
-//    }
-//}
     }
