@@ -7,6 +7,7 @@ import org.example.reservation.service.spec.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 
 /** Productコントローラ */
@@ -28,39 +29,16 @@ public class ProductController {
 		return "/product"; // 商品選択ページのビュー名
 	}
 
-//	@PostMapping("/confirm")
-//	public String handleProductSelection(@ModelAttribute("ProductSelection") ProductDto form, HttpSession session) {
-//		// 選択された商品情報をセッションに保存
-////		session.setAttribute("selectedProducts", form.getSelections());se
-//		// 次のステップ（ユーザー情報入力画面）にリダイレクト
-//		return "/reservation";
-//	}
 
 
 	/**メニューデータをランダムで1件取得し、画面に表示する*/
-//	@GetMapping("/takeout/product22")
-//	public String showRandom(ProductForm form, Model model) {
-//		//商品を取得
-//		Optional<Product> productOpt = service.selectOneRandomProduct();
-//		//値が入っているか判定する
-//		if(productOpt.isPresent()) {
-//			// ProductForm productForm = productOpt(productOpt.get());
-//	        //    model.addAttribute("productForm", productForm);
-//	            form.setName(productOpt.get().getProductName());
-//		}else {
-//			model.addAttribute("msg", "商品がありません…");
-//			return "takeout/product";
-//		}
-//        return "takeout/product";
-//    }
-//		//値が入っているか判定する
-//		if(productOpt.isPresent()) {
-//			 ProductForm productForm = makeProductForm(productOpt.get());
-//	            model.addAttribute("productForm", productForm);
-//		}else {
-//			model.addAttribute("msg", "商品がありません…");
-//			return "takeout/product";
-//		}
+	@PostMapping("/take")
+	public String showRandom(Model model) {
+		//商品を取得
+		ProductDto randomProductDto = converter.convertToDto(service.selectOneRandomProduct());
+		model.addAttribute("randomProduct" ,randomProductDto);
+        return "redirect:/takeout/product";
+    }
 
         // 商品がある場合は該当のビューを返す
 //        return "takeout/product";
@@ -106,4 +84,5 @@ public class ProductController {
 //// public String showPopup(Model model) {
 ////     return "popup"; // popup.htmlを表示する
 //// }
+
 }
