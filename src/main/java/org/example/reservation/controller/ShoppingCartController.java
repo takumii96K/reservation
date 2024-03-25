@@ -43,15 +43,19 @@ public class ShoppingCartController {
         return ResponseEntity.ok(Map.of("redirectUrl", "/takeout/product/reservation"));
     }
 
-    @PostMapping("/delete")
-    public ResponseEntity<?> deleteItem(@RequestBody CartItemRequest cartItemRequest){
-        try {
-            service.deleteItem(cartItemRequest);//カートから指定idの商品を削除
-            return ResponseEntity.ok().build(); //true
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("商品をカートに追加する際にエラーが発生しました: " + e.getMessage());
-        }
+    @DeleteMapping("/delete/{itemId}")//1行削除
+    public ResponseEntity<?> deleteProduct(@PathVariable Long itemId)
+    {
+    	System.out.print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+    	//session.getCart().getItems().remove(productId)
+
+        // 受け取ったIDを使用して商品の削除を処理
+    	session.getCart().removeItem(itemId);
+        // 適切なレスポンスを返します
+        return ResponseEntity.ok("商品が正常に削除されました");
     }
+
+
 
     @PostMapping("/update")
     public ResponseEntity<?> updateQuantity(@RequestBody CartItemRequest cartItemRequest){
@@ -64,4 +68,27 @@ public class ShoppingCartController {
     }
 
 
-}
+//カートに追加ボタンを押すたびに特定の商品をセッションに追加する
+//    @PostMapping("/cart/add")
+//    public String addToCart(@ModelAttribute("inputProduct") ProductForm form, Model model) {
+//        //(form)に埋め込まれた指定idの商品を取得
+//        Product product = service.getProductById(form.getProductId()); //idがこないhtmlに問題あり
+//        //productをcartItemとしてCartに追加する
+//        session.getCart().addItem(service.registerCartItem(product, form));
+//        model.addAttribute("cart", session);
+//        return "redirect:/takeout/product";
+//    }
+
+//    /**
+//     * クライアントへレスポンスするオブジェクト
+//     */
+//    @Data
+//    @AllArgsConstructor
+//    public static class CartResponse {
+//        private List<CartItem> items;
+////        private int itemCount = items.size();
+////        private BigDecimal totalPrice;
+//
+//    }
+//}
+    }

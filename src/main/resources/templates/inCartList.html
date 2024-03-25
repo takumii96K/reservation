@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6" lang="ja">
 <head>
     <meta charset="UTF-8">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -84,6 +84,9 @@
                 <td th:text="${#numbers.formatDecimal(item.value.price, 0, 'COMMA', 0, 'POINT')} + '円'">></td>
                 <td th:text="${item.value.quantity}"></td>
                 <td th:text="${#numbers.formatDecimal((item.value.price * item.value.quantity), 0, 'COMMA', 0, 'POINT')} + '円'"></td>
+
+                <td><button id="updateButton" class="update-item" th:data-item-id="${item.value.itemId}" onclick="showConfirmButton()">更新</button></td>
+                <td><button class="delete-item" th:data-product-id="${item.value.itemId}">削除</button></td>
             </tr>
             </tbody>
         </table>
@@ -106,12 +109,35 @@
 
     <!--更新ボタンを押した後の編集処理-->
     <script>
-        // 更新ボタンが押された時の処理
-        function showConfirmButton(button) {
-            const tr = button.closest("tr");
-            tr.querySelector(".new-quantity").style.display = "inline-block";
-            tr.querySelector(".confirm-update").style.display = "inline-block";
-        }
+		$('.delete-item').click(function()
+		 {
+	        let productId = $(this).data('product-id'); // データ属性から商品IDを取得
+	        console.log("ID: " + productId);
+
+	        const csrfToken = $('meta[name="_csrf"]').attr('content');
+	    	const csrfHeaderName = $('meta[name="_csrf_header"]').attr('content');
+        // 商品IDをコントローラに送信
+		 $.ajax({
+	            type: 'DELETE',
+	            url: '/cart/delete/' + productId, // コントローラのエン0ドポイントに合わせてURLを変更
+	            contentType: 'application/json',
+	            headers: { [csrfHeaderName]: csrfToken },
+	            //data: { itemId: productId }, // 商品IDをデータとして送信
+	            success: function(response)
+				{
+	                // 必要に応じて成功時のレスポンスを処理
+	                alert("商品が正常に削除されました。");
+	                // ページを再読み込みする
+        			location.reload();
+	            },
+	            error: function(xhr, status, error)
+	            {
+	                // 必要に応じてエラー時のレスポンスを処理
+	                console.error('商品の削除エラー:', error);
+	            }
+        });
+    });
+
 	</script>
 </body>
 </html>
