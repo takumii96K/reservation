@@ -75,16 +75,22 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="item : ${cartItems}" class="cart-item"
+             <tr th:each="item : ${cartItems}" class="cart-item"
                 th:data-product-id="${item.value.itemId}"
                 th:data-item-name="${item.value.itemName}"
                 th:data-price="${item.value.price}"
                 th:data-quantity="${item.value.quantity}">
-                <td th:text="${item.value.itemName}"></td>s
-                <td th:text="${item.value.price}"></td>
-                <td th:text="${item.value.quantity}"></td>
-                <td th:text="${item.value.price * item.value.quantity}"></td>
-                <td><button id="updateButton" class="update-item" th:data-item-id="${item.value.itemId}" onclick="showConfirmButton()">更新</button></td>
+                <td th:text="${item.value.itemName}"></td>
+                <td th:text="${#numbers.formatDecimal(item.value.price, 0, 'COMMA', 0, 'POINT')} + '円'">></td>
+                <td>
+                    <label>
+                        <input type="number" th:value="${item.value.quantity}" class="item-quantity" th:id="'quantity-' + ${item.value.itemId}" />
+                    </label>
+                </td>
+                <td th:text="${#numbers.formatDecimal((item.value.price * item.value.quantity), 0, 'COMMA', 0, 'POINT')} + '円'"></td>
+                
+                
+                <td><button class="update-item" th:data-product-id="${item.value.itemId}" data-quantity="${item.value.quantity}">更新</button></td>
                 <td><button class="delete-item" th:data-product-id="${item.value.itemId}">削除</button></td>
             </tr>
             </tbody>
@@ -92,7 +98,6 @@
     </div>
     <!--決済ボタン-->
     <button id="checkoutButton">決済する</button>
-
 
     <!--固定フッターフラグメントの挿入 -->
     <div th:replace="fragments/layout :: footer"></div>
@@ -102,7 +107,7 @@
 
     <!--更新ボタンを押した後の編集処理-->
     <script>
-		$('.delete-item').click(function()
+		$('.delete-item').click(function()//削除ボタン
 		 {
 	        let productId = $(this).data('product-id'); // データ属性から商品IDを取得
 	        console.log("ID: " + productId);
@@ -112,7 +117,7 @@
         // 商品IDをコントローラに送信
 		 $.ajax({
 	            type: 'DELETE',
-	            url: '/cart/delete/' + productId, // コントローラのエン0ドポイントに合わせてURLを変更
+	            url: '/cart/delete/' + productId, // コントローラのエンドポイントに合わせてURLを変更
 	            contentType: 'application/json',
 	            headers: { [csrfHeaderName]: csrfToken },
 	            //data: { itemId: productId }, // 商品IDをデータとして送信
@@ -130,7 +135,38 @@
 	            }
         });
     });
-		
+	</script>
+	<script>
+		 $('.update-item').click(function()//更新ボタン
+	    {
+			let itemId = $(this).data('product-id');
+   			let newQuantity = $('#quantity-' + itemId).val();
+    
+			console.log("ID:"+itemId);
+			console.log("quantity :"+newQuantity);
+			
+			const csrfToken = $('meta[name="_csrf"]').attr('content');
+		    const csrfHeaderName = $('meta[name="_csrf_header"]').attr('content');
+		    
+			$.ajax({
+		            type: 'PUT',
+		            url: '/cart/update/' + itemId +'/'+ newQuantity, // コントローラのエンドポイントに合わせてURLを変更
+		            contentType: 'application/json',
+		            headers: { [csrfHeaderName]: csrfToken },
+		            success: function(response)
+					{
+		                // 必要に応じて成功時のレスポンスを処理
+		                alert("商品が正常に更新されました。");
+		                // ページを再読み込みする
+	        			location.reload();
+		            },
+		            error: function(xhr, status, error)
+		            {
+		                // 必要に応じてエラー時のレスポンスを処理
+		                console.error('商品の更新エラー:', error);
+		            }
+	        });
+		});
 	</script>
 </body>
 </html>

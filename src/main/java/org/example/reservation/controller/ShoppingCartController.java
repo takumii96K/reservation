@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -50,16 +51,20 @@ public class ShoppingCartController {
     @DeleteMapping("/delete/{itemId}")//1行削除
     public ResponseEntity<?> deleteProduct(@PathVariable Long itemId)
     {
-    	System.out.print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-    	//session.getCart().getItems().remove(productId)
-    	
         // 受け取ったIDを使用して商品の削除を処理
     	session.getCart().removeItem(itemId);
         // 適切なレスポンスを返します
         return ResponseEntity.ok("商品が正常に削除されました");
     }
 
-
+    @PutMapping("/update/{itemId}/{itemQuantity}")
+    public ResponseEntity<?> updateProduct(@PathVariable Long itemId, @PathVariable int itemQuantity)
+    {
+        // 商品の更新処理
+        session.getCart().updateItem(itemId, itemQuantity);
+        // 適切なレスポンスを返します
+        return ResponseEntity.ok("商品が正常に更新されました");
+    }
 
 //}
 
