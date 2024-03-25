@@ -3,15 +3,7 @@ package org.example.reservation.controller;
 import lombok.RequiredArgsConstructor;
 import org.example.reservation.service.spec.ShoppingCartService;
 import org.example.reservation.session.CartItemRequest;
-import org.example.reservation.session.CartSession;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -22,7 +14,6 @@ import java.util.Map;
 public class ShoppingCartController {
 
     private final ShoppingCartService service;
-    private final CartSession session;
 
     /**
      * カートに追加ボタン
@@ -41,7 +32,7 @@ public class ShoppingCartController {
 
     @PostMapping("/checkout")
     public ResponseEntity<?> checkout() {
-        if(session.getCart().getItems().isEmpty()){
+        if(service.getSession().getCart().getItems().isEmpty()){
             return ResponseEntity.badRequest().body(Map.of("message", "商品をカートに入れてください"));
         }
         return ResponseEntity.ok(Map.of("redirectUrl", "/takeout/product/reservation"));
@@ -59,7 +50,7 @@ public class ShoppingCartController {
     public ResponseEntity<?> updateProduct(@PathVariable Long itemId, @PathVariable int itemQuantity)
     {
         // 商品の更新処理
-        session.getCart().updateItem(itemId, itemQuantity);
+        service.getSession().getCart().updateItem(itemId, itemQuantity);
         // 適切なレスポンスを返します
         return ResponseEntity.ok("商品が正常に更新されました");
     }
