@@ -25,6 +25,9 @@
     	padding:50px;
     	border: 1px solid #1a1a1a;
     	text-align: center; /* 中央揃え */
+    	/*animation: slide-up 0.5s ease forwards; /* 下から上にスライドするアニメーション */
+    	transform: translateY(50px); /* 初期状態では下方向に移動 */
+    	transition: opacity 0.5s ease, transform 0.5s ease; /* フェードインと移動のトランジションを設定 */
 	}
 
 	.profile__img {
@@ -46,7 +49,16 @@
     	margin: 0; /* 説明文のマージンをリセット */
 	}
 	
-	/* △△△ メンバープロフィール △△△ */
+	@keyframes slide-up {
+    from {
+        transform: translateY(100%); /* 下方向に移動 */
+        opacity: 0; /* 透明 */
+    }
+    to {
+        transform: translateY(0); /* 上方向に移動 */
+        opacity: 1; /* 不透明 */
+    }
+}
 	
 </style>
 </head>
@@ -115,7 +127,29 @@
 	<div th:replace="fragments/layout :: footer"></div>
 	
 	
-	
+<script>
+// JavaScript
+document.addEventListener('DOMContentLoaded', function() {
+    const profiles = document.querySelectorAll('.profile');
+
+    // スクロール時のイベントリスナーを追加
+    window.addEventListener('scroll', function() {
+        profiles.forEach((profile, index) => {
+            // プロフィールが画面内に入ったかどうかを判定
+            const rect = profile.getBoundingClientRect();
+            const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+            const isVisible = rect.top < windowHeight;
+
+            // プロフィールが画面内に入ったらアニメーションを適用
+            if (isVisible) {
+                setTimeout(() => {
+                    profile.style.display = 'block';
+                }, index * 300); // 時差を設定
+            }
+        });
+    });
+});
+</script>	
 
 </body>
 </html>
