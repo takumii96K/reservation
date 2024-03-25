@@ -12,7 +12,5 @@ public interface ShoppingCartService {
     void addItemToCart(CartItemRequest request);
     Map<Long, CartItem> lookInCart();
     void finalizeCheckout(Cart cart, ReservationInputForm form);
-    void updateQuantity(CartItemRequest request);
-
     CartSession getSession();
 }

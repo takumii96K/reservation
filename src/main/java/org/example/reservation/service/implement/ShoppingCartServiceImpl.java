@@ -66,10 +66,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         });
     }
 
-    @Override
-    public void updateQuantity(CartItemRequest request) {
-        cartSession.getCart().updateItem(request.getItemId(), request.getQuantity());
-    }
 
     @Override
     public CartSession getSession() {
