@@ -32,7 +32,7 @@ public class ReservationController {
 	public String showReservationForm(Model model) {
 
 		if(cartSession.getCart().getItems().isEmpty()){
-			return "product";
+			return "redirect:/takeout/product";
 		}
 		model.addAttribute("reservationForm", new ReservationInputForm());
 		model.addAttribute("items", cartSession.getCart().getItems());

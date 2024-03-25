@@ -60,6 +60,7 @@ public class ProductDtoConverter{
             dto.setId(entity.getProductId());
             dto.setProductName(entity.getProductName());
             dto.setStock(entity.getStock());
+            dto.setImgUrl(entity.getImageUrl());
             dto.setPrice(entity.getProductPrice());
             productDtoList.add(dto);
         }

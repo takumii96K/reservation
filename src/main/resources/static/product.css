@@ -1,0 +1,223 @@
+/* 全体の余白 */
+.wrap{
+    margin:0 40px 20px 40px;
+}
+
+/*スライドショー*/
+.slider {/*横幅94%で左右に余白を持たせて中央寄せ*/
+    width:100%;
+    margin:0 auto;
+    position: relative; /* スライダーにも相対位置を指定 */
+    z-index: 0; /* 背面に配置 */
+    opacity: 0; /* 初期状態では非表示にする */
+    animation: fadeInUp 1.0s ease forwards; /* fadeInUpアニメーションを適用 */
+}
+
+.slider img {
+    width:40vw;/*スライダー内の画像を60vwにしてレスポンシブ化*/
+    height:auto;
+}
+
+.slider .slick-slide {
+    transform: scale(0.8);/*左右の画像のサイズを80%に*/
+    transition: all .5s;/*拡大や透過のアニメーションを0.5秒で行う*/
+    opacity: 0.5;/*透過50%*/
+}
+
+.slider .slick-slide.slick-center{
+    transform: scale(1);/*中央の画像のサイズだけ等倍に*/
+    opacity: 1;/*透過なし*/
+}
+
+
+/*矢印の設定*/
+/*戻る、次へ矢印の位置*/
+.slick-prev,
+.slick-next {
+    position: absolute;/*絶対配置にする*/
+    top: 42%;
+    cursor: pointer;/*マウスカーソルを指マークに*/
+    outline: none;/*クリックをしたら出てくる枠線を消す*/
+    border-top: 2px solid #666;/*矢印の色*/
+    border-right: 2px solid #666;/*矢印の色*/
+    height: 15px;
+    width: 15px;
+    display: none;
+}
+
+.slick-prev {/*戻る矢印の位置と形状*/
+    left: -1.5%;
+    transform: rotate(-135deg);
+}
+
+.slick-next {/*次へ矢印の位置と形状*/
+    right: -1.5%;
+    transform: rotate(45deg);
+}
+
+/*ドットナビゲーションの設定*/
+.slick-dots {
+    text-align:center;
+    margin:30px 0 0 0;
+}
+
+.slick-dots li {
+    display:inline-block;
+    margin:0 5px;
+}
+
+.slick-dots button {
+    color: transparent;
+    outline: none;
+    width:8px;/*ドットボタンのサイズ*/
+    height:8px;/*ドットボタンのサイズ*/
+    display:block;
+    border-radius:50%;
+    background:#ccc;/*ドットボタンの色*/
+}
+
+.slick-dots .slick-active button{
+    background:#333;/*ドットボタンの現在地表示の色*/
+}
+
+ul{
+    margin:0;
+    padding: 0;
+    list-style: none;
+}
+
+
+/* メニューコンテナ */
+h3 {
+    margin: 0;
+    padding: 10px 0;
+}
+
+main{
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.menu-container {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative; /* 親要素に相対位置を指定 */
+    z-index: 1; /* スライダーよりも前面に表示 */
+    justify-content: space-around;
+    margin-top: 150px; /* ヘッダーの高さに合わせて調整 */
+    margin-right: 100px;
+    margin-left: 100px;
+    margin-bottom: 70px;
+}
+
+.product-card{
+    width: calc(33.33% - 40px); /* カードの幅 */
+    /*margin: 30px; /* カード間の余白 */
+    margin: 30px 20px 30px 20px; /* 上右下左の順に余白を指定 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .2);
+}
+
+.menu-item {
+    background-color: #fff;
+    margin: 15px;
+    width: calc(33.33% - 30px); /* 画面幅に応じて調整 */
+    box-shadow: 0 2px 4px rgba(0,0,0,.2);
+    transition: transform .2s;
+    position: relative; /* この変更を加えます */
+}
+
+.menu-item:hover {
+    transform: scale(1.05);
+}
+
+.product-image img {
+    width: 100%;
+    height: 200px; /* 画像の高さ */
+    object-fit: cover;
+}
+
+.product-details {
+    padding: 15px;
+    text-align: center;
+}
+
+.product-details span {
+    display: block;
+    margin: 10px 0;
+}
+
+.quantity-input {
+    width: 60px; /* 数量入力フィールドの幅 */
+    padding: 5px;
+    margin-top: 5px;
+    margin-bottom: 15px; /* ボタンとの間隔 */
+}
+
+/* アニメーション */
+.product-card {
+    opacity: 0; /* 初期状態では非表示にする */
+    animation: fadeInUp 3.0s ease forwards; /* fadeInUpアニメーションを適用 */
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px); /* 初期位置を下方向に20px移動 */
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0); /* 最終位置まで移動 */
+    }
+}
+
+/* 次ページボタン */
+.button-36 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+    margin: 0 auto;
+    padding: .9em 2em;
+    border: 1px solid #c06e2a;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #c06e2a;
+    font-size: 1em;
+}
+
+.button-36:hover {
+    border: none;
+    background-color: #c06e2a;
+    font-weight: 600;
+}
+
+.button-36 a {
+    color: chocolate; /* 通常時の文字色を指定 */
+    transition: 0.3s;
+}
+
+.button-36:hover a {
+    color: #fff; /* ホバー時の文字色を白に設定 */
+    letter-spacing: 5px; /* 文字間隔を2ピクセルに設定 */
+}
+
+.button-36::after {
+    transform: rotate(45deg);
+    width: 5px;
+    height: 5px;
+    margin-left: 10px;
+    border-top: 2px solid #c06e2a;
+    border-right: 2px solid #c06e2a;
+    content: '';
+}
+
+.button-36:hover::after {
+    border-color: #fff;
+    text-decoration-color: bisque;
+}
+
+/* エラーメッセージ */
+#message-container {
+    display: none; /* 最初は非表示に */
+    margin-bottom: 20px;
+}

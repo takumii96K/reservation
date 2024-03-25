@@ -72,7 +72,6 @@ public class ManageController {
 //            model.addAttribute("editedProduct", editedProductForm);
 //
 //            return "redirect:/takeout/manage"; // 商品情報の一覧ページにリダイレクト
-//
 //    }
 
         /** 商品情報の追加処理 */

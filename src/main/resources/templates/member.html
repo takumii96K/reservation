@@ -3,116 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>メンバー紹介</title>
-<link rel="stylesheet" type="text/css" href="/style.css">
-<link rel="stylesheet" href ="https://cdn.skypack.dev/sanitize.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-<style>
-		
-	/* メンバープロフィール */
-	.profile-group {
-    	display: flex;
-    	flex-wrap: wrap;
-    	justify-content: center; /* 中央揃え */
-    	gap: 20px; /* プロフィール間の間隔 */
-   		margin: 10px 10% 30px 10%;
-	}
+    <title>メンバー紹介</title>
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    <link rel="stylesheet" href ="https://cdn.skypack.dev/sanitize.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <style>
 
-	.profile {
-		display: none; /* 初期状態では非表示 */
-    	background: #FFF;
-    	width: calc(50% - 10px); /* 2列にするために50%に設定し、間隔を考慮して適宜調整 */
-    	padding:50px;
-    	border: 1px solid #1a1a1a;
-    	text-align: center; /* 中央揃え */
-	}
+        /* メンバープロフィール */
+        .profile-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center; /* 中央揃え */
+            gap: 20px; /* プロフィール間の間隔 */
+            margin: 10px 10% 30px 10%;
+        }
 
-	.profile__img {
-    	display: block;
-    	width: 100px; /* 画像の幅 */
-    	height: 100px; /* 画像の高さ */
-    	border-radius: 50%; /* 丸い形にする */
-    	object-fit: cover; /* 画像のアスペクト比を維持しつつ枠にフィット */
-    	margin: 0 auto 10px; /* 上下にマージンを追加して中央揃え */
-	}
+        .profile {
+            background: #FFF;
+            width: calc(50% - 10px); /* 2列にするために50%に設定し、間隔を考慮して適宜調整 */
+            padding:50px;
+            border: 1px solid #1a1a1a;
+            text-align: center; /* 中央揃え */
+            opacity: 0; /* 初期状態で透明に設定 */
+            transition: opacity 2s ease-in-out; /* 透明度の変化を2秒間で */
+        }
 
-	.profile__name {
-    	font-weight: bold; /* 太字 */
-    	margin: 0 0 5px; /* 下部のマージンを設定 */
-	}
+        .profile__img {
+            display: block;
+            width: 100px; /* 画像の幅 */
+            height: 100px; /* 画像の高さ */
+            border-radius: 50%; /* 丸い形にする */
+            object-fit: cover; /* 画像のアスペクト比を維持しつつ枠にフィット */
+            margin: 0 auto 10px; /* 上下にマージンを追加して中央揃え */
 
-	.profile__desc {
-    	line-height: 1.6rem;
-    	margin: 0; /* 説明文のマージンをリセット */
-	}
-	
-	/* △△△ メンバープロフィール △△△ */
-	
-</style>
+        }
+
+        .profile__name {
+            font-weight: bold; /* 太字 */
+            margin: 0 0 5px; /* 下部のマージンを設定 */
+        }
+
+        .profile__desc {
+            line-height: 1.6rem;
+            margin: 0; /* 説明文のマージンをリセット */
+        }
+
+        /* △△△ メンバープロフィール △△△ */
+
+    </style>
 </head>
 <body>
 
 
-	<!--固定ヘッダーフラグメントの挿入 -->
-    <div th:replace="fragments/layout :: header"></div>
+<!--固定ヘッダーフラグメントの挿入 -->
+<div th:replace="fragments/layout :: header"></div>
 
 
-    <!-- ▽▽▽ メインページ ▽▽▽ -->
-    <!-- 見出し -->
-	<h1 class="midashi">Member</h1>
+<!-- ▽▽▽ メインページ ▽▽▽ -->
+<!-- 見出し -->
+<h1 class="midashi">Member</h1>
 
-    <main class="wrap">
+<main class="wrap">
 
-	<!-- メンバープロフィール -->
-	<!-- バックエンド2人 -->
-	<div class="profile-group">
-		<div class="profile">
-			<img class="profile__img" src="https://1.bp.blogspot.com/-tVeC6En4e_E/X96mhDTzJNI/AAAAAAABdBo/jlD_jvZvMuk3qUcNjA_XORrA4w3lhPkdQCNcBGAsYHQ/s400/onepiece01_luffy.png" alt="">
-			<div class="profile__name">Takumi Kawahara</div>
-			<div class="profile__desc">リーダー</div>
-		</div>
-		<div class="profile">
-			<img class="profile__img" src="https://1.bp.blogspot.com/-LZL7jGWmL3Q/X-FcwoOnE2I/AAAAAAABdEs/qUrY1ClrQrMukkdaEnZK8-Bdob7mOdmQgCNcBGAsYHQ/s400/onepiece13_crocodile.png" alt="">
-			<div class="profile__name">Hiroyuki Mizokam</div>
-			<div class="profile__desc">ここに簡単な自己紹介が入ります。</div>
-		</div>
-	</div>
+    <!-- メンバープロフィール -->
+    <!-- バックエンド2人 -->
+    <div class="profile-group">
+        <div class="profile">
+            <img class="profile__img" src="https://1.bp.blogspot.com/-tVeC6En4e_E/X96mhDTzJNI/AAAAAAABdBo/jlD_jvZvMuk3qUcNjA_XORrA4w3lhPkdQCNcBGAsYHQ/s400/onepiece01_luffy.png" alt="">
+            <div class="profile_name">Takumi Kawahara</div>
+            <div class="profile__desc">リーダー</div>
+        </div>
+        <div class="profile">
+            <img class="profile__img" src="https://1.bp.blogspot.com/-LZL7jGWmL3Q/X-FcwoOnE2I/AAAAAAABdEs/qUrY1ClrQrMukkdaEnZK8-Bdob7mOdmQgCNcBGAsYHQ/s400/onepiece13_crocodile.png" alt="">
+            <div class="profile__name">Hiroyuki Mizokam</div>
+            <div class="profile__desc">ここに簡単な自己紹介が入ります。</div>
+        </div>
+    </div>
 
-	<!-- フロントエンド4人 -->
-	<div class="profile-group">
+    <!-- フロントエンド4人 -->
+    <div class="profile-group">
 
-		<div class="profile">
-			<img class="profile__img" src="https://1.bp.blogspot.com/-VACf4WfKNOk/X-Fcx7DWraI/AAAAAAABdE8/KT0UudaIHrMtbFvjC02yLuPLNBZurGYpQCNcBGAsYHQ/s400/onepiece17_doflamingo.png" alt="">
-			<div class="profile__name">Shiho Yamamoto</div>
-			<div class="profile__desc">ここに簡単な自己紹介が入ります。</div>
-		</div>
+        <div class="profile">
+            <img class="profile__img" src="https://1.bp.blogspot.com/-VACf4WfKNOk/X-Fcx7DWraI/AAAAAAABdE8/KT0UudaIHrMtbFvjC02yLuPLNBZurGYpQCNcBGAsYHQ/s400/onepiece17_doflamingo.png" alt="">
+            <div class="profile__name">Shiho Yamamoto</div>
+            <div class="profile__desc">ここに簡単な自己紹介が入ります。</div>
+        </div>
 
-		<div class="profile">
-			<img class="profile__img" src="https://1.bp.blogspot.com/--9Rl2O4BBN0/X-Fct8K5mqI/AAAAAAABdEI/yLOziAqJO34fwn73AolVP0e42A2h-ql1QCNcBGAsYHQ/s400/onepiece06_chopper.png" alt="">
-			<div class="profile__name">Mika Hayashida</div>
-			<div class="profile__desc">ここに簡単な自己紹介が入ります。</div>
-		</div>
-	</div>
+        <div class="profile">
+            <img class="profile__img" src="https://1.bp.blogspot.com/--9Rl2O4BBN0/X-Fct8K5mqI/AAAAAAABdEI/yLOziAqJO34fwn73AolVP0e42A2h-ql1QCNcBGAsYHQ/s400/onepiece06_chopper.png" alt="">
+            <div class="profile__name">Mika Hayashida</div>
+            <div class="profile__desc">ここに簡単な自己紹介が入ります。</div>
+        </div>
+    </div>
 
-	<div class="profile-group">
-		<div class="profile">
-			<img class="profile__img" src="https://i.pinimg.com/236x/bd/b3/51/bdb35178e39091b53a8cdae16afa1e03.jpg" alt="">
-			<div class="profile__name">Manami Suzuki</div>
-			<div class="profile__desc">ここに簡単な自己紹介が入ります。</div>
-		</div>
+    <div class="profile-group">
+        <div class="profile">
+            <img class="profile__img" src="https://i.pinimg.com/236x/bd/b3/51/bdb35178e39091b53a8cdae16afa1e03.jpg" alt="">
+            <div class="profile__name">Manami Suzuki</div>
+            <div class="profile__desc">ここに簡単な自己紹介が入ります。</div>
+        </div>
 
-		<div class="profile">
-			<img class="profile__img" src="https://1.bp.blogspot.com/-vIXZ3_KMn9g/X-FcvVKPQSI/AAAAAAABdEc/i8oJKU0UDMM2uQfzemn6oOmJLICo4VcVgCNcBGAsYHQ/s200/onepiece10_jinbe.png" alt="">
-			<div class="profile__name">Miu Fujiwara</div>
-			<div class="profile__desc">ここに簡単な自己紹介が入ります。</div>
-		</div>
-	</div>
+        <div class="profile">
+            <img class="profile__img" src="https://1.bp.blogspot.com/-vIXZ3_KMn9g/X-FcvVKPQSI/AAAAAAABdEc/i8oJKU0UDMM2uQfzemn6oOmJLICo4VcVgCNcBGAsYHQ/s200/onepiece10_jinbe.png" alt="">
+            <div class="profile__name">Miu Fujiwara</div>
+            <div class="profile__desc">ここに簡単な自己紹介が入ります。</div>
+        </div>
+    </div>
 
-	</main>
-	<!-- △△△ メインページ △△△ -->
+</main>
+<!-- △△△ メインページ △△△ -->
 
-	<!--固定フッターフラグメントの挿入 -->
-	<div th:replace="fragments/layout :: footer"></div>
+<!--固定フッターフラグメントの挿入 -->
+<div th:replace="fragments/layout :: footer"></div>
 
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.profile').each(function(i) {
+            $(this).delay(i * 500).animate({ opacity: 1 }, 1000); // 各要素を500ミリ秒遅延させつつフェードイン
+        });
+    });
+</script>
 </body>
 </html>

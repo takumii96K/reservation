@@ -13,39 +13,50 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Map;
+
 @Controller
 @RequiredArgsConstructor
 public class LoginController {
 
 	private final UserService service;
 
+	/**
+	 * GET:ログイン画面表示
+	 * @param model errorメッセ
+	 * @param params
+	 * @return
+	 */
 	@GetMapping("/login")
 	public String loginForm(Model model,
-							@RequestParam(value = "failure", required = false) String failure,
-							@RequestParam(value = "complete", required = false) String complete,
-							@RequestParam(value = "error", required = false) String error) { // この行を追加
-		if (failure != null) {
+							@RequestParam Map<String, String> params) { // すべてのリクエストパラメータをマップとして受け取る
+
+		// ログイン失敗メッセージ
+		if (params.containsKey("failure")) {
 			model.addAttribute("failureMessage", "※IDもしくはパスワードが違います");
 		}
-		if (complete != null) {
+
+		// 登録完了メッセージ
+		if (params.containsKey("complete")) {
 			model.addAttribute("completeMsg", "登録が完了しました！");
 		}
-		if (error != null) { // この部分を追加
-			if ("admin_required".equals(error)) {
-				model.addAttribute("errorMessage", "管理者としてログインしてください。");
-			} else if ("login_required".equals(error)) {
-				model.addAttribute("errorMessage", "ログインが必要です。");
-			} else {
-				model.addAttribute("errorMessage", "不明なエラーが発生しました。");
+
+		// エラーメッセージ
+		String errorType = params.get("error");
+		if (errorType != null) {
+			switch (errorType) {
+				case "accessDenied":
+					model.addAttribute("errorMessage", "アクセス権限がありません。");
+					break;
+				case "unauthorized":
+					model.addAttribute("errorMessage", "ログインが必要です。");
+					break;
+				// 他のエラータイプがある場合はここに追加
 			}
 		}
+
 		return "user/login";
 	}
-
-
-	//    public String loginForm(@RequestParam(value = "failure", required = false) Model model) {
-	//        return "/user/login";
-	//    }
 
 	/**
 	 * GET:ユーザー登録画面遷移
@@ -77,16 +88,5 @@ public class LoginController {
 			return "redirect:/register";
 		}
 	}
-	//    @PostMapping("/register")
-	//    public String submitForm(@Validated @ModelAttribute("inputRegister") UserRegistrationForm form, BindingResult result,
-	//                             RedirectAttributes redirectAttributes) {
-	//        if (result.hasErrors()) {
-	//        	//return "redirect:register";
-	//            return "redirect:/user/register";
-	//        }
-	//        service.registerUser(form);
-	//        redirectAttributes.addFlashAttribute("completeMsg", "登録が完了しました。");
-	//        return "redirect:/login?complete=true";
-	//    }
 
 }

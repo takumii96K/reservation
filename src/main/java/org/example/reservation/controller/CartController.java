@@ -22,19 +22,8 @@ public class CartController {
     @GetMapping("/list")
     public String InCartPage(Model model){
         model.addAttribute("cartItems", service.lookInCart());
+        model.addAttribute("total", service.getSession().getCart().calculateTotalAmount());
         return "inCartList";
     }
-//    @GetMapping("/checkout")
-//    public String showCheckout(HttpSession session, RedirectAttributes redirectAttributes) {
-//        Reservation reservation = (Reservation) session.getAttribute("reservation");
-//        if (reservation == null) {
-//            // 予約者情報がセッションに存在しない場合、入力画面にリダイレクト
-//            return "redirect:/reservation/form";
-//        } else {
-//            // 予約者情報が存在する場合、決済画面に進む
-//            return "redirect:/payment";
-//        }
-//    }
-
 
 }

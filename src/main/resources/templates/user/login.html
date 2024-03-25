@@ -80,9 +80,8 @@
     <main class="wrap">
 		<h1 class="midashi">Login</h1>
 
-		<div th:if="${errorMessage}" class="error">
-			<p th:text="${errorMessage}"></p>
-		</div>
+
+		<p th:if="${errorMessage}" style="color: red;" th:text="${errorMessage}"></p>
 
 	<!-- エラーメッセージの表示 -->
     <p th:if="${failureMessage}" style="color: red;" th:text="${failureMessage}"></p>

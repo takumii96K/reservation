@@ -1,8 +1,9 @@
 function addToCart(element) {
-    let productId = element.closest('.product-details').querySelector('input[name="productId"]').value;
-    let quantity = element.closest('.product-details').querySelector('.quantity-input').value;
-    let productName = element.closest('.product-details').querySelector('.productName-span').textContent;
-    let productPrice = element.closest('.product-details').querySelector('.productPrice-span').textContent;
+    let productDetails = element.closest('.product-details');
+    let productId = productDetails.dataset.productId; // data-product-idから
+    let productName = productDetails.dataset.productName; // data-product-nameから
+    let productPrice = productDetails.dataset.productPrice; // data-product-priceから
+    let quantity = productDetails.querySelector('.quantity-input').value; // ユーザーが入力した数量
 
     const csrfToken = $('meta[name="_csrf"]').attr('content');
     const csrfHeaderName = $('meta[name="_csrf_header"]').attr('content');

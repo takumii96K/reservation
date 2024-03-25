@@ -9,7 +9,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 /**
@@ -38,7 +40,8 @@ public class SecurityConfig {
                         .failureUrl("/login?failure"))//ログイン失敗時の画面憑依 リクエストパラメーターfailureを設定(Controllerでメッセージを設定)
                 //認可失敗時のエラー画面
                 .exceptionHandling(handling -> handling
-                        .accessDeniedPage("/display-access-denind"))
+                        .accessDeniedHandler(accessDeniedHandler())
+                        .authenticationEntryPoint(authenticationEntryPoint()))
                 //ログアウトの設定
                 .logout(LogoutConfigurer::permitAll);
         return http.build();
@@ -62,4 +65,19 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler() {
+        return (request, response, accessDeniedException) -> {
+            // 認証済みユーザーが認可に失敗した場合
+            response.sendRedirect("/login?error=accessDenied");
+        };
+    }
+
+    @Bean
+    public AuthenticationEntryPoint authenticationEntryPoint() {
+        return (request, response, authException) -> {
+            // 未認証ユーザーが保護されたリソースにアクセスした場合
+            response.sendRedirect("/login?error=unauthorized");
+        };
+    }
 }
