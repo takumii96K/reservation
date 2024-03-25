@@ -1,4 +1,4 @@
-package org.example.reservation;
+package org.example.reservation.exception;
 
 public class ResourceNotFoundException extends RuntimeException {
 
@@ -21,4 +21,5 @@ public class ResourceNotFoundException extends RuntimeException {
     protected ResourceNotFoundException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
+
 }

@@ -32,6 +32,7 @@ public class ShoppingCartController {
         }
     }
 
+
     @PostMapping("/checkout")
     public ResponseEntity<?> checkout() {
         if(session.getCart().getItems().isEmpty()){
@@ -43,11 +44,10 @@ public class ShoppingCartController {
     @DeleteMapping("/delete/{itemId}")//1行削除
     public ResponseEntity<?> deleteProduct(@PathVariable Long itemId) {
         // 受け取ったIDを使用して商品の削除を処理
-    	session.getCart().removeItem(itemId);
+    	service.getSession().getCart().removeItem(itemId);
         // 適切なレスポンスを返します
         return ResponseEntity.ok("商品が正常に削除されました");
     }
-
 
     @PostMapping("/update")
     public ResponseEntity<?> updateQuantity(@RequestBody CartItemRequest cartItemRequest){
@@ -58,29 +58,4 @@ public class ShoppingCartController {
             return ResponseEntity.badRequest().body("カートを更新する際にエラーが発生しました: " + e.getMessage());
         }
     }
-
-
-//カートに追加ボタンを押すたびに特定の商品をセッションに追加する
-//    @PostMapping("/cart/add")
-//    public String addToCart(@ModelAttribute("inputProduct") ProductForm form, Model model) {
-//        //(form)に埋め込まれた指定idの商品を取得
-//        Product product = service.getProductById(form.getProductId()); //idがこないhtmlに問題あり
-//        //productをcartItemとしてCartに追加する
-//        session.getCart().addItem(service.registerCartItem(product, form));
-//        model.addAttribute("cart", session);
-//        return "redirect:/takeout/product";
-//    }
-
-//    /**
-//     * クライアントへレスポンスするオブジェクト
-//     */
-//    @Data
-//    @AllArgsConstructor
-//    public static class CartResponse {
-//        private List<CartItem> items;
-////        private int itemCount = items.size();
-////        private BigDecimal totalPrice;
-//
-//    }
-//}
-    }
+}

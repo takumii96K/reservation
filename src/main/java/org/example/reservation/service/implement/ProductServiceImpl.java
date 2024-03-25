@@ -1,7 +1,7 @@
 package org.example.reservation.service.implement;
 
 import lombok.RequiredArgsConstructor;
-import org.example.reservation.ResourceNotFoundException;
+import org.example.reservation.exception.ResourceNotFoundException;
 import org.example.reservation.entity.Product;
 import org.example.reservation.form.ProductForm;
 import org.example.reservation.repository.JpaProductRepository;
@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
