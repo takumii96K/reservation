@@ -1,15 +1,21 @@
 package org.example.reservation.controller;
 
-import jakarta.servlet.http.HttpSession;
-import lombok.RequiredArgsConstructor;
-import org.example.reservation.session.CartItemRequest;
+import java.util.Map;
+
 import org.example.reservation.service.spec.ShoppingCartService;
+import org.example.reservation.session.CartItemRequest;
 import org.example.reservation.session.CartSession;
 import org.example.reservation.session.CheckoutRequest;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Map;
+import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
@@ -41,8 +47,17 @@ public class ShoppingCartController {
         return ResponseEntity.ok(Map.of("redirectUrl", "/takeout/product/reservation"));
     }
 
-
-
+    @DeleteMapping("/delete/{itemId}")//1行削除
+    public ResponseEntity<?> deleteProduct(@PathVariable Long itemId)
+    {
+    	System.out.print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+    	//session.getCart().getItems().remove(productId)
+    	
+        // 受け取ったIDを使用して商品の削除を処理
+    	session.getCart().removeItem(itemId);
+        // 適切なレスポンスを返します
+        return ResponseEntity.ok("商品が正常に削除されました");
+    }
 
 
 
