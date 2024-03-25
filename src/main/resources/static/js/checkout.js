@@ -3,18 +3,6 @@ $(document).ready(function() {
         const csrfToken = $('meta[name="_csrf"]').attr('content');
         const csrfHeaderName = $('meta[name="_csrf_header"]').attr('content');
 
-        let cartItems = [];
-        $('.cart-item').each(function() {
-            const $this = $(this);
-            let item = {
-                itemId: $this.data('product-id'),
-                itemName: $this.data('item-name'),
-                price: $this.data('price'),
-                quantity: $this.data('quantity')
-            };
-            cartItems.push(item);
-        });
-
         $.ajax({
             url: '/cart/checkout',
             type: 'POST',
@@ -22,14 +10,20 @@ $(document).ready(function() {
             headers: {
                 [csrfHeaderName]: csrfToken
             },
-            data: JSON.stringify({cartItemRequests: cartItems}),
             success: function(response) {
                 alert('決済はまだ完了していません。');
-                // window.location.href = '/takeout/product/reservation';
                 window.location.href = response.redirectUrl;
             },
-            error: function() {
-                alert('処理が失敗しました。');
+            error: function(xhr) {
+                // エラーメッセージをresponseから取得して表示
+                let errorMessage = xhr.responseJSON && xhr.responseJSON.message ?
+                    xhr.responseJSON.message :
+                    '処理が失敗しました。';
+                alert(errorMessage);
+                // 任意：エラーが「カートに商品を追加してください」の場合、商品選択画面にリダイレクトする
+                if (errorMessage === "商品をカートに入れてください") {
+                    window.location.href = '/takeout/product'; // 適切な商品選択画面のURLに置き換えてください
+                }
             }
         });
     });

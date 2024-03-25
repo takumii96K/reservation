@@ -8,7 +8,7 @@
 <link rel="stylesheet" href ="https://cdn.skypack.dev/sanitize.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 <style>
-		
+
 	/* メンバープロフィール */
 	.profile-group {
     	display: flex;
@@ -19,7 +19,7 @@
 	}
 
 	.profile {
-		display: none; /* 初期状態では非表示 */
+		/*display: none; !* 初期状態では非表示 *!*/
     	background: #FFF;
     	width: calc(50% - 10px); /* 2列にするために50%に設定し、間隔を考慮して適宜調整 */
     	padding:50px;
@@ -125,31 +125,31 @@
 	
 	<!--固定フッターフラグメントの挿入 -->
 	<div th:replace="fragments/layout :: footer"></div>
-	
-	
-<script>
-// JavaScript
-document.addEventListener('DOMContentLoaded', function() {
-    const profiles = document.querySelectorAll('.profile');
 
-    // スクロール時のイベントリスナーを追加
-    window.addEventListener('scroll', function() {
-        profiles.forEach((profile, index) => {
-            // プロフィールが画面内に入ったかどうかを判定
-            const rect = profile.getBoundingClientRect();
-            const windowHeight = window.innerHeight || document.documentElement.clientHeight;
-            const isVisible = rect.top < windowHeight;
 
-            // プロフィールが画面内に入ったらアニメーションを適用
-            if (isVisible) {
-                setTimeout(() => {
-                    profile.style.display = 'block';
-                }, index * 300); // 時差を設定
-            }
+
+    <script>
+        // JavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+            const profiles = document.querySelectorAll('.profile');
+
+            // スクロール時のイベントリスナーを追加
+            window.addEventListener('scroll', function() {
+                profiles.forEach((profile, index) => {
+                    // プロフィールが画面内に入ったかどうかを判定
+                    const rect = profile.getBoundingClientRect();
+                    const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+                    const isVisible = rect.top < windowHeight;
+
+                    // プロフィールが画面内に入ったらアニメーションを適用
+                    if (isVisible) {
+                        setTimeout(() => {
+                            profile.style.display = 'block';
+                        }, index * 300); // 時差を設定
+                    }
+                });
+            });
         });
-    });
-});
-</script>	
-
+    </script>
 </body>
 </html>

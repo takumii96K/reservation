@@ -33,7 +33,6 @@ public class ManageController {
         productFormVisible = false;
     }
 
-
     /**
      * 商品情報,ユーザー情報,予約情報の一覧を表示
      * @param model products:ProductDto, users, reservation
@@ -41,6 +40,7 @@ public class ManageController {
      */
     @GetMapping("/manage")
     public String showList(Model model) {
+
         //商品情報
         model.addAttribute("products" ,converter.convertToDtoList(productService.getAllProducts()));
         // 商品情報の編集フォーム表示フラグ
@@ -51,10 +51,10 @@ public class ManageController {
         model.addAttribute("users", userService.findUserWithAuthorityKindOne());
         //予約情報
         model.addAttribute("reservations",reservationService.getReservationProductDtoAll());
-        return "/manage";
+
+        return "manage";
     }
 
-    /** 商品情報の編集処理 */
 //    @RequestMapping("/edit-product/{productId}")
 //    public String editProduct(@PathVariable("productId") Long productId, @ModelAttribute ProductForm form,Model model) {
 //            // 編集フォームを表示するためのフラグを設定
@@ -71,7 +71,6 @@ public class ManageController {
 //            model.addAttribute("editedProduct", editedProductForm);
 //
 //            return "redirect:/takeout/manage"; // 商品情報の一覧ページにリダイレクト
-//
 //    }
 
         /** 商品情報の追加処理 */

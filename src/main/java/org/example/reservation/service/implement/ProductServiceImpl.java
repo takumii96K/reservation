@@ -3,17 +3,15 @@ package org.example.reservation.service.implement;
 import lombok.RequiredArgsConstructor;
 import org.example.reservation.ResourceNotFoundException;
 import org.example.reservation.entity.Product;
-import org.example.reservation.entity.dto.ProductDto;
-import org.example.reservation.entity.projection.ProductProjection;
 import org.example.reservation.form.ProductForm;
 import org.example.reservation.repository.JpaProductRepository;
 import org.example.reservation.service.spec.ProductService;
-import org.example.reservation.session.CartItemRequest;
-import org.example.reservation.session.CheckoutRequest;
+import org.example.reservation.session.Cart;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -26,42 +24,17 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public ProductProjection getProductProjectionById(Long id) {
-		return repository.findProductProjectionByProductId(id);
-	}
+	public List<Product> updateProductStock(Cart cart) {
+		List<Product> updatedProducts = new ArrayList<>();
 
-	@Override
-	public Product getProductByRequest(CartItemRequest cartItemRequest) {
-		return repository.findById(cartItemRequest.getItemId())
-				.orElseThrow(() -> new ResourceNotFoundException("指定の商品はありません" + cartItemRequest.getItemId()));
-	}
-
-	public List<Product> getProductsByRequest(CheckoutRequest request) {
-		return request.getCartItemRequests().stream()
-				.map(cartItemRequest -> repository.findById(cartItemRequest.getItemId())
-						.orElseThrow(() -> new ResourceNotFoundException("指定の商品はありません")))
-				.collect(Collectors.toList());
-	}
-
-	@Override
-	public void updateProduct(ProductDto dto) {
-
-		Product product = repository.findById(dto.getId()).orElseThrow(() -> new ResourceNotFoundException("指定の商品はありません"));
-
-			product.setProductName(dto.getProductName());
-			product.setProductPrice(dto.getPrice());
-			product.setStock(dto.getStock());
-			repository.save(product);
-	}
-
-	@Override
-	public void updateProductStock(CheckoutRequest request) {
-		request.getCartItemRequests().forEach(items ->{
-			Product product = repository.findById(items.getItemId()).orElseThrow(() -> new ResourceNotFoundException("指定の商品はありません"));
-			product.setStock(product.getStock() - items.getQuantity());
-			repository.save(product);
+		cart.getItems().forEach((productId, cartItem) -> {
+			// productId は商品ID、cartItem はカートアイテム
+			Product product = repository.findById(productId).orElseThrow(() -> new ResourceNotFoundException("指定の商品はありません"));
+			product.setStock(product.getStock() - cartItem.getQuantity()); // cartItemから数量を取得
+			updatedProducts.add(repository.save(product)); // 更新された製品をリストに追加
 		});
 
+		return updatedProducts; // 更新された製品のリストを返す
 	}
 
 	@Override
@@ -72,6 +45,13 @@ public class ProductServiceImpl implements ProductService {
 		product.setStock(form.getStock());
 		product.setImageUrl(form.getImgUrl());
 		repository.save(product);
+	}
+
+	@Override
+	public Product selectOneRandomProduct() {
+		//ランダムでidの値を取得する
+		Long id = repository.getRandomId();
+		return repository.findById(id).orElseThrow(()-> new ResourceNotFoundException("その商品はありません。"));
 	}
 
 }

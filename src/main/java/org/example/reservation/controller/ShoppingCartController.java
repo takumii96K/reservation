@@ -1,21 +1,13 @@
 package org.example.reservation.controller;
 
-import java.util.Map;
-
+import lombok.RequiredArgsConstructor;
 import org.example.reservation.service.spec.ShoppingCartService;
 import org.example.reservation.session.CartItemRequest;
 import org.example.reservation.session.CartSession;
-import org.example.reservation.session.CheckoutRequest;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import jakarta.servlet.http.HttpSession;
-import lombok.RequiredArgsConstructor;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -41,18 +33,15 @@ public class ShoppingCartController {
     }
 
     @PostMapping("/checkout")
-    public ResponseEntity<?> checkout(HttpSession httpsession ,@RequestBody CheckoutRequest request) {
-        httpsession.setAttribute("request", request);
-        httpsession.setAttribute("total", session.getCart().calculateTotalAmount());
+    public ResponseEntity<?> checkout() {
+        if(session.getCart().getItems().isEmpty()){
+            return ResponseEntity.badRequest().body(Map.of("message", "商品をカートに入れてください"));
+        }
         return ResponseEntity.ok(Map.of("redirectUrl", "/takeout/product/reservation"));
     }
 
     @DeleteMapping("/delete/{itemId}")//1行削除
-    public ResponseEntity<?> deleteProduct(@PathVariable Long itemId)
-    {
-    	System.out.print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-    	//session.getCart().getItems().remove(productId)
-    	
+    public ResponseEntity<?> deleteProduct(@PathVariable Long itemId) {
         // 受け取ったIDを使用して商品の削除を処理
     	session.getCart().removeItem(itemId);
         // 適切なレスポンスを返します
@@ -60,8 +49,16 @@ public class ShoppingCartController {
     }
 
 
+    @PostMapping("/update")
+    public ResponseEntity<?> updateQuantity(@RequestBody CartItemRequest cartItemRequest){
+        try {
+            service.updateQuantity(cartItemRequest);//カートから指定idの商品を更新
+            return ResponseEntity.ok().build(); //true
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("カートを更新する際にエラーが発生しました: " + e.getMessage());
+        }
+    }
 
-//}
 
 //カートに追加ボタンを押すたびに特定の商品をセッションに追加する
 //    @PostMapping("/cart/add")

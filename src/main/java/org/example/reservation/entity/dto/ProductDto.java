@@ -14,6 +14,7 @@ public class ProductDto {
 	private String productName; //商品名
 	private BigDecimal price; //金額
 	private int stock; //在庫
+	private String imgUrl;
 	private Integer quantity; // 選択された商品の数量
 }
 

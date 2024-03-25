@@ -1,13 +1,11 @@
 package org.example.reservation.session;
 
-import lombok.Data;
-import org.example.reservation.entity.Product;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
 import java.io.Serializable;
 
-@Component
+@Component("cartSession")
 @SessionScope
 public class CartSession implements Serializable {
 

@@ -18,6 +18,6 @@ public class TopPageController {
 
     @GetMapping("/member")
     public String memberPage(){
-        return "/member";
+        return "member";
     }
 }

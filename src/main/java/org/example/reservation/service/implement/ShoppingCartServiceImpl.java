@@ -9,15 +9,14 @@ import org.example.reservation.service.spec.OrderService;
 import org.example.reservation.service.spec.ProductService;
 import org.example.reservation.service.spec.ReservationService;
 import org.example.reservation.service.spec.ShoppingCartService;
+import org.example.reservation.session.Cart;
 import org.example.reservation.session.CartItem;
 import org.example.reservation.session.CartItemRequest;
 import org.example.reservation.session.CartSession;
-import org.example.reservation.session.CheckoutRequest;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -31,44 +30,12 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     private final CartSession cartSession;
     private final ModelMapper modelMapper;
 
-
-
     @Override
     public void addItemToCart(CartItemRequest request) {
         //requestをitemへ変換
         CartItem item = modelMapper.map(request, CartItem.class);
         //カートに指定idの商品と個数を追加
         cartSession.getCart().addItem(item);
-    }
-
-
-    @Override
-    public void removeItemFromCart(Long id) {
-        cartSession.getCart().removeItem(id);
-    }
-
-    @Override
-    public void updateItemInCart(CartItemRequest request) {
-        cartSession.getCart().updateItem(request.getItemId(), request.getQuantity());
-
-    }
-
-    /**
-     * カートの合計を計算
-     *
-     * @return BigDecimal
-     */
-    @Override
-    public BigDecimal calculateTotalPrice() {
-        return cartSession.getCart().calculateTotalAmount();
-    }
-
-    /**
-     * カートの中身を削除(カートそのものは保持）
-     */
-    @Override
-    public void refreshCart() {
-        cartSession.resetCart();
     }
 
     @Override
@@ -78,20 +45,41 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public void finalizeCheckout(CheckoutRequest request, ReservationInputForm form) {
-
-        //reservationの新規作成
+    public void finalizeCheckout(Cart cart, ReservationInputForm form) {
+        // Reservationの新規作成
         Reservation createReservation = reservationService.createReservation(form);
-        //statusを確定に変更
+        // Statusを確定に変更
         createReservation.setStatus(ReservationStatus.CONFIRMED);
-        //確定後在庫更新
-        productService.updateProductStock(request);
 
-        for (CartItemRequest cartItem : request.getCartItemRequests()) {
-            Product product = productService.getProductByRequest(cartItem);
-            orderService.createOrder(cartItem, product, createReservation);
-        }
+        // 確定後、在庫を更新し、更新された製品情報を取得
+        List<Product> updatedProducts = productService.updateProductStock(cart);
 
+        // 更新された製品情報をもとに、注文を作成
+        updatedProducts.forEach(updatedProduct -> {
+            // カートから、現在処理している製品に対応するカートアイテムを取得
+            CartItem cartItem = cart.getItems().get(updatedProduct.getProductId());
+
+            // 注文サービスを使用して注文を作成
+            if (cartItem != null) {
+                orderService.createOrder(cartItem, updatedProduct, createReservation);
+            }
+        });
     }
+
+    @Override
+    public void deleteItem(CartItemRequest request) {
+        cartSession.getCart().removeItem(request.getItemId());
+    }
+
+    @Override
+    public void updateQuantity(CartItemRequest request) {
+        cartSession.getCart().updateItem(request.getItemId(), request.getQuantity());
+    }
+
+    @Override
+    public CartSession getSession() {
+        return cartSession;
+    }
+
 
 }
