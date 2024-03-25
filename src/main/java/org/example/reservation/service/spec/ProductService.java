@@ -1,13 +1,14 @@
 package org.example.reservation.service.spec;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.example.reservation.entity.Product;
 import org.example.reservation.entity.dto.ProductDto;
 import org.example.reservation.entity.projection.ProductProjection;
 import org.example.reservation.form.ProductForm;
 import org.example.reservation.session.CartItemRequest;
 import org.example.reservation.session.CheckoutRequest;
-
-import java.util.List;
 
 public interface ProductService {
 	List<Product> getAllProducts();//商品を全件取得
@@ -18,5 +19,5 @@ public interface ProductService {
 	void updateProductStock(CheckoutRequest request);
 //	void saveProduct(Product product ,Order order);
 	void createProduct(ProductForm form);
-
+	Optional<Product> selectOneRandomProduct();//商品のランダム取得
 }

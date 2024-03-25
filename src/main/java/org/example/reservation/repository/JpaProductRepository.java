@@ -1,7 +1,6 @@
 package org.example.reservation.repository;
 
 import org.example.reservation.entity.Product;
-import org.example.reservation.entity.dto.ProductDto;
 import org.example.reservation.entity.projection.ProductProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -20,4 +19,7 @@ public interface JpaProductRepository extends JpaRepository<Product, Long> {
 //            "(p.productId, p.productName, p.productPrice, p.stock, rp.quantity)FROM Product p JOIN Order rp")
 //    ProductDto findProductDtoByProductId(Long id);
 
-}
+    	@Query("SELECT id FROM Product ORDER BY RANDOM() limit 1")
+    	Long getRandomId();
+    	}
+

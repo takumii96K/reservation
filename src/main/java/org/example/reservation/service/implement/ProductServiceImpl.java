@@ -1,6 +1,9 @@
 package org.example.reservation.service.implement;
 
-import lombok.RequiredArgsConstructor;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 import org.example.reservation.ResourceNotFoundException;
 import org.example.reservation.entity.Product;
 import org.example.reservation.entity.dto.ProductDto;
@@ -12,8 +15,7 @@ import org.example.reservation.session.CartItemRequest;
 import org.example.reservation.session.CheckoutRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -72,6 +74,20 @@ public class ProductServiceImpl implements ProductService {
 		product.setStock(form.getStock());
 		product.setImageUrl(form.getImgUrl());
 		repository.save(product);
+	}
+	
+	@Override
+	public Optional<Product> selectOneRandomProduct() {
+		//ランダムでidの値を取得する
+		Long randId = repository.getRandomId();
+		//問題がない場合
+		if(randId == null) {
+			//空のOptional.empty();
+			return Optional.empty();
+		}
+		
+		//名前を取ってくる
+		return repository.findById(randId);
 	}
 
 }
