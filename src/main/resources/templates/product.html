@@ -68,18 +68,18 @@
 
     <!--サイコロ -->
 
-    <h1>Random Product</h1>
-    <form th:action="@{/takeout/product}" th:object="${productForm}" method="post">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <button id="getRandomProductButton" style="background-color: transparent; border: none; color:royalblue;">ランダムな商品を取得する</button>
-    </form>
+<!--    <h1>Random Product</h1>-->
+<!--    <form th:action="@{/takeout/product}" th:object="${productForm}" method="post">-->
+<!--        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
+<!--        <button id="getRandomProductButton" style="background-color: transparent; border: none; color:royalblue;">ランダムな商品を取得する</button>-->
+<!--    </form>-->
 
-    <div th:if="${msg}">
-        <p th:text="${msg}"></p>
-    </div>
-    <div th:if="${not msg}">
-        <p th:text="'Random Product Name: ' + ${form.name}"></p>
-    </div>
+<!--    <div th:if="${msg}">-->
+<!--        <p th:text="${msg}"></p>-->
+<!--    </div>-->
+<!--    <div th:if="${not msg}">-->
+<!--        <p th:text="'Random Product Name: ' + ${form.name}"></p>-->
+<!--    </div>-->
 
 
     <!--カートへ移動ボタン-->
