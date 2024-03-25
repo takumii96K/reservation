@@ -19,4 +19,7 @@ public interface JpaProductRepository extends JpaRepository<Product, Long> {
 //            "(p.productId, p.productName, p.productPrice, p.stock, rp.quantity)FROM Product p JOIN Order rp")
 //    ProductDto findProductDtoByProductId(Long id);
 
-}
+    	@Query("SELECT id FROM Product ORDER BY RANDOM() limit 1")
+    	Long getRandomId();
+    	}
+

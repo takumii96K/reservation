@@ -1,10 +1,11 @@
 package org.example.reservation.service.spec;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.example.reservation.entity.Product;
 import org.example.reservation.form.ProductForm;
 import org.example.reservation.session.Cart;
-
-import java.util.List;
 
 public interface ProductService {
 
@@ -16,5 +17,5 @@ public interface ProductService {
 
 	List<Product> updateProductStock(Cart cart);
 	void createProduct(ProductForm form);
-
+	Optional<Product> selectOneRandomProduct();//商品のランダム取得
 }
