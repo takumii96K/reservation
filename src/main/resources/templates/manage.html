@@ -67,6 +67,7 @@
 
     </style>
 </head>
+
 <body>
 <h2>商品情報</h2>
 <table border="1">
@@ -86,32 +87,66 @@
     <tr th:each="product : ${products}">
         <td th:text="*{product.id}"></td>
         <td th:text="${product.productName}"></td>
-        <td th:text="${product.productStock}"></td>
-        <td th:text="${product.productPrice}"></td>
+        <td th:text="${product.stock}"></td>
+        <td th:text="${product.price}"></td>
 <!--　　　　<td th:text="${product.quantity}"></td>-->　　
 <!--        <td th:text="${product.totalPrice}"></td>-->
-		 <!-- 編集ボタンのセル -->
-         <td>
-            <a th:href="@{/takeout/edit-product/{productId}(productId=${product.id})}">
-             <button class="edit-btn">編集</button>
-            </a>
-         </td>
-    </tr>
-
-    <!-- 編集フォームの行 -->
-    <tr th:if="${productFormVisible}">
-        <td><label><input type="text" th:field="${form.name}" /></label></td>
-        <td><label><input type="text" th:field="*{form.stock}" /></label></td>
-        <td><label><input type="text" th:field="*{form.price}" /></label></td>
-        <td><label><input type="text" th:field="*{form.imgUrl}" /></label></td>
-        <td><button type="submit">保存</button></td>
+		 <!-- 編集ボタン -->
+        <td>
+            <!-- 編集ボタンに対するJavaScriptの呼び出し -->
+            <button class="edit-btn" onclick="showEditForm(this)">編集</button>
+        </td>
     </tr>
     </tbody>
 </table>
 
+<!-- 編集フォーム -->
+<div class="edit-form" style="display: none;">
+    <h2>商品情報を編集する</h2>
+    <form th:action="@{/admin/edit-product/' + ${product.id}}"  method="post" class="edit-form">
+        <input type="hidden" id="edit-product-id" name="productId" />
+        <label for="edit-product-name">商品名:</label>
+        <input type="text" id="edit-product-name" name="productName" /><br />
+        <label for="edit-product-stock">在庫数:</label>
+        <input type="number" id="edit-product-stock" name="stock" /><br />
+        <label for="edit-product-price">商品金額:</label>
+        <input type="number" id="edit-product-price" name="price" /><br />
+        <button type="submit">更新</button>
+    </form>
+     <!-- 成功メッセージ -->
+    <p th:text="${successMessage}" style="color: blue;"></p>
+    
+    <!-- エラーメッセージ -->
+    <p th:text="${errorMessage}" style="color: red;"></p>
+</div>
+
+<script>
+    // 編集フォームの表示を切り替える関数
+    function showEditForm(button) {
+        // クリックされた行の情報を取得
+        var row = button.parentNode.parentNode;
+        var cells = row.getElementsByTagName("td");
+
+        // 編集フォームに行の情報をセット
+        document.getElementById("edit-product-id").value = cells[0].innerText;
+        document.getElementById("edit-product-name").value = cells[1].innerText;
+        document.getElementById("edit-product-stock").value = cells[2].innerText;
+        document.getElementById("edit-product-price").value = cells[3].innerText;
+
+        // 編集フォームの表示を切り替え
+        var editForm = document.querySelector('.edit-form');
+        editForm.action = '/admin/edit-product/' + cells[0].innerText; // URIを動的に設定
+        editForm.style.display = 'block';
+        
+       // エラーメッセージを非表示にする
+        document.querySelector('.error-message').style.display = 'none';
+    }
+</script>
+		
+
 
 <h2>商品登録</h2>
-<form th:action="@{/manage/add-product}" method="post" style="display: flex; flex-direction: row;">
+<form th:action="@{/admin/manage/add-product}" method="post" style="display: flex; flex-direction: row;">
 	
     <div style="margin-right: 20px;">
         <label for="productName" style="width: 100px;">商品名:</label>
@@ -133,8 +168,17 @@
         <input type="text" id="productUrl" name="imgUrl" style="font-size: 16px;">
     </div>
     
-    <button type="submit" class="edit-btn">登録</button>
+    <button type="submit" >登録</button>
 </form>
+	<!-- エラーメッセージ -->
+	<div th:if="${errorMessage}" style="color: red;">
+    	<p th:text="${errorMessage}"></p>
+	</div>
+	<!-- 成功メッセージ -->
+	<div th:if="${successMessage}" style="color:blue;">
+    	<p th:text="${successMessage}"></p>
+</div>
+
 
 
 <h2>ユーザー情報</h2>
