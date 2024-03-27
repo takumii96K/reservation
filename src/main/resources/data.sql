@@ -1,9 +1,32 @@
 INSERT INTO product (product_name, product_url, product_price, product_stock) VALUES
-                                                                                              ('たこ焼き', 'https://cdn.macaro-ni.jp/image/summary/108/108786/bPSqCOs6isa8vH8rGWVFZhiRcpQs4reeaT8ZlN8n.jpg', 300, 100),
-                                                                                              ('焼きそば', 'https://www.esthetic.cc/column/column/img/01296.jpg', 400, 80),
-                                                                                              ('はしまき', 'https://yataiya-senjudo.com/wp-content/uploads/2021/01/hashimaki_33.jpg', 300, 60),
-                                                                                              ('りんご飴', 'https://www.daisho.co.jp/dw/wp-content/uploads/2023/07/HP%E3%83%AC%E3%82%B7%E3%83%94%E7%94%A8%E3%80%80%E3%81%82%E3%82%81%E3%80%80%E3%82%8A%E3%82%93%E3%81%94-scaled.jpg', 650, 70),
-                                                                                              ('スパイシーチキンバーガー', 'https://www.mcdonalds.co.jp/product_images/885/1180_Spicy%20Chicken%20Burger_2021.png?20240130170946', 550, 90);
+                                                                                  ('スマイル', '/images/4.jpg', 650, 70),
+                                                                                  ('ドーナッツ', '/images/6.jpg', 750, 50),
+                                                                                  ('アポーパイ', '/images/2.jpg', 550, 90),
+                                                                                  ('チキンナゲット', '/images/5.jpg', 700, 60),
+                                                                                  ('ホットドッグ', '/images/8.jpg', 850, 30),
+                                                                                  ('ポテト', '/images/9.jpg', 900, 20),
+                                                                                  ('ミックスポップコーン', '/images/10.jpg', 950, 10),
+                                                                                  ('ベジタリアンバーガー', '/images/7.jpg', 800, 40),
+                                                                                  ('カリカリベーコンバーガー', '/images/3.jpg', 600, 80),
+                                                                                  ('ビックマック', '/images/bigmac.png', 500, 100),
+                                                                                  ('淡路島バーガー', '/images/11.jpg', 500, 100),
+                                                                                  ('ジャパニーズバーガー', '/images/12.jpg', 550, 90),
+                                                                                  ('チャイニーズバーガー', '/images/13.jpg', 600, 80),
+                                                                                  ('北欧バーガー', '/images/14.jpg', 650, 70),
+                                                                                  ('イタリアンバーガー', '/images/15.jpg', 700, 60),
+                                                                                  ('イングランドバーガー', '/images/16.jpg', 750, 50),
+                                                                                  ('キッズバーガー', '/images/17.jpg', 800, 40),
+                                                                                  ('コーラ', '/images/18.jpg', 850, 30),
+                                                                                  ('Heineken', '/images/19.jpg', 900, 20),
+                                                                                  ('ジンジャエール', '/images/20.jpg', 950, 10),
+                                                                                  ('マルゲリータ', '/images/21.jpg', 900, 20),
+                                                                                  ('ペパロニピザ', '/images/22.jpg', 900, 20),
+                                                                                  ('メキシカンピザ', '/images/23.jpg', 900, 20),
+                                                                                  ('ピザトースト', '/images/24.jpg', 900, 20);
+
+
+
+
 
 INSERT INTO reservation (customer_name, reservation_time, customer_tel, reservation_email, reservation_status) VALUES
                                                                                                                        ('山田太郎', '2024-04-01 12:00:00', '080-1234-5678', 'yamada@example.com', '未確定'),
