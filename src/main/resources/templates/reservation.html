@@ -56,13 +56,12 @@
 	
 </style>
 </head>
-
-
 <body>
-<!--	&lt;!&ndash;固定ヘッダーフラグメントの挿入 &ndash;&gt;-->
-    <div th:insert="fragments/layout::header"></div>
+		
+	<!--固定ヘッダーフラグメントの挿入 -->
+    <div th:insert="fragments/layout :: header"></div>
 
-<main>
+    <main>
 
 	<!-- 見出し -->
     <h1>Reservation form</h1>
@@ -141,15 +140,18 @@
 	        });
 	    </script>
 
-	    <button type="submit">注文を確定☺</button><br>
+	    <button type="submit">注文を確定☺</button>
+
 
 	    <a href="/takeout/product">メニュー画面に戻る</a><br>
-	</form>
+	    </form>
+
+	<!--トップへ戻るボタンフラグメントの挿入 -->
+    <div th:replace="fragments/layout :: toTop"></div>
 
 </main>
-
-<!--	    固定フッターフラグメントの挿入-->
-<div th:insert="fragments/layout::footer"></div>
+	<!--固定フッターフラグメントの挿入 -->
+	<div th:insert="fragments/layout :: footer"></div>
 
 <!--カレンダー表示処理-->
 <script th:src="@{/js/dateTimePicker.js}"></script>
