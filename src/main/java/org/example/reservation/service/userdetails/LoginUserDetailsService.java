@@ -1,10 +1,13 @@
 package org.example.reservation.service.userdetails;
 
 import lombok.RequiredArgsConstructor;
+import org.example.reservation.entity.Reservation;
 import org.example.reservation.entity.converter.UserRegistrationFormConverter;
 import org.example.reservation.entity.projection.UserLoginProjection;
 import org.example.reservation.exception.DuplicateUserNameException;
 import org.example.reservation.form.UserRegistrationForm;
+import org.example.reservation.repository.JpaProductRepository;
+import org.example.reservation.repository.JpaReservationRepository;
 import org.example.reservation.repository.JpaUserRepository;
 import org.example.reservation.service.spec.UserService;
 import org.springframework.security.core.GrantedAuthority;
@@ -97,6 +100,10 @@ public class LoginUserDetailsService implements UserDetailsService, UserService 
     @Override
     public List<org.example.reservation.entity.User> findUserWithAuthorityKindOne() {
         return repository.getUserWithAuthorityKindOne();
+    }
+
+    public List<Reservation> getReservation(String username){
+        repository.
     }
 
 }

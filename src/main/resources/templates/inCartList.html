@@ -95,22 +95,23 @@
             </tr>
             </tbody>
         </table>
-<!--        合計金額の表示-->
+
+        <!--合計金額の表示-->
         <div>
             <span>合計：</span>
             <span th:text="${#numbers.formatDecimal(total, 0, 'COMMA', 0, 'POINT')} + '円'"></span>
         </div>
-
     </div>
+
     <!--決済ボタン-->
     <button id="checkoutButton">決済する</button>
-
 
     <!--固定フッターフラグメントの挿入 -->
     <div th:replace="fragments/layout :: footer"></div>
 
-<!--    チェックアウト（決済）のjsファイル-->
+    <!--チェックアウト（決済）のjsファイル-->
     <script th:src="@{/js/checkout.js}"></script>
+
 
     <!--更新ボタンを押した後の編集処理-->
     <script>
@@ -143,6 +144,8 @@
         });
     });
 	</script>
+
+
 	<script>
 		 $('.update-item').click(function()//更新ボタン
 	    {
@@ -175,5 +178,6 @@
 	        });
 		});
 	</script>
+
 </body>
 </html>
