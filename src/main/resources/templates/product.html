@@ -106,29 +106,6 @@
 <div th:replace="fragments/layout :: footer"></div>
 
 
-    <script>
-        function filterProductsByCategory() {
-            let selectedCategory = document.getElementById('categorySelect').value;
-            fetch(`/api/products?category=${selectedCategory}`)
-                .then(response => response.json())
-                .then(products => {
-                    // ここで製品を表示する処理を実装
-                    displayProducts(products);
-                });
-        }
-
-        function displayProducts(products) {
-            let productsContainer = document.getElementById('productsContainer');
-            productsContainer.innerHTML = ''; // 既存の製品をクリア
-            products.forEach(product => {
-                // 各製品の表示処理を実装
-                let productElement = document.createElement('div');
-                productElement.innerHTML = `<h3>${product.productName}</h3><p>価格: ${product.price}円</p>`;
-                productsContainer.appendChild(productElement);
-            });
-        }
-
-    </script>
 <script th:src="@{/js/slider.js}"></script> <!-- 外部のJavaScriptファイル -->
 <script th:src="@{/js/addToCart.js}"></script>
 </body>
