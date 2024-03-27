@@ -2,6 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
 <head>
     <meta charset="UTF-8">
+    <meta id="csrfToken" name="_csrf" th:content="${_csrf.token}"/>
+    <meta id="csrfHeaderName" name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title>管理画面</title>
     <style>
         body {
@@ -76,42 +78,107 @@
         <th>商品名</th>
         <th>在庫数</th>
         <th>商品金額</th>
-        <th>売上個数</th>
-        <th>売上金額</th>
-        <!-- 編集ボタンの列 -->
         <th>編集</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="product : ${products}">
-        <td th:text="*{product.id}"></td>
+        <td th:text="${product.id}"></td>
         <td th:text="${product.productName}"></td>
         <td th:text="${product.stock}"></td>
         <td th:text="${product.price}"></td>
-<!--　　　　<td th:text="${product.quantity}"></td>-->　　
-<!--        <td th:text="${product.}"></td>-->
-		  編集ボタンのセル
-         <td>
-            <a th:href="@{/takeout/edit-product/{productId}(productId=${product.id})}">
-             <button class="edit-btn">編集</button>
-            </a>
-         </td>
-    </tr>
-
-    <!-- 編集フォームの行 -->
-    <tr th:if="${productFormVisible}">
-        <td><label><input type="text" th:field="${form.name}" /></label></td>
-        <td><label><input type="text" th:field="*{form.stock}" /></label></td>
-        <td><label><input type="text" th:field="*{form.price}" /></label></td>
-        <td><label><input type="text" th:field="*{form.imgUrl}" /></label></td>
-        <td><button type="submit">保存</button></td>
+        <td>
+            <!-- 非表示の画像URLフィールド -->
+            <input type="hidden" th:value="${product.imgUrl}" class="product-image-url" />
+            <!-- 編集ボタン -->
+            <button class="edit-btn" onclick="showEditForm(this)">編集</button>
+        </td>
     </tr>
     </tbody>
 </table>
 
+<!-- 編集フォーム -->
+<div class="edit-form" id="editForm" style="display: none;">
+    <h2>商品情報を編集する</h2>
+    <form id="edit-product-form">
+        <input type="hidden" id="edit-product-id" name="productId">
+        <div class="form-group">
+            <label for="edit-product-name">商品名:</label>
+            <input type="text" id="edit-product-name" name="productName">
+        </div>
+        <div class="form-group">
+            <label for="edit-product-stock">在庫数:</label>
+            <input type="number" id="edit-product-stock" name="stock">
+        </div>
+        <div class="form-group">
+            <label for="edit-product-price">商品金額:</label>
+            <input type="number" id="edit-product-price" name="price">
+        </div>
+        <div class="form-group">
+            <label for="edit-product-image">商品画像URL:</label>
+            <input type="text" id="edit-product-image" name="image">
+        </div>
+        <button type="button" id="update-product">更新</button>
+    </form>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    function showEditForm(button) {
+        let row = button.parentNode.parentNode;
+        let cells = row.getElementsByTagName("td");
+        let imageUrl = row.getElementsByClassName("product-image-url")[0].value;
+
+        document.getElementById("edit-product-id").value = cells[0].innerText;
+        document.getElementById("edit-product-name").value = cells[1].innerText;
+        document.getElementById("edit-product-stock").value = cells[2].innerText;
+        document.getElementById("edit-product-price").value = cells[3].innerText;
+        document.getElementById("edit-product-image").value = cells[4] ? cells[4].innerText : ''; // 画像URLがあれば設定
+        // 画像URLを編集フォームにセット
+        document.getElementById("edit-product-image").value = imageUrl;
+
+        let editForm = document.getElementById('editForm');
+        editForm.style.display = 'block';
+    }
+
+    $(document).ready(function(){
+        $("#update-product").click(function(){
+            let productId = $("#edit-product-id").val();
+            let productName = $("#edit-product-name").val();
+            let productStock = $("#edit-product-stock").val();
+            let productPrice = $("#edit-product-price").val();
+            let productImage = $("#edit-product-image").val(); // 画像URLを取得
+
+            const csrfToken = $('meta[name="_csrf"]').attr('content');
+            const csrfHeaderName = $('meta[name="_csrf_header"]').attr('content');
+
+            $.ajax({
+                url: '/admin/edit/' + productId,
+                type: 'PUT',
+                contentType: 'application/json',
+                headers: { [csrfHeaderName]: csrfToken },
+                data: JSON.stringify({
+                    name: productName,
+                    stock: productStock,
+                    price: productPrice,
+                    imgUrl: productImage // 画像URLをJSONに含める
+                }),
+                success: function(response) {
+                    alert('商品情報を更新しました');
+                    $("#editForm").hide();
+                    // ここにページの内容を更新するコードを追加（例：商品リストの更新）
+                    window.location.reload(); // ページ全体をリロードする
+                },
+                error: function() {
+                    alert('商品情報の更新に失敗しました');
+                }
+            });
+        });
+    });
+</script>
 
 <h2>商品登録</h2>
-<form th:action="@{/manage/add-product}" method="post" style="display: flex; flex-direction: row;">
+<form th:action="@{/admin/manage/add-product}" method="post" style="display: flex; flex-direction: row;">
 	
     <div style="margin-right: 20px;">
         <label for="productName" style="width: 100px;">商品名:</label>
@@ -133,8 +200,17 @@
         <input type="text" id="productUrl" name="imgUrl" style="font-size: 16px;">
     </div>
     
-    <button type="submit" class="edit-btn">登録</button>
+    <button type="submit" >登録</button>
 </form>
+	<!-- エラーメッセージ -->
+	<div th:if="${errorMessage}" style="color: red;">
+    	<p th:text="${errorMessage}"></p>
+	</div>
+	<!-- 成功メッセージ -->
+	<div th:if="${successMessage}" style="color:blue;">
+    	<p th:text="${successMessage}"></p>
+</div>
+
 
 
 <h2>ユーザー情報</h2>
