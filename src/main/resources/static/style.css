@@ -202,9 +202,6 @@
 	/* △△△ 見出し △△△ */
 	
 	/* ▽▽▽トップへ戻るボタン ▽▽▽*/
-	.for-scroll{
-	  height: 1500px;
-	}
 	
 	.scroll-top {
 	  position: fixed;
