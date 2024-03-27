@@ -67,14 +67,12 @@
     </div>
 
     <!--サイコロ -->
-    <h1>Random Product</h1>
-
-    <div th:if="${randomProductName}">
-        <p th:text="${randomProductName} + 'がおすすめです。'"></p>
-    </div>
     <form th:action="@{/random}" method="post">
-        <button id="getRandomProductButton" class="random-product-button">ランダムな商品を取得する</button>
+        <button id="getRandomProductButton" class="random-product-button"style="background-color: transparent; border: none; color: transparent; cursor: pointer; font-size: 100px;">🤠</button>
     </form>
+    <div th:if="${randomProductName}">
+        <p th:text="${randomProductName} + 'がｵｽｽﾒ♪'" style="color:transparent;"></p>
+    </div>
 
 
 

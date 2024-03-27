@@ -16,4 +16,6 @@ public interface ProductService {
 	List<Product> updateProductStock(Cart cart);
 	void createProduct(ProductForm form);
 	Product selectOneRandomProduct();//商品のランダム取得
+
+	Product updateProduct(Long id, ProductForm from);
 }

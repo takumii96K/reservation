@@ -1,21 +1,18 @@
 package org.example.reservation.controller;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import org.example.reservation.entity.Product;
 import org.example.reservation.entity.converter.ProductDtoConverter;
-import org.example.reservation.entity.dto.ProductDto;
+import org.example.reservation.exception.ResourceNotFoundException;
 import org.example.reservation.form.ProductForm;
 import org.example.reservation.service.spec.ProductService;
 import org.example.reservation.service.spec.ReservationService;
 import org.example.reservation.service.spec.UserService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -58,29 +55,19 @@ public class ManageController {
 
 
 	/** 商品情報の編集処理 */
-	@RequestMapping("/edit-product/{productId}")
-	public String editProduct(@PathVariable("productId") Long productId, @ModelAttribute ProductForm form, Model model) {
+	// 商品情報の更新を行うメソッド
+	@PutMapping("/edit/{id}")
+	@ResponseBody // RESTful な応答をこのメソッドから送る
+	public ResponseEntity<?> updateProduct(@PathVariable("id") Long id, @RequestBody ProductForm form) {
 		try {
-            // 編集処理を実行
-            ProductDto editedProduct = new ProductDto();
-            editedProduct.setId(productId);
-            editedProduct.setProductName(form.getName());
-            editedProduct.setPrice(form.getPrice());
-            editedProduct.setStock(form.getStock());
-
-            productService.updateProduct(editedProduct);
-
-            // 編集が成功した場合のメッセージを追加
-            model.addAttribute("successMessage", "編集できました！");
-
-        } catch (Exception e) {
-            // 編集が失敗した場合のメッセージを追加
-            model.addAttribute("errorMessage", "編集できませんでした");
-        }
-
-        // 商品情報にリターン
-        return "/manage";
-    }
+			Product updatedProduct = productService.updateProduct(id, form);
+			return ResponseEntity.ok(updatedProduct);
+		} catch (ResourceNotFoundException e) {
+			return ResponseEntity.notFound().build();
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().body("更新に失敗しました: " + e.getMessage());
+		}
+	}
 
 
 	/** 商品情報の追加処理 */

@@ -1,8 +1,8 @@
 package org.example.reservation.service.implement;
 
 import lombok.RequiredArgsConstructor;
-import org.example.reservation.exception.ResourceNotFoundException;
 import org.example.reservation.entity.Product;
+import org.example.reservation.exception.ResourceNotFoundException;
 import org.example.reservation.form.ProductForm;
 import org.example.reservation.repository.JpaProductRepository;
 import org.example.reservation.service.spec.ProductService;
@@ -51,6 +51,19 @@ public class ProductServiceImpl implements ProductService {
 		//ランダムでidの値を取得する
 		Long id = repository.getRandomId();
 		return repository.findById(id).orElseThrow(()-> new ResourceNotFoundException("その商品はありません。"));
+	}
+
+	@Override
+	public Product updateProduct(Long id, ProductForm form) throws ResourceNotFoundException {
+		Product product = repository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Product not found for this id :: " + id));
+
+		product.setProductName(form.getName());
+		product.setStock(form.getStock());
+		product.setImageUrl(form.getImgUrl());
+		product.setProductPrice(form.getPrice());
+
+        return repository.save(product);
 	}
 
 }
