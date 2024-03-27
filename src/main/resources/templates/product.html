@@ -41,10 +41,21 @@
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 	<script src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/6-1-7/js/6-1-7.js"></script>
-    
 
-            <!-- 商品カードを動的に表示 -->
-            <div class="menu-container"
+        <!-- カテゴリ選択用のドロップダウンメニュー -->
+        <form th:action="@{/takeout/product}" method="get">
+            <select name="category" onchange="this.form.submit()">
+                <option value="">全てのカテゴリ</option>
+                <option value="FOOD">食品</option>
+                <option value="DRINK">飲料</option>
+                <option value="SIDE">サイド</option>
+                <!-- 他のカテゴリオプション -->
+            </select>
+        </form>
+
+
+        <!-- 商品カードを動的に表示 -->
+            <div class="menu-container">
                 <!-- 商品カート HTML -->
                 <div class="product-card" th:each="product : ${products}">
                     <div class="product-image">
@@ -94,6 +105,30 @@
 <!--固定フッターフラグメントの挿入 -->
 <div th:replace="fragments/layout :: footer"></div>
 
+
+    <script>
+        function filterProductsByCategory() {
+            let selectedCategory = document.getElementById('categorySelect').value;
+            fetch(`/api/products?category=${selectedCategory}`)
+                .then(response => response.json())
+                .then(products => {
+                    // ここで製品を表示する処理を実装
+                    displayProducts(products);
+                });
+        }
+
+        function displayProducts(products) {
+            let productsContainer = document.getElementById('productsContainer');
+            productsContainer.innerHTML = ''; // 既存の製品をクリア
+            products.forEach(product => {
+                // 各製品の表示処理を実装
+                let productElement = document.createElement('div');
+                productElement.innerHTML = `<h3>${product.productName}</h3><p>価格: ${product.price}円</p>`;
+                productsContainer.appendChild(productElement);
+            });
+        }
+
+    </script>
 <script th:src="@{/js/slider.js}"></script> <!-- 外部のJavaScriptファイル -->
 <script th:src="@{/js/addToCart.js}"></script>
 </body>

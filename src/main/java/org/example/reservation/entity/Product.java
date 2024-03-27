@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import org.example.reservation.entity.converter.CategoryConverter;
+import org.example.reservation.entity.enumeration.Category;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -37,6 +39,11 @@ public class Product {
 	@JsonManagedReference
 	@OneToMany(mappedBy = "product")
 	private List<Order> orders = new ArrayList<>();
+
+	@Convert(converter = CategoryConverter.class)
+	@Column(name = "category")
+	private Category category; // カテゴリフィールドを追加
+
 
 	@Override
 	public String toString() {
