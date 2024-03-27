@@ -1,5 +1,6 @@
 package org.example.reservation.service.implement;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.example.reservation.entity.Product;
 import org.example.reservation.exception.ResourceNotFoundException;
@@ -23,6 +24,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
+	@Transactional
 	public List<Product> updateProductStock(Cart cart) {
 		List<Product> updatedProducts = new ArrayList<>();
 
@@ -37,6 +39,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
+	@Transactional
 	public void createProduct(ProductForm form) {
 		Product product = new Product();
 		product.setProductName(form.getName());
@@ -54,6 +57,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
+	@Transactional
 	public Product updateProduct(Long id, ProductForm form) throws ResourceNotFoundException {
 		Product product = repository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Product not found for this id :: " + id));

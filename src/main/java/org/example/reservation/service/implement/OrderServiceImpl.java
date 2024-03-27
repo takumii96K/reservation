@@ -1,5 +1,6 @@
 package org.example.reservation.service.implement;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.example.reservation.entity.Order;
 import org.example.reservation.entity.Product;
@@ -15,6 +16,7 @@ public class OrderServiceImpl implements OrderService {
     private final JpaOrderRepository repository;
 
     @Override
+    @Transactional
     public void createOrder(CartItem item, Product product, Reservation reservation) {
         Order order = new Order();
         order.setQuantity(item.getQuantity());

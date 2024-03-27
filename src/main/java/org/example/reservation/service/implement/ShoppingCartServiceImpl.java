@@ -1,5 +1,6 @@
 package org.example.reservation.service.implement;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.example.reservation.entity.Product;
 import org.example.reservation.entity.Reservation;
@@ -45,6 +46,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
+    @Transactional
     public void finalizeCheckout(Cart cart, ReservationInputForm form) {
         // Reservationの新規作成
         Reservation createReservation = reservationService.createReservation(form);

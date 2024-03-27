@@ -1,5 +1,6 @@
 package org.example.reservation.service.implement;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.example.reservation.entity.Reservation;
 import org.example.reservation.entity.dto.ReservationProductDto;
@@ -22,6 +23,7 @@ public class ReservationServiceImpl implements ReservationService {
 	 * @return boolean true/false
 	 */
 	@Override
+	@Transactional
 	public Reservation createReservation(ReservationInputForm form){
 		Reservation reservation = new Reservation();
 			reservation.setCustomerName(form.getName());
