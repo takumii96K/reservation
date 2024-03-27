@@ -44,13 +44,15 @@
 
         <!-- カテゴリ選択用のドロップダウンメニュー -->
         <form th:action="@{/takeout/product}" method="get">
-            <select name="category" onchange="this.form.submit()">
-                <option value="">全てのカテゴリ</option>
-                <option value="FOOD">食品</option>
-                <option value="DRINK">飲料</option>
-                <option value="SIDE">サイド</option>
-                <!-- 他のカテゴリオプション -->
-            </select>
+            <label>
+                <select name="category" onchange="this.form.submit()">
+                    <option value="">全てのカテゴリ</option>
+                    <option value="FOOD">食品</option>
+                    <option value="DRINK">飲料</option>
+                    <option value="SIDE">サイド</option>
+                    <!-- 他のカテゴリオプション -->
+                </select>
+            </label>
         </form>
 
 
@@ -85,7 +87,7 @@
 
     <!--サイコロ -->
     <form th:action="@{/random}" method="post">
-        <button id="getRandomProductButton" class="random-product-button"style="background-color: transparent; border: none; color: transparent; cursor: pointer; font-size: 100px;">🤠</button>
+        <button id="getRandomProductButton" class="random-product-button" style="background-color: transparent; border: none; color: transparent; cursor: pointer; font-size: 100px;">🤠</button>
     </form>
     <div th:if="${randomProductName}">
         <p th:text="${randomProductName} + 'がｵｽｽﾒ♪'" style="color:transparent;"></p>
