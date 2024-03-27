@@ -6,8 +6,6 @@ import org.example.reservation.entity.converter.UserRegistrationFormConverter;
 import org.example.reservation.entity.projection.UserLoginProjection;
 import org.example.reservation.exception.DuplicateUserNameException;
 import org.example.reservation.form.UserRegistrationForm;
-import org.example.reservation.repository.JpaProductRepository;
-import org.example.reservation.repository.JpaReservationRepository;
 import org.example.reservation.repository.JpaUserRepository;
 import org.example.reservation.service.spec.UserService;
 import org.springframework.security.core.GrantedAuthority;
@@ -103,7 +101,7 @@ public class LoginUserDetailsService implements UserDetailsService, UserService 
     }
 
     public List<Reservation> getReservation(String username){
-        repository.
+        return null;
     }
 
 }
