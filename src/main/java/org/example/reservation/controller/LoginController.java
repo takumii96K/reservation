@@ -27,8 +27,8 @@ public class LoginController {
 	/**
 	 * GET:ログイン画面表示
 	 * @param model errorメッセ
-	 * @param params
-	 * @return
+	 * @param params requestParam="message"
+	 * @return "/login"
 	 */
 	@GetMapping("/login")
 	public String loginForm(Model model,
@@ -97,7 +97,7 @@ public class LoginController {
 	}
 	@GetMapping("/user/profile")
 	public String myPage(@AuthenticationPrincipal UserDetailsIml userDetails, Model model) {
-		model.addAttribute("user", userDetails);
+		model.addAttribute("user", userDetails.getUser());
 		// 例: 注文履歴、お気に入り商品など
 		return "mypage";
 	}
