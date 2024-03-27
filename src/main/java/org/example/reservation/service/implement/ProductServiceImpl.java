@@ -3,6 +3,7 @@ package org.example.reservation.service.implement;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.example.reservation.entity.Product;
+import org.example.reservation.entity.converter.CategoryConverter;
 import org.example.reservation.exception.ResourceNotFoundException;
 import org.example.reservation.form.ProductForm;
 import org.example.reservation.repository.JpaProductRepository;
@@ -18,6 +19,8 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService {
 
 	private final JpaProductRepository repository;
+	private final CategoryConverter converter;
+
 	@Override
 	public List<Product> getAllProducts() {
 		return repository.findAll();
@@ -68,6 +71,11 @@ public class ProductServiceImpl implements ProductService {
 		product.setProductPrice(form.getPrice());
 
         return repository.save(product);
+	}
+
+	// 特定のカテゴリの製品を取得するメソッド
+	public List<Product> getProductsByCategory(String category) {
+		return repository.findProductsByCategory(converter.convertToEntityAttribute(category));
 	}
 
 }

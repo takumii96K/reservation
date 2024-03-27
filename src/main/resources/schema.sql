@@ -3,7 +3,8 @@ CREATE TABLE IF NOT EXISTS public.product
     product_id SERIAL PRIMARY KEY NOT NULL,
     product_name VARCHAR NOT NULL,
     product_price INTEGER NOT NULL,
-    product_stock INTEGER NOT NULL
+    product_stock INTEGER NOT NULL,
+    category VARCHAR
 );
 
 CREATE TABLE IF NOT EXISTS public.reservation
