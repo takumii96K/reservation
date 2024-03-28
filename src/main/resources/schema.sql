@@ -4,7 +4,9 @@ CREATE TABLE IF NOT EXISTS public.product
     product_name VARCHAR NOT NULL,
     product_price INTEGER NOT NULL,
     product_stock INTEGER NOT NULL,
-    category VARCHAR
+    category VARCHAR,
+    image_id BIGINT,
+    FOREIGN KEY (image_id) REFERENCES public.image (image_id)
 );
 
 CREATE TABLE IF NOT EXISTS public.reservation
@@ -36,4 +38,12 @@ CREATE TABLE IF NOT EXISTS public.reservation_product
     purchased_quantity INT NOT NULL,
     FOREIGN KEY (reservation_id) REFERENCES public.reservation (reservation_id),
     FOREIGN KEY (product_id) REFERENCES public.product (product_id)
+);
+
+CREATE TABLE IF NOT EXISTS public.image
+(
+    image_id SERIAL PRIMARY KEY,
+    image_name VARCHAR(255),
+    image_url VARCHAR(255) NOT NULL,
+    image_type VARCHAR(255)
 );

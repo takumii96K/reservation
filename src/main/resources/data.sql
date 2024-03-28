@@ -1,53 +1,59 @@
--- INSERT INTO product (product_name, product_url, product_price, product_stock) VALUES
---                                                                                   ('スマイル', '/images/4.jpg', 650, 70),
---                                                                                   ('ドーナッツ', '/images/6.jpg', 750, 50),
---                                                                                   ('アポーパイ', '/images/2.jpg', 550, 90),
---                                                                                   ('チキンナゲット', '/images/5.jpg', 700, 60),
---                                                                                   ('ホットドッグ', '/images/8.jpg', 850, 30),
---                                                                                   ('ポテト', '/images/9.jpg', 900, 20),
---                                                                                   ('ミックスポップコーン', '/images/10.jpg', 950, 10),
---                                                                                   ('ベジタリアンバーガー', '/images/7.jpg', 800, 40),
---                                                                                   ('カリカリベーコンバーガー', '/images/3.jpg', 600, 80),
---                                                                                   ('ビックマック', '/images/bigmac.png', 500, 100),
---                                                                                   ('淡路島バーガー', '/images/11.jpg', 500, 100),
---                                                                                   ('ジャパニーズバーガー', '/images/12.jpg', 550, 90),
---                                                                                   ('チャイニーズバーガー', '/images/13.jpg', 600, 80),
---                                                                                   ('北欧バーガー', '/images/14.jpg', 650, 70),
---                                                                                   ('イタリアンバーガー', '/images/15.jpg', 700, 60),
---                                                                                   ('イングランドバーガー', '/images/16.jpg', 750, 50),
---                                                                                   ('キッズバーガー', '/images/17.jpg', 800, 40),
---                                                                                   ('コーラ', '/images/18.jpg', 850, 30),
---                                                                                   ('Heineken', '/images/19.jpg', 900, 20),
---                                                                                   ('ジンジャエール', '/images/20.jpg', 950, 10),
---                                                                                   ('マルゲリータ', '/images/21.jpg', 900, 20),
---                                                                                   ('ペパロニピザ', '/images/22.jpg', 900, 20),
---                                                                                   ('メキシカンピザ', '/images/23.jpg', 900, 20),
---                                                                                   ('ピザトースト', '/images/24.jpg', 900, 20);
-INSERT INTO product (product_name, product_url, product_price, product_stock, category) VALUES
-                                                                                            ('スマイル', '/images/4.jpg', 650, 70, 'FOOD'),
-                                                                                            ('ドーナッツ', '/images/6.jpg', 750, 50, 'FOOD'),
-                                                                                            ('アポーパイ', '/images/2.jpg', 550, 90, 'FOOD'),
-                                                                                            ('チキンナゲット', '/images/5.jpg', 700, 60, 'FOOD'),
-                                                                                            ('ホットドッグ', '/images/8.jpg', 850, 30, 'FOOD'),
-                                                                                            ('ポテト', '/images/9.jpg', 900, 20, 'SIDE'),
-                                                                                            ('ミックスポップコーン', '/images/10.jpg', 950, 10, 'SIDE'),
-                                                                                            ('ベジタリアンバーガー', '/images/7.jpg', 800, 40, 'FOOD'),
-                                                                                            ('カリカリベーコンバーガー', '/images/3.jpg', 600, 80, 'FOOD'),
-                                                                                            ('ビックマック', '/images/bigmac.png', 500, 100, 'FOOD'),
-                                                                                            ('淡路島バーガー', '/images/11.jpg', 500, 100, 'FOOD'),
-                                                                                            ('ジャパニーズバーガー', '/images/12.jpg', 550, 90, 'FOOD'),
-                                                                                            ('チャイニーズバーガー', '/images/13.jpg', 600, 80, 'FOOD'),
-                                                                                            ('北欧バーガー', '/images/14.jpg', 650, 70, 'FOOD'),
-                                                                                            ('イタリアンバーガー', '/images/15.jpg', 700, 60, 'FOOD'),
-                                                                                            ('イングランドバーガー', '/images/16.jpg', 750, 50, 'FOOD'),
-                                                                                            ('キッズバーガー', '/images/17.jpg', 800, 40, 'FOOD'),
-                                                                                            ('コーラ', '/images/18.jpg', 850, 30, 'DRINK'),
-                                                                                            ('Heineken', '/images/19.jpg', 900, 20, 'DRINK'),
-                                                                                            ('ジンジャエール', '/images/20.jpg', 950, 10, 'DRINK'),
-                                                                                            ('マルゲリータ', '/images/21.jpg', 900, 20, 'FOOD'),
-                                                                                            ('ペパロニピザ', '/images/22.jpg', 900, 20, 'FOOD'),
-                                                                                            ('メキシカンピザ', '/images/23.jpg', 900, 20, 'FOOD'),
-                                                                                            ('ピザトースト', '/images/24.jpg', 900, 20, 'FOOD');
+INSERT INTO public.image (image_name, image_url, image_type) VALUES
+                                                                 ('スマイル', '/images/4.jpg', 'image/jpeg'),
+                                                                 ('ドーナッツ', '/images/6.jpg', 'image/jpeg'),
+                                                                 ('アポーパイ', '/images/1.jpg', 'image/jpeg'),
+                                                                 ('チキンナゲット', '/images/5.jpg', 'image/jpeg'),
+                                                                 ('ホットドッグ', '/images/8.jpg', 'image/jpeg'),
+                                                                 ('ポテト', '/images/9.jpg', 'image/jpeg'),
+                                                                 ('ミックスポップコーン', '/images/10.jpg', 'image/jpeg'),
+                                                                 ('ベジタリアンバーガー', '/images/7.jpg', 'image/jpeg'),
+                                                                 ('カリカリベーコンバーガー', '/images/3.jpg', 'image/jpeg'),
+                                                                 ('ビックマック', '/images/2.jpg', 'image/jpeg'),
+                                                                 ('淡路島バーガー', '/images/11.jpg', 'image/jpeg'),
+                                                                 ('ジャパニーズバーガー', '/images/12.jpg', 'image/jpeg'),
+                                                                 ('チャイニーズバーガー', '/images/13.jpg', 'image/jpeg'),
+                                                                 ('北欧バーガー', '/images/14.jpg', 'image/jpeg'),
+                                                                 ('イタリアンバーガー', '/images/15.jpg', 'image/jpeg'),
+                                                                 ('イングランドバーガー', '/images/16.jpg', 'image/jpeg'),
+                                                                 ('キッズバーガー', '/images/17.jpg', 'image/jpeg'),
+                                                                 ('コーラ', '/images/18.jpg', 'image/jpeg'),
+                                                                 ('Heineken', '/images/19.jpg', 'image/jpeg'),
+                                                                 ('ジンジャエール', '/images/20.jpg', 'image/jpeg'),
+                                                                 ('マルゲリータ', '/images/21.jpg', 'image/jpeg'),
+                                                                 ('ペパロニピザ', '/images/22.jpg', 'image/jpeg'),
+                                                                 ('メキシカンピザ', '/images/23.jpg', 'image/jpeg'),
+                                                                 ('ピザトースト', '/images/24.jpg', 'image/jpeg');
+
+
+
+
+
+INSERT INTO public.product (product_name, product_price, product_stock, category, image_id) VALUES
+                                                                                                ('スマイル', 650, 70, 'FOOD', 1),
+                                                                                                ('ドーナッツ', 750, 50, 'FOOD', 2),
+                                                                                                ('アポーパイ', 550, 90, 'FOOD', 3),
+                                                                                                ('チキンナゲット', 700, 60, 'FOOD', 4),
+                                                                                                ('ホットドッグ', 850, 30, 'FOOD', 5),
+                                                                                                ('ポテト', 900, 20, 'SIDE', 6),
+                                                                                                ('ミックスポップコーン', 950, 10, 'SIDE', 7),
+                                                                                                ('ベジタリアンバーガー', 800, 40, 'FOOD', 8),
+                                                                                                ('カリカリベーコンバーガー', 600, 80, 'FOOD', 9),
+                                                                                                ('ビックマック', 500, 100, 'FOOD', 10),
+                                                                                                ('淡路島バーガー', 500, 100, 'FOOD', 11),
+                                                                                                ('ジャパニーズバーガー', 550, 90, 'FOOD', 12),
+                                                                                                ('チャイニーズバーガー', 600, 80, 'FOOD', 13),
+                                                                                                ('北欧バーガー', 650, 70, 'FOOD', 14),
+                                                                                                ('イタリアンバーガー', 700, 60, 'FOOD', 15),
+                                                                                                ('イングランドバーガー', 750, 50, 'FOOD', 16),
+                                                                                                ('キッズバーガー', 800, 40, 'FOOD', 17),
+                                                                                                ('コーラ', 850, 30, 'DRINK', 18),
+                                                                                                ('Heineken', 900, 20, 'DRINK', 19),
+                                                                                                ('ジンジャエール', 950, 10, 'DRINK', 20),
+                                                                                                ('マルゲリータ', 900, 20, 'FOOD', 21),
+                                                                                                ('ペパロニピザ', 900, 20, 'FOOD', 22),
+                                                                                                ('メキシカンピザ', 900, 20, 'FOOD', 23),
+                                                                                                ('ピザトースト', 900, 20, 'FOOD', 24);
+
 
 
 
@@ -70,7 +76,7 @@ INSERT INTO reservation_product (reservation_id, product_id, purchased_quantity)
                                                                            (3, 3, 4), -- 佐藤花子がはしまきを4個予約
                                                                            (4, 2, 1), -- 田中次郎が焼きそばを1個予約
                                                                            (4, 3, 2), -- 田中次郎がはしまきを2個予約
-                                                                           (5, 5, 1); -- 伊藤桃子がスパイシーチキンバーガーを1個予約
+                                                                           (5, 5, 1);
 
 -- user_tableにデータを挿入
 INSERT INTO user_table (authority_kind, user_name, user_password, user_tel) VALUES

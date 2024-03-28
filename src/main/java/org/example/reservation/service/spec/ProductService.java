@@ -17,6 +17,5 @@ public interface ProductService {
 	void createProduct(ProductForm form);
 	Product selectOneRandomProduct();//商品のランダム取得
 	Product updateProduct(Long id, ProductForm from);
-
 	List<Product> getProductsByCategory(String category);
 }

@@ -16,7 +16,7 @@ function plusSlides(n) {
     $('.slideshow-container').slick('slickGoTo', n);
 }
 
-//カードフェードインアニメーション
+// カードフェードインアニメーション
 window.addEventListener('scroll', function() {
     let productCards = document.querySelectorAll('.product-card');
     let windowHeight = window.innerHeight;
