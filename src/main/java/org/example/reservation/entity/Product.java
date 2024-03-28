@@ -25,9 +25,6 @@ public class Product {
 	@Column(name = "product_name")
 	private String productName;    //商品名
 
-	@Column(name = "product_url")
-	private String imageUrl;
-
 	@NotNull
 	@Column(name = "product_price")
 	private BigDecimal productPrice;    //商品の金額
@@ -44,6 +41,10 @@ public class Product {
 	@Column(name = "category")
 	private Category category; // カテゴリフィールドを追加
 
+	@JsonManagedReference
+	@OneToOne
+	@JoinColumn(name = "image_id")
+	private Image image;
 
 	@Override
 	public String toString() {

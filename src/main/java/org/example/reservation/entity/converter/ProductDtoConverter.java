@@ -21,7 +21,6 @@ public class ProductDtoConverter{
         product.setProductName(form.getName());
         product.setStock(form.getStock());
         product.setProductPrice(form.getPrice());
-        product.setImageUrl(form.getImgUrl());
         return product;
     }
 
@@ -35,6 +34,7 @@ public class ProductDtoConverter{
         dto.setId(entity.getProductId());
         dto.setProductName(entity.getProductName());
         dto.setStock(entity.getStock());
+        dto.setCategory(entity.getCategory());
         return dto;
     }
 
@@ -60,8 +60,9 @@ public class ProductDtoConverter{
             dto.setId(entity.getProductId());
             dto.setProductName(entity.getProductName());
             dto.setStock(entity.getStock());
-            dto.setImgUrl(entity.getImageUrl());
             dto.setPrice(entity.getProductPrice());
+            dto.setImage(entity.getImage());
+            dto.setCategory(entity.getCategory());
             productDtoList.add(dto);
         }
         return productDtoList;

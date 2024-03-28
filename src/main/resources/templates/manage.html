@@ -78,6 +78,7 @@
         <th>商品名</th>
         <th>在庫数</th>
         <th>商品金額</th>
+        <th>カテゴリ</th>
         <th>編集</th>
     </tr>
     </thead>
@@ -87,9 +88,10 @@
         <td th:text="${product.productName}"></td>
         <td th:text="${product.stock}"></td>
         <td th:text="${product.price}"></td>
+        <td th:text="${product.category}"></td>
         <td>
             <!-- 非表示の画像URLフィールド -->
-            <input type="hidden" th:value="${product.imgUrl}" class="product-image-url" />
+            <input type="hidden" th:value="${product.image.url}" class="product-image-url" />
             <!-- 編集ボタン -->
             <button class="edit-btn" onclick="showEditForm(this)">編集</button>
         </td>
@@ -115,8 +117,17 @@
             <input type="number" id="edit-product-price" name="price">
         </div>
         <div class="form-group">
-            <label for="edit-product-image">商品画像URL:</label>
+            <label for="edit-product-image">商品画像:</label>
             <input type="text" id="edit-product-image" name="image">
+        </div>
+        <div class="form-group">
+            <label for="edit-product-category">カテゴリ:</label>
+            <select id="edit-product-category" name="category">
+                <option value="FOOD">食品</option>
+                <option value="DRINK">飲料</option>
+                <option value="SIDE">サイド</option>
+                <!-- 他のカテゴリオプション -->
+            </select>
         </div>
         <button type="button" id="update-product">更新</button>
     </form>
@@ -133,9 +144,10 @@
         document.getElementById("edit-product-name").value = cells[1].innerText;
         document.getElementById("edit-product-stock").value = cells[2].innerText;
         document.getElementById("edit-product-price").value = cells[3].innerText;
-        document.getElementById("edit-product-image").value = cells[4] ? cells[4].innerText : ''; // 画像URLがあれば設定
+        // document.getElementById("edit-product-image").value = cells[4] ? cells[4].innerText : ''; // 画像URLがあれば設定
         // 画像URLを編集フォームにセット
         document.getElementById("edit-product-image").value = imageUrl;
+        document.getElementById("edit-product-category").value = cells[4].innerText.trim(); // カテゴリをセット
 
         let editForm = document.getElementById('editForm');
         editForm.style.display = 'block';
@@ -148,6 +160,7 @@
             let productStock = $("#edit-product-stock").val();
             let productPrice = $("#edit-product-price").val();
             let productImage = $("#edit-product-image").val(); // 画像URLを取得
+            let productCategory = $("#edit-product-category").val(); // カテゴリを取得
 
             const csrfToken = $('meta[name="_csrf"]').attr('content');
             const csrfHeaderName = $('meta[name="_csrf_header"]').attr('content');
@@ -161,7 +174,8 @@
                     name: productName,
                     stock: productStock,
                     price: productPrice,
-                    imgUrl: productImage // 画像URLをJSONに含める
+                    imgUrl: productImage, // 画像URLをJSONに含める
+                    category: productCategory // JSONにカテゴリ情報を含める
                 }),
                 success: function(response) {
                     alert('商品情報を更新しました');
@@ -177,31 +191,44 @@
     });
 </script>
 
+
+
 <h2>商品登録</h2>
-<form th:action="@{/admin/manage/add-product}" method="post" style="display: flex; flex-direction: row;">
-	
+<form th:action="@{/admin/manage/add-product}" method="post" enctype="multipart/form-data" style="display: flex; flex-direction: row;">
+
     <div style="margin-right: 20px;">
         <label for="productName" style="width: 100px;">商品名:</label>
         <input type="text" id="productName" name="name" style="font-size: 16px;">
     </div>
-    
+
     <div style="margin-right: 20px;">
         <label for="productStock" style="width: 100px;">在庫数:</label>
         <input type="text" id="productStock" name="stock" style="font-size: 16px;">
     </div>
-    
+
     <div style="margin-right: 20px;">
         <label for="productPrice" style="width: 100px;">商品金額:</label>
         <input type="text" id="productPrice" name="price" style="font-size: 16px;">
     </div>
-    
+
     <div style="margin-right: 20px;">
-        <label for="productUrl" style="width: 100px;">商品画像:</label>
-        <input type="text" id="productUrl" name="imgUrl" style="font-size: 16px;">
+        <label for="productImage" style="width: 100px;">商品画像:</label>
+        <input type="file" id="productImage" name="image" style="font-size: 16px;">
     </div>
-    
-    <button type="submit" >登録</button>
+
+    <div style="margin-right: 20px;">
+        <label for="productCategory" style="width: 100px;">カテゴリ:</label>
+        <select id="productCategory" name="category" style="font-size: 16px;">
+            <option value="FOOD">食品</option>
+            <option value="DRINK">飲料</option>
+            <option value="SIDE">サイド</option>
+        </select>
+    </div>
+
+    <button type="submit">登録</button>
 </form>
+
+
 	<!-- エラーメッセージ -->
 	<div th:if="${errorMessage}" style="color: red;">
     	<p th:text="${errorMessage}"></p>
@@ -279,6 +306,32 @@
 </table>
 
 
+<script>
+    $('#uploadForm').submit(function(event) {
+        event.preventDefault();
 
+        let formData = new FormData();
+        formData.append('productImage', $('#productImage')[0].files[0]);
+
+        const csrfToken = $('meta[name="_csrf"]').attr('content');
+        const csrfHeaderName = $('meta[name="_csrf_header"]').attr('content');
+
+        $.ajax({
+            url: '/upload', // サーバー側のエンドポイント
+            type: 'POST',
+            data: formData,
+            headers: { [csrfHeaderName]: csrfToken },
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                alert('画像のアップロードが完了しました');
+                location.reload();
+            },
+            error: function() {
+                alert('画像のアップロードに失敗しました');
+            }
+        });
+    });
+</script>
 </body>
 </html>

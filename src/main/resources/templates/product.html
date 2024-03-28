@@ -59,9 +59,9 @@
         <!-- 商品カードを動的に表示 -->
             <div class="menu-container">
                 <!-- 商品カート HTML -->
-                <div class="product-card" th:each="product : ${products}">
+                <div class="product-card product" th:each="product : ${products}">
                     <div class="product-image">
-                        <img th:src="${product.imgUrl}" th:alt="${product.productName}" />
+                        <div id="product-image-${product.id}">画像ロード中...</div>
                     </div>
                     <div class="product-details"
                          th:data-product-id="${product.id}"
@@ -110,5 +110,6 @@
 
 <script th:src="@{/js/slider.js}"></script> <!-- 外部のJavaScriptファイル -->
 <script th:src="@{/js/addToCart.js}"></script>
+<script th:src="@{/js/image.js}"></script>
 </body>
 </html>

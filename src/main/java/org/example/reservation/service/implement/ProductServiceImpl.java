@@ -2,15 +2,19 @@ package org.example.reservation.service.implement;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.example.reservation.entity.Image;
 import org.example.reservation.entity.Product;
-import org.example.reservation.entity.converter.CategoryConverter;
+import org.example.reservation.entity.enumeration.Category;
 import org.example.reservation.exception.ResourceNotFoundException;
 import org.example.reservation.form.ProductForm;
 import org.example.reservation.repository.JpaProductRepository;
+import org.example.reservation.service.spec.ImageService;
 import org.example.reservation.service.spec.ProductService;
 import org.example.reservation.session.Cart;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,8 +22,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
 
+	private final ImageService imageService;
 	private final JpaProductRepository repository;
-	private final CategoryConverter converter;
 
 	@Override
 	public List<Product> getAllProducts() {
@@ -44,11 +48,21 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	@Transactional
 	public void createProduct(ProductForm form) {
+		MultipartFile file = form.getImage();
+		Image savedImage = null;
+		if (file != null && !file.isEmpty()) {
+            try {
+                savedImage = imageService.saveImage(file);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
 		Product product = new Product();
 		product.setProductName(form.getName());
 		product.setProductPrice(form.getPrice());
 		product.setStock(form.getStock());
-		product.setImageUrl(form.getImgUrl());
+		product.setImage(savedImage);
+		product.setCategory(Category.valueOf(form.getCategory()));
 		repository.save(product);
 	}
 
@@ -67,15 +81,15 @@ public class ProductServiceImpl implements ProductService {
 
 		product.setProductName(form.getName());
 		product.setStock(form.getStock());
-		product.setImageUrl(form.getImgUrl());
 		product.setProductPrice(form.getPrice());
+		product.setCategory(Category.valueOf(form.getCategory()));
 
         return repository.save(product);
 	}
 
 	// 特定のカテゴリの製品を取得するメソッド
 	public List<Product> getProductsByCategory(String category) {
-		return repository.findProductsByCategory(converter.convertToEntityAttribute(category));
+		return repository.findProductsByCategory(Category.valueOf(category));
 	}
 
 }
