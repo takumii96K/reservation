@@ -1,16 +1,13 @@
 package org.example.reservation.controller;
 
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.example.reservation.entity.Product;
 import org.example.reservation.entity.converter.ProductDtoConverter;
 import org.example.reservation.exception.ResourceNotFoundException;
 import org.example.reservation.form.ProductForm;
-import org.example.reservation.service.spec.ImageService;
 import org.example.reservation.service.spec.ProductService;
 import org.example.reservation.service.spec.ReservationService;
 import org.example.reservation.service.spec.UserService;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,20 +21,7 @@ public class ManageController {
 	private final ProductService productService;
 	private final UserService userService;
 	private final ReservationService reservationService;
-	private final ImageService imageService;
 	private final ProductDtoConverter converter;
-
-	// 商品情報の編集フォーム表示フラグ
-	@Getter
-	private boolean productFormVisible = false;
-
-	// 商品情報の編集フォーム表示フラグのリセット
-	private void resetProductFormVisible() {
-		productFormVisible = false;
-	}
-
-	@Value("${upload.path}")
-	private String uploadPath;
 
 
 	/**
@@ -49,8 +33,6 @@ public class ManageController {
 	public String showList(Model model) {
 		//商品情報
 		model.addAttribute("products" ,converter.convertToDtoList(productService.getAllProducts()));
-		// 商品情報の編集フォーム表示フラグ
-		model.addAttribute("productFormVisible", this.productFormVisible);
 		model.addAttribute("form", new ProductForm());
 		//authorityKindが1のユーザーのみを取得
 		model.addAttribute("users", userService.findUserWithAuthorityKindOne());
@@ -90,12 +72,11 @@ public class ManageController {
 
 		// 商品情報, ユーザー情報, 予約情報の再取得とビューへの追加
 		model.addAttribute("products", converter.convertToDtoList(productService.getAllProducts()));
-		model.addAttribute("productFormVisible", this.productFormVisible);
 		model.addAttribute("form", new ProductForm());
 		model.addAttribute("users", userService.findUserWithAuthorityKindOne());
 		model.addAttribute("reservations", reservationService.getReservationProductDtoAll());
 
-		return "/manage"; // 商品登録画面にフォワード
+		return "redirect:/admin/manage"; // 商品登録画面にフォワード
 	}
 
 }

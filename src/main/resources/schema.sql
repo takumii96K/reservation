@@ -44,6 +44,6 @@ CREATE TABLE IF NOT EXISTS public.image
 (
     image_id SERIAL PRIMARY KEY,
     image_name VARCHAR(255),
-    image_url VARCHAR(255) NOT NULL,
+    image_path VARCHAR(255),
     image_type VARCHAR(255)
 );

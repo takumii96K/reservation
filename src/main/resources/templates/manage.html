@@ -91,7 +91,7 @@
         <td th:text="${product.category}"></td>
         <td>
             <!-- 非表示の画像URLフィールド -->
-            <input type="hidden" th:value="${product.image.path}" class="product-image-url" />
+            <input type="hidden" th:value="${product.image?.path}" class="product-image-url" />
             <!-- 編集ボタン -->
             <button class="edit-btn" onclick="showEditForm(this)">編集</button>
         </td>
@@ -306,32 +306,32 @@
 </table>
 
 
-<script>
-    $('#uploadForm').submit(function(event) {
-        event.preventDefault();
+<!--<script>-->
+<!--    $('#uploadForm').submit(function(event) {-->
+<!--        event.preventDefault();-->
 
-        let formData = new FormData();
-        formData.append('productImage', $('#productImage')[0].files[0]);
+<!--        let formData = new FormData();-->
+<!--        formData.append('productImage', $('#productImage')[0].files[0]);-->
 
-        const csrfToken = $('meta[name="_csrf"]').attr('content');
-        const csrfHeaderName = $('meta[name="_csrf_header"]').attr('content');
+<!--        const csrfToken = $('meta[name="_csrf"]').attr('content');-->
+<!--        const csrfHeaderName = $('meta[name="_csrf_header"]').attr('content');-->
 
-        $.ajax({
-            url: '/upload', // サーバー側のエンドポイント
-            type: 'POST',
-            data: formData,
-            headers: { [csrfHeaderName]: csrfToken },
-            processData: false,
-            contentType: false,
-            success: function(response) {
-                alert('画像のアップロードが完了しました');
-                location.reload();
-            },
-            error: function() {
-                alert('画像のアップロードに失敗しました');
-            }
-        });
-    });
-</script>
+<!--        $.ajax({-->
+<!--            url: '/upload', // サーバー側のエンドポイント-->
+<!--            type: 'POST',-->
+<!--            data: formData,-->
+<!--            headers: { [csrfHeaderName]: csrfToken },-->
+<!--            processData: false,-->
+<!--            contentType: false,-->
+<!--            success: function(response) {-->
+<!--                alert('画像のアップロードが完了しました');-->
+<!--                location.reload();-->
+<!--            },-->
+<!--            error: function() {-->
+<!--                alert('画像のアップロードに失敗しました');-->
+<!--            }-->
+<!--        });-->
+<!--    });-->
+<!--</script>-->
 </body>
 </html>
