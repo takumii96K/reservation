@@ -61,7 +61,7 @@
                 <!-- 商品カート HTML -->
                 <div class="product-card product" th:each="product : ${products}">
                     <div class="product-image">
-                        <div id="product-image-${product.id}">画像ロード中...</div>
+                        <img th:src="${product.image.getPath()}" th:alt="${product.productName}" />
                     </div>
                     <div class="product-details"
                          th:data-product-id="${product.id}"

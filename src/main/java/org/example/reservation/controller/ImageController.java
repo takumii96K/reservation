@@ -5,12 +5,13 @@ import org.example.reservation.entity.Image;
 import org.example.reservation.service.spec.ImageService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.IOException;
-import java.util.Collections;
 
 @RestController
 @RequestMapping("/images")
@@ -29,17 +30,17 @@ public class ImageController {
         }
     }
 
-    @GetMapping("/images/{id}")
-    public ResponseEntity<?> getImage(@PathVariable Long id) {
-        Image image = imageService.getImage(id);
-        // image.getPath() が /images/4 のような相対パスを返すことを想定
-        String imageUrl = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path(image.getPath())
-                .toUriString();
-
-        return ResponseEntity
-                .ok()
-                .body(Collections.singletonMap("url", imageUrl));
-    }
+//    @GetMapping("/images/{id}")
+//    public ResponseEntity<?> getImage(@PathVariable Long id) {
+//        Image image = imageService.getImage(id);
+//        // image.getPath() が /images/4 のような相対パスを返すことを想定
+//        String imageUrl = ServletUriComponentsBuilder.fromCurrentContextPath()
+//                .path(image.getPath())
+//                .toUriString();
+//
+//        return ResponseEntity
+//                .ok()
+//                .body(Collections.singletonMap("url", imageUrl));
+//    }
 }
 
