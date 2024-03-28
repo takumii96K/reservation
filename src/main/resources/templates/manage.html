@@ -91,7 +91,7 @@
         <td th:text="${product.category}"></td>
         <td>
             <!-- 非表示の画像URLフィールド -->
-            <input type="hidden" th:value="${product.image.url}" class="product-image-url" />
+            <input type="hidden" th:value="${product.image.path}" class="product-image-url" />
             <!-- 編集ボタン -->
             <button class="edit-btn" onclick="showEditForm(this)">編集</button>
         </td>
