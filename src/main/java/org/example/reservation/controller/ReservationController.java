@@ -12,6 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  * 予約画面コントローラー
@@ -47,7 +48,7 @@ public class ReservationController {
 	 */
 	@PostMapping("/takeout/product/completeOrder")
 	public String completeOrderView(@Validated @ModelAttribute("inputReservationForm")
-									ReservationInputForm form, BindingResult bindingResult) {
+									ReservationInputForm form, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 		if(!bindingResult.hasErrors()) {
 			//予約をデータベースに登録する。
 			shoppingCartService.finalizeCheckout(cartSession.getCart(), form);
@@ -55,19 +56,9 @@ public class ReservationController {
 			cartSession.resetCart();
 			return "confirmation";
 		}
+		redirectAttributes.addFlashAttribute("errorMessage", "エラーが発生しました。やり直してください");
 		return "redirect:/takeout/product/reservation";
 	}
-
-//
-//	//カレンダーから日時指定をする
-//	@PostMapping("/takeout/product/submitDate")
-//	public String submitDate(@RequestParam("datetime") String datetime, Model model)
-//	{
-//		// 文字列をLocalDateTimeに変換（フォーマットはフロントエンドで選択した日時に応じて）
-//		LocalDateTime parsedDateTime = LocalDateTime.parse(datetime);
-//		model.addAttribute("selectedDateTime", parsedDateTime.toString());
-//		return "resultPage";
-//	}
 
 
 	@PostMapping("/reservation/submit")

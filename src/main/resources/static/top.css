@@ -1,0 +1,537 @@
+@charset "UTF-8";
+@import url(https://fonts.googleapis.com/css?family=Fjalla+One);
+@import url(https://fonts.googleapis.com/css?family=Petit+Formal+Script);
+
+
+/* 見出し */
+h1 {
+    z-index: 3; /* 他の要素よりも手前に表示 */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1.2);
+    padding: 0 55px;
+    text-align: center;
+    color: rgb(255, 255, 255);
+    opacity: 0; /* 初期状態で非表示 */
+    animation: fadeIn 1s forwards, bounce 1s ease-out; /* フェードインと振動アニメーション */
+}
+
+/* フェードインアニメーション */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* 振動アニメーション */
+@keyframes bounce {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(1.2);
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+/* 背景画像画像 */
+.bg {
+    position: relative;
+    background-image: url("https://plus.unsplash.com/premium_photo-1668618295237-f1d8666812c9?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+    background-size: cover;
+    background-position: center;
+    height: 100%;
+    width: 100%;
+    z-index: 1; /* オーバーレイよりも背景画像を上に表示 */
+}
+
+.bg-overRay {
+    background-color: rgba(0, 0, 0, 0.4); /* 黒の半透明オーバーレイ */
+    /* オーバーレイを背景画像の上に全面に広げる */
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2; /* 背景画像よりもオーバーレイを上に表示 */
+}
+
+/* 背景画像の拡大縮小アニメーション */
+@keyframes scaleBackground {
+    from {
+        transform: scale(1);
+    }
+    to {
+        transform: scale(1.1);
+    }
+}
+
+/* ポップアップのスタイル */
+.popup-overlay {
+    z-index: 3; /* 他の要素よりも手前に表示 */
+    position: fixed;
+    top: 70px;
+    bottom: 100px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-content {
+    background-color: white;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    width: 300px; /* 幅を指定 */
+    height: 380px; /* 高さを指定 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 60px; /* 上側の余白 */
+    margin-bottom: 100px; /* 下側の余白 */
+}
+
+.popup-content img {
+    padding: 0;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.close-btn {
+    position: absolute;
+    top: 12%;
+    right: 34%;
+    cursor: pointer;
+    color: #fff;
+}
+
+/*おしらせ：アコーディオンメニュー*/
+.information {
+    position: relative;
+    padding: 20px 50px;
+    margin-top: 40px;
+    background-color: #f78318;
+    color: #fff;
+    opacity: 0; /* 初期状態は透明にする */
+    transform: translateY(100%); /* 下から100%分上に移動 */
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out; /* アニメーションの設定 */
+
+
+}
+
+/* フェードインアニメーションのトリガー */
+.show {
+    opacity: 1; /* 不透明にする */
+    transform: translateY(0%); /* 元の位置に移動 */
+}
+
+
+.home {
+    display: flex;
+    justify-content: center;
+    flex-direction: column; /* 要素を縦に並べる */
+    align-items: center; /* 中央揃え */
+    margin: 90px 0 60px 0;
+}
+.accordion-003 {
+    max-width: 750px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgb(64, 0, 0); /* accordion-003要素にもborder-bottomを適用 */
+}
+
+.accordion-003 summary {
+    display: flex;
+    justify-content: center; /* 中央に配置 */
+    align-items: center;
+    /*position: relative;*/
+    font-size: 17px;
+    padding: 1em 2em;
+    color: #3f3131;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.accordion-003 summary::-webkit-details-marker {
+    display: none;
+}
+
+.accordion-003 summary::after {
+    transform: translateY(-25%) rotate(45deg);
+    width: 7px;
+    height: 7px;
+    margin-left: 10px;
+    border-bottom: 3px solid #3f3131b3;
+    border-right: 3px solid #3f3131b3;
+    content: '';
+    transition: transform .3s; /* トランジションを追加 */
+}
+
+.accordion-003[open] summary::after {
+    transform: rotate(225deg);
+    transition: transform .5s, opacity .5s;
+}
+
+.accordion-003 p {
+    transform: translateY(-10px);
+    opacity: 0;
+    margin: 0;
+    padding: .3em 2em 1.5em;
+    color: #4e4b4b;
+    transition: transform .5s, opacity .5s;
+}
+
+.accordion-003[open] p {
+    transform: none;
+    opacity: 1;
+}
+.accordion-003 p {
+    font-size: 13px; /* Adjust as needed */
+}
+
+/* 広告バナー（ダミー） */
+.campaign{
+    background-color: darkorange;
+    display: flex;
+    justify-content: center;
+    flex-direction: column; /* 要素を縦に並べる */
+    align-items: center; /* 中央揃え */
+    margin: 90px 0 60px 0;
+}
+.campaign .information{
+    background-color: rgb(255, 247, 208);
+    color: rgb(128, 64, 0);
+}
+.ad-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 60px 60px 60px;
+}
+
+.ad-container img {
+    border-radius: 30px; /* 画像の角を丸くする */
+    width: 800px; /* 画像の横幅を500ピクセルに設定 */
+    height: 300px; /* 高さを自動調整 */
+    margin-bottom: 20px; /* 画像間の余白を設定 */
+    opacity: 0; /* 初期状態で不透明度を0に設定 */
+    transform: scale(0); /* 初期状態で非表示 */
+}
+.ad-container img:hover {
+    cursor: pointer; /* カーソルを指に変更 */
+}
+.ad-container img.fade-in {
+    opacity: 1; /* fade-inクラスが適用された場合、不透明度を1に設定してフェードインさせる */
+}
+
+.horizontal-ads {
+    display: flex;
+    justify-content: center; /* 横方向の中央揃え */
+}
+
+.horizontal-ads img {
+    border-radius: 30px; /* 画像の角を丸くする */
+    max-width:40%; /* 画像の最大幅を設定 */
+    margin: 20px; /* 画像間の余白を設定 */
+}
+.ad-container img.pop {
+    margin: 20px; /* 余白を設定 */
+    animation: popIn 1s ease forwards; /* popInアニメーションを1秒かけて実行 */
+}
+@keyframes popIn {
+    0% { transform: scale(0); opacity: 0; } /* 非表示状態 */
+    100% { transform: scale(1); opacity: 1; } /* 表示状態 */
+}
+
+/*タイトル*/
+
+.hello-word {
+    margin:100px;
+    z-index: auto;
+}
+/* H Animation */
+
+.H-left-stroke {
+    stroke-dasharray: 124px;
+    stroke-dashoffset: 124px;
+    animation: H-left-move 20s ease forwards;
+}
+
+.H-mid-stroke {
+    stroke-dasharray: 37px;
+    stroke-dashoffset: 37px;
+    animation: H-mid-move 9s ease forwards;
+}
+
+.H-right-stroke {
+    stroke-dasharray: 124px;
+    stroke-dashoffset: 124px;
+    animation: H-right-move 13s ease forwards;
+}
+
+@keyframes H-left-move {
+    0% {
+        stroke-dashoffset: 124px;
+    }
+    5% {
+        stroke-dashoffset: 0;
+    }
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes H-mid-move {
+    0% {
+        stroke-dashoffset: 37px;
+    }
+    5% {
+        stroke-dashoffset: 37px;
+    }
+    10% {
+        stroke-dashoffset: 0;
+    }
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes H-right-move {
+    0% {
+        stroke-dashoffset: 124px;
+    }
+    5% {
+        stroke-dashoffset: 124px;
+    }
+    10% {
+        stroke-dashoffset: 0;
+    }
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+/* E Animation */
+
+.E-left-stroke {
+    stroke-dasharray: 124px;
+    stroke-dashoffset: 124px;
+    animation: E-left-move 20s ease forwards;
+}
+
+.E-top-stroke {
+    stroke-dasharray: 47px;
+    stroke-dashoffset: 47px;
+    animation: E-top-move 10s ease forwards;
+}
+
+.E-mid-stroke {
+    stroke-dasharray: 42px;
+    stroke-dashoffset: 42px;
+    animation: E-mid-move 10s ease forwards;
+}
+
+.E-bottom-stroke {
+    stroke-dasharray: 47px;
+    stroke-dashoffset: 47px;
+    animation: E-bottom-move 10s ease forwards;
+}
+
+@keyframes E-left-move {
+    0% {
+        stroke-dashoffset: 124px;
+    }
+    2% {
+        stroke-dashoffset: 124px;
+    }
+    6% {
+        stroke-dashoffset: 0;
+    }
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes E-top-move {
+    0% {
+        stroke-dashoffset: 47px;
+    }
+    6% {
+        stroke-dashoffset: 47px;
+    }
+    11% {
+        stroke-dashoffset: 0;
+    }
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes E-mid-move {
+    0% {
+        stroke-dashoffset: 42px;
+    }
+    8% {
+        stroke-dashoffset: 42px;
+    }
+    13% {
+        stroke-dashoffset: 0;
+    }
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes E-bottom-move {
+    0% {
+        stroke-dashoffset: 47px;
+    }
+    11% {
+        stroke-dashoffset: 47px;
+    }
+    16% {
+        stroke-dashoffset: 0;
+    }
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+/* L One Animation */
+
+.L-one-long-stroke {
+    stroke-dasharray: 124px;
+    stroke-dashoffset: 124px;
+    animation: L-one-long-move 20s ease forwards;
+}
+
+.L-one-short-stroke {
+    stroke-dasharray: 44px;
+    stroke-dashoffset: 44px;
+    animation: L-one-short-move 10s ease forwards;
+}
+
+@keyframes L-one-long-move {
+    0% {
+        stroke-dashoffset: 124px;
+    }
+    2% {
+        stroke-dashoffset: 124px;
+    }
+    7% {
+        stroke-dashoffset: 0;
+    }
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes L-one-short-move {
+    0% {
+        stroke-dashoffset: 44px;
+    }
+    13% {
+        stroke-dashoffset: 44px;
+    }
+    18% {
+        stroke-dashoffset: 0;
+    }
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+/* L Two Animation */
+
+.L-two-long-stroke {
+    stroke-dasharray: 124px;
+    stroke-dashoffset: 124px;
+    animation: L-two-long-move 20s ease forwards;
+}
+
+.L-two-short-stroke {
+    stroke-dasharray: 44px;
+    stroke-dashoffset: 44px;
+    animation: L-two-short-move 10s ease forwards;
+}
+
+@keyframes L-two-long-move {
+    0% {
+        stroke-dashoffset: 124px;
+    }
+    3% {
+        stroke-dashoffset: 124px;
+    }
+    8% {
+        stroke-dashoffset: 0;
+    }
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes L-two-short-move {
+    0% {
+        stroke-dashoffset: 44px;
+    }
+    15% {
+        stroke-dashoffset: 44px;
+    }
+    20% {
+        stroke-dashoffset: 0;
+    }
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+/* O Animation */
+
+.O-stroke {
+    stroke-dasharray: 302px;
+    stroke-dashoffset: 302px;
+    animation: O-move 20s ease forwards;
+}
+
+@keyframes O-move {
+    0% {
+        stroke-dashoffset: 302px;
+    }
+    4% {
+        stroke-dashoffset: 302px;
+    }
+    9% {
+        stroke-dashoffset: 0;
+    }
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+/* Red Dot Animation */
+
+.red-dot {
+    stroke-width: 44px;
+    stroke-linecap: round;
+    animation: red-dot-grow 8s ease-out forwards;
+}
+
+@keyframes red-dot-grow {
+    0% {
+        stroke-width: 0;
+    }
+    15% {
+        stroke-width: 0;
+    }
+    20% {
+        stroke-width: 44px;
+    }
+    100% {
+        stroke-width: 44px;
+    }
+}

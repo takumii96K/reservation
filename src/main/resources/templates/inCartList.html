@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6" lang="ja">
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
 <head>
     <meta charset="UTF-8">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -48,11 +48,6 @@
 	div p span {
 		font-size: 40px;
 	}
-
-	/*編集テキストのスタイル*/
-	#newQuantityInput{
-        width: 30px; /* テキストボックスの横幅を指定 */
-    }
 	
 	#checkoutButton{
 		background-color: rgb(255, 156, 66);
@@ -146,7 +141,7 @@
 	            contentType: 'application/json',
 	            headers: { [csrfHeaderName]: csrfToken },
 	            //data: { itemId: productId }, // 商品IDをデータとして送信
-	            success: function(response)
+	            success: function()
 				{
 	                // 必要に応じて成功時のレスポンスを処理
 	                alert("商品が正常に削除されました。");
@@ -180,7 +175,7 @@
 		            url: '/cart/update/' + itemId +'/'+ newQuantity, // コントローラのエンドポイントに合わせてURLを変更
 		            contentType: 'application/json',
 		            headers: { [csrfHeaderName]: csrfToken },
-		            success: function(response)
+		            success: function()
 					{
 		                // 必要に応じて成功時のレスポンスを処理
 		                alert("商品が正常に更新されました。");

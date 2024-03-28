@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta id="csrfToken" name="_csrf" th:content="${_csrf.token}"/>
     <meta id="csrfHeaderName" name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <title>管理画面</title>
     <style>
         body {
@@ -91,7 +92,7 @@
         <td th:text="${product.category}"></td>
         <td>
             <!-- 非表示の画像URLフィールド -->
-            <input type="hidden" th:value="${product.image.url}" class="product-image-url" />
+            <input type="hidden" th:value="${product.image?.path}" class="product-image-url" />
             <!-- 編集ボタン -->
             <button class="edit-btn" onclick="showEditForm(this)">編集</button>
         </td>
@@ -133,7 +134,6 @@
     </form>
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     function showEditForm(button) {
         let row = button.parentNode.parentNode;
@@ -306,32 +306,32 @@
 </table>
 
 
-<script>
-    $('#uploadForm').submit(function(event) {
-        event.preventDefault();
+<!--<script>-->
+<!--    $('#uploadForm').submit(function(event) {-->
+<!--        event.preventDefault();-->
 
-        let formData = new FormData();
-        formData.append('productImage', $('#productImage')[0].files[0]);
+<!--        let formData = new FormData();-->
+<!--        formData.append('productImage', $('#productImage')[0].files[0]);-->
 
-        const csrfToken = $('meta[name="_csrf"]').attr('content');
-        const csrfHeaderName = $('meta[name="_csrf_header"]').attr('content');
+<!--        const csrfToken = $('meta[name="_csrf"]').attr('content');-->
+<!--        const csrfHeaderName = $('meta[name="_csrf_header"]').attr('content');-->
 
-        $.ajax({
-            url: '/upload', // サーバー側のエンドポイント
-            type: 'POST',
-            data: formData,
-            headers: { [csrfHeaderName]: csrfToken },
-            processData: false,
-            contentType: false,
-            success: function(response) {
-                alert('画像のアップロードが完了しました');
-                location.reload();
-            },
-            error: function() {
-                alert('画像のアップロードに失敗しました');
-            }
-        });
-    });
-</script>
+<!--        $.ajax({-->
+<!--            url: '/upload', // サーバー側のエンドポイント-->
+<!--            type: 'POST',-->
+<!--            data: formData,-->
+<!--            headers: { [csrfHeaderName]: csrfToken },-->
+<!--            processData: false,-->
+<!--            contentType: false,-->
+<!--            success: function(response) {-->
+<!--                alert('画像のアップロードが完了しました');-->
+<!--                location.reload();-->
+<!--            },-->
+<!--            error: function() {-->
+<!--                alert('画像のアップロードに失敗しました');-->
+<!--            }-->
+<!--        });-->
+<!--    });-->
+<!--</script>-->
 </body>
 </html>

@@ -1,16 +1,13 @@
 package org.example.reservation.controller;
 
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.example.reservation.entity.Product;
 import org.example.reservation.entity.converter.ProductDtoConverter;
 import org.example.reservation.exception.ResourceNotFoundException;
 import org.example.reservation.form.ProductForm;
-import org.example.reservation.service.spec.ImageService;
 import org.example.reservation.service.spec.ProductService;
 import org.example.reservation.service.spec.ReservationService;
 import org.example.reservation.service.spec.UserService;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,20 +22,7 @@ public class ManageController {
 	private final ProductService productService;
 	private final UserService userService;
 	private final ReservationService reservationService;
-	private final ImageService imageService;
 	private final ProductDtoConverter converter;
-
-	// 商品情報の編集フォーム表示フラグ
-	@Getter
-	private boolean productFormVisible = false;
-
-	// 商品情報の編集フォーム表示フラグのリセット
-	private void resetProductFormVisible() {
-		productFormVisible = false;
-	}
-
-	@Value("${upload.path}")
-	private String uploadPath;
 
 
 	/**
@@ -50,8 +34,6 @@ public class ManageController {
 	public String showList(Model model) {
 		//商品情報
 		model.addAttribute("products" ,converter.convertToDtoList(productService.getAllProducts()));
-		// 商品情報の編集フォーム表示フラグ
-		model.addAttribute("productFormVisible", this.productFormVisible);
 		model.addAttribute("form", new ProductForm());
 		//authorityKindが1のユーザーのみを取得
 		model.addAttribute("users", userService.findUserWithAuthorityKindOne());
@@ -62,9 +44,9 @@ public class ManageController {
 
 
 	/** 商品情報の編集処理 */
-	// 商品情報の更新を行うメソッド
+	// エラーが出る、formのimagefileの扱いを変えないのが原因
 	@PutMapping("/edit/{id}")
-	@ResponseBody // RESTful な応答をこのメソッドから送る
+	@ResponseBody
 	public ResponseEntity<?> updateProduct(@PathVariable("id") Long id, @RequestBody ProductForm form) {
 		try {
 			Product updatedProduct = productService.updateProduct(id, form);
@@ -77,39 +59,19 @@ public class ManageController {
 	}
 
 
-
 	/** 商品情報の追加処理 */
-//	@PostMapping("/manage/add-product")
-//	public String addProduct(@ModelAttribute("form") ProductForm form, Model model) {
-//		try {
-//			productService.createProduct(form);
-//			model.addAttribute("successMessage", "登録できました！");
-//
-//		} catch (Exception e) {
-//			model.addAttribute("errorMessage", "登録できませんでした");
-//			model.addAttribute("form", form); // 入力されたフォームデータを再表示するために必要な場合
-//		}
-//
-//		// 商品情報, ユーザー情報, 予約情報の再取得とビューへの追加
-//		model.addAttribute("products", converter.convertToDtoList(productService.getAllProducts()));
-//		model.addAttribute("productFormVisible", this.productFormVisible);
-//		model.addAttribute("form", new ProductForm());
-//		model.addAttribute("users", userService.findUserWithAuthorityKindOne());
-//		model.addAttribute("reservations", reservationService.getReservationProductDtoAll());
-//
-//		return "/manage"; // 商品登録画面にフォワード
-//	}
-
 	@PostMapping("/manage/add-product")
-	public String addProduct(@ModelAttribute ProductForm productForm, RedirectAttributes redirectAttributes) {
+	public String addProduct(@ModelAttribute("form") ProductForm form, RedirectAttributes redirectAttributes) {
 		try {
-			productService.createProduct(productForm); // 製品情報をデータベースに保存
-			redirectAttributes.addFlashAttribute("message", "商品が正常に登録されました。");
-			return "redirect:/admin/manage";
+			productService.createProduct(form);
+			redirectAttributes.addFlashAttribute("successMessage", "登録できました！");
+
 		} catch (Exception e) {
-			redirectAttributes.addFlashAttribute("message", "商品登録に失敗しました。");
-			return "redirect:/admin/manage";
+			redirectAttributes.addFlashAttribute("errorMessage", "登録できませんでした");
+			redirectAttributes.addFlashAttribute("form", form); // 入力されたフォームデータを再表示するために必要な場合
 		}
+
+		return "redirect:/admin/manage"; // 商品登録画面にフォワード
 	}
 
 }

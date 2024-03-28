@@ -1,431 +1,173 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
 <head >
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>トップページ</title>
-<link rel="stylesheet" type="text/css" href="/style.css">
-<link rel="stylesheet" href ="https://cdn.skypack.dev/sanitize.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/vegas/2.4.4/vegas.min.css">
-<link rel="stylesheet" type="text/css" href="css/6-1-4.css">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>トップページ</title>
+	<link rel="stylesheet" type="text/css" href="/style.css">
+	<link rel="stylesheet" type="text/css" href="/top.css">
+	<link rel="stylesheet" href ="https://cdn.skypack.dev/sanitize.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/vegas/2.4.4/vegas.min.css">
+	<link rel="stylesheet" type="text/css" href="css/6-1-4.css">
 
-<style>
-        body {
-            text-align: center;
-        }
-	
-       /* 見出し */
-        h1 {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(1.2);
-            padding: 0 55px;
-            text-align: center;
-            color: rgb(255, 255, 255);
-            opacity: 0; /* 初期状態で非表示 */
-            animation: fadeIn 1s forwards, bounce 1s ease-out; /* フェードインと振動アニメーション */
-        }
-        
-        /* フェードインアニメーション */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        /* 振動アニメーション */
-        @keyframes bounce {
-            0%, 100% {
-                transform: translate(-50%, -50%) scale(1.2);
-            }
-            50% {
-                transform: translate(-50%, -50%) scale(1);
-            }
-        }
-
-        /* 背景画像画像 */
-        .bg {
-			position: relative;
-			background-color: rgba(0, 0, 0, 0.5); /* 背景色を半透明の黒に設定 */
-           	background-image: url("https://plus.unsplash.com/premium_photo-1668618295237-f1d8666812c9?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
-            background-size: cover;
-            background-position: center;
-            height: 90vh;
-            width: 100%;
-            animation: scaleBackground 5s infinite alternate; /* 背景画像の拡大縮小アニメーション */
-            
-        }
-        
-        /* 背景画像の拡大縮小アニメーション */
-        @keyframes scaleBackground {
-            from {
-                transform: scale(1);
-            }
-            to {
-                transform: scale(1.1);
-            }
-        }
-        
-	/* ポップアップのスタイル */
-	.popup-overlay {
-	    position: fixed;
-	    top: 70px;
-	    bottom: 100px;
-	    left: 0;
-	    width: 100%;
-	    height: 100%;
-	    background-color: rgba(0, 0, 0, 0.7);
-	    display: none;
-	    justify-content: center;
-	    align-items: center;
-	}
-	
-	.popup-content {
-	    background-color: white;
-	    padding: 10px;
-	    border-radius: 10px;
-	    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-	    width: 300px; /* 幅を指定 */
-	    height: 380px; /* 高さを指定 */
-	    display: flex;
-	    justify-content: center;
-	    align-items: center;
-	    margin-top: 60px; /* 上側の余白 */
-	    margin-bottom: 100px; /* 下側の余白 */	    
-	}
-	
-	.popup-content img {
-		padding: 0;
-	    max-width: 100%;
-	    max-height: 100%;
-	}
-	
-	.close-btn {
-	    position: absolute;
-	    top: 12%;
-	    right: 34%;
-	    cursor: pointer;
-	}
-	        
-     /*おしらせ：アコーディオンメニュー*/
- 	.information {
-	    position: relative;
-	    padding: 20px 50px;
-	    margin-top: 40px;
-	    background-color: #f78318;
-	    color: #fff;
-	    opacity: 0; /* 初期状態は透明にする */
-	    transform: translateY(100%); /* 下から100%分上に移動 */
-	    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out; /* アニメーションの設定 */
-	    
-	    
-	}
-	
-	/* フェードインアニメーションのトリガー */
-	.show {
-	    opacity: 1; /* 不透明にする */
-	    transform: translateY(0%); /* 元の位置に移動 */
-	}
-
-	    
-    .home {
-		display: flex;
-		justify-content: center;
-		margin-top: 90px;
-		flex-direction: column; /* 要素を縦に並べる */
-		align-items: center; /* 中央揃え */
-		margin: 90px 0 60px 0;
-	}
-      .accordion-003 {
-		    max-width: 750px;
-		    margin-bottom: 10px;
-		    border-bottom: 1px solid rgb(64, 0, 0); /* accordion-003要素にもborder-bottomを適用 */
-		}
-		
-		.accordion-003 summary {
-		    display: flex;
-		    justify-content: center; /* 中央に配置 */
-		    align-items: center;
-		    /*position: relative;*/
-		    font-size: 17px;
-		    padding: 1em 2em;
-		    color: #3f3131;
-		    font-weight: 600;
-		    cursor: pointer;
-		}
-		
-		.accordion-003 summary::-webkit-details-marker {
-		    display: none;
-		}
-		
-		.accordion-003 summary::after {
-		    transform: translateY(-25%) rotate(45deg);
-		    width: 7px;
-		    height: 7px;
-		    margin-left: 10px;
-		    border-bottom: 3px solid #3f3131b3;
-		    border-right: 3px solid #3f3131b3;
-		    content: '';
-		    transition: transform .3s; /* トランジションを追加 */
-		}
-		
-		.accordion-003[open] summary::after {
-		    transform: rotate(225deg);
-		    transition: transform .5s, opacity .5s;
-		}
-		
-		.accordion-003 p {
-		    transform: translateY(-10px);
-		    opacity: 0;
-		    margin: 0;
-		    padding: .3em 2em 1.5em;
-		    color: #4e4b4b;
-		    transition: transform .5s, opacity .5s;
-		}
-		
-		.accordion-003[open] p {
-		    transform: none;
-		    opacity: 1;
-		}
-		.accordion-003 p {
-		    font-size: 13px; /* Adjust as needed */
-		}
-	
-	/* 広告バナー（ダミー） */
-	.campaign{
-		background-color: darkorange;
-		display: flex;
-		justify-content: center;
-		margin-top: 90px;
-		flex-direction: column; /* 要素を縦に並べる */
-		align-items: center; /* 中央揃え */
-		margin: 90px 0 60px 0;
-	}
-	.campaign .information{
-		background-color: rgb(255, 247, 208);
-		color: rgb(128, 64, 0);
-	}
-  	.ad-container {
-	    display: flex;
-	    flex-direction: column;
-	    align-items: center;
-	    padding: 40px 60px 60px 60px;
-	}
-	
-	.ad-container img {
-	    border-radius: 30px; /* 画像の角を丸くする */
-		width: 800px; /* 画像の横幅を500ピクセルに設定 */
-	    height: 300px; /* 高さを自動調整 */
-	    margin-bottom: 20px; /* 画像間の余白を設定 */
-		opacity: 0; /* 初期状態で不透明度を0に設定 */
-	    transform: scale(0); /* 初期状態で非表示 */
-	}
-	
-	.ad-container img.fade-in {
-    opacity: 1; /* fade-inクラスが適用された場合、不透明度を1に設定してフェードインさせる */
-	}
-	
-	.horizontal-ads {
-	    display: flex;
-	    justify-content: center; /* 横方向の中央揃え */
-	}
-	
-	.horizontal-ads img {
-	    border-radius: 30px; /* 画像の角を丸くする */
-	    max-width:40%; /* 画像の最大幅を設定 */
-	    margin: 20px; /* 画像間の余白を設定 */
-	}
-	.ad-container img.pop {
-		margin: 20px; /* 余白を設定 */
-		animation: popIn 1s ease forwards; /* popInアニメーションを1秒かけて実行 */
-	}
-	@keyframes popIn {
-	  0% { transform: scale(0); opacity: 0; } /* 非表示状態 */
-	  100% { transform: scale(1); opacity: 1; } /* 表示状態 */
-	}
-	
-</style>
 </head>
-<body>
-	
-	<!--固定ヘッダーフラグメントの挿入 -->
-    <div th:replace="fragments/layout :: header"></div>
-    
-    <!-- メインコンテンツ -->
-    <main class="wrap">
-		<h1 class="midashi">Wellcom!</h1>
-		
+<body class="animate-onload"><!-- ページロード時にアニメーションをトリガーするクラスを追加 -->
+
+
+<!--固定ヘッダーフラグメントの挿入 -->
+<div th:replace="fragments/layout :: header"></div>
+
+<!-- メインコンテンツ -->
+<main class="wrap">
+	<!--		<h1 class="midashi">Wellcom!</h1>-->
+	<!-- This is a recreation of the SVG animation that can be found on Wokine.com -->
+
+	<div class="bg">
+
+		<svg class="hello-word" width="365" height="365" viewBox="0 0 365 365">
+
+
+			<g id="H-letter">
+				<line class="H-left-stroke" x1="17" y1="0" x2="17" y2="124" stroke="#000" fill="none" stroke-width="34" />
+				<line class="H-mid-stroke" x1="33" y1="62" x2="68" y2="62" stroke="#000" fill="none" stroke-width="34" />
+				<line class="H-right-stroke" x1="84" y1="0" x2="84" y2="124" stroke="#000" fill="none" stroke-width="34" />
+			</g>
+
+			<g id="E-letter">
+				<line class="E-left-stroke" x1="138" y1="0" x2="138" y2="124" stroke="#000" fill="none" stroke-width="34" />
+				<line class="E-top-stroke" x1="154" y1="17" x2="201" y2="17" stroke="#000" fill="none" stroke-width="34" />
+				<line class="E-mid-stroke" x1="154" y1="62" x2="196" y2="62" stroke="#000" fill="none" stroke-width="34" />
+				<line class="E-bottom-stroke" x1="154" y1="107" x2="201" y2="107" stroke="#000" fill="none" stroke-width="34" />
+			</g>
+
+			<g id="L-one-letter">
+				<line class="L-one-long-stroke" x1="17" y1="153" x2="17" y2="277" stroke="#000" fill="none" stroke-width="34" />
+				<line class="L-one-short-stroke" x1="33" y1="260" x2="77" y2="260" stroke="#000" fill="none" stroke-width="34" />
+			</g>
+
+			<g id="L-two-letter">
+				<line class="L-two-long-stroke" x1="104" y1="153" x2="104" y2="277" stroke="#000" fill="none" stroke-width="34" />
+				<line class="L-two-short-stroke" x1="120" y1="260" x2="164" y2="260" stroke="#000" fill="none" stroke-width="34" />
+			</g>
+
+			<g id="O-letter">
+				<circle class="O-stroke" cx="231" cy="215" r="48" stroke="#000" fill="none" stroke-width="31" />
+			</g>
+
+			<g id="red-dot">
+				<!-- Initially I tried creating a circle but it was harder to manipulate it how I wanted to in CSS so I resorted to using a line trick to make it look like a circle ....
+
+                <circle class="red-dot" cx="325" cy="260" r="20" fill="#FF5851" stroke="none" />
+
+                -->
+
+				<line x1="325" y1="260" x2="325" y2="260" stroke="#FF5851" class="red-dot" />
+			</g>
+
+
+		</svg>
+	</div>
+
 	<!-- 背景画像 -->
 	<div id="slider"></div>
-	<div class="bg"></div>
-	
-		<!-- お知らせ -->
-		<div class="home">
-			<h2 class="information">information</h2>
-				<details class="accordion-003">
-					<summary>【2024/03/20】<br>～TeamAの“絶品”がリニューアル！～ <br>『絶品チーズバーガー』 2024年4月1日（月）から販売！</summary>
-			    		<p>『絶品チーズバーガー』をリニューアルし、<br>2024年4月1日（月）から全国のTeamA※1にて販売いたします。
-							※1：一部店舗を除く。
-							<br>
-							TeamAでは、2023年に『絶品チーズバーガー』を発売以来、人気定番商品として多くのお客様からご好評をいただいております。
-							そしてこのたび、『絶品チーズバーガー』をさらに美味しくリニューアルし、4月1日（月）から販売いたします。
-							リニューアルした『絶品チーズバーガー』は、岩塩や胡椒などのシンプルな味付けで肉の甘味と旨味を引き出した100％ビーフパティに、レッドチェダーチーズと4種類（ゴーダ、チェダー、マスカルポーネ、パルメザン）のチーズをブレンドしたとろ～りチーズソースを合わせ、アクセントのからしマヨとともに、ふんわりもっちり食感が特長のバンズで挟みました。
-							<br><br>
-							【新商品概要】<br>
-							販売期間：2024年4月1日（月）～レギュラーメニュー
-							販売店舗：全国のTeamA※1<br>
-							※1：さいたまスーパーアリーナ店を含む一部店舗を除く。<br>
-							*「MMセット」は対象バーガーと『フレンチフライポテトM』、『ドリンクM』のセットです。
-							同価格で『フレンチフライポテトM』を『オニオンフライ（5個入り）』または『チキンからあげっと（3本入り）』に変更いただけます。
-							また、プラス50円で『フレンチフライポテトM』を各種「ふるポテ」に、プラス100円で『フレンチフライポテトL』、『ドリンクL』の「LLセット」に変更いただけます。
-							<br>*表示価格は全て税込です。<br>
-							*一部店舗で価格が異なります。</p>
-				</details>
-				
-				<details class="accordion-003">
-			    	<summary>【2024/01/14】<br>新アプリにおける一部不具合発生のお知らせ</summary>
-			    		<p>お客さま各位<br>
-							いつもTeamAをご利用いただきありがとうございます。<br>
-							2024年1月10日にリニューアルした新アプリにおいて一部不具合が発生しております。
-							早期改善に努めておりますが、以下のいずれかの事象が発生してしまった場合、大変お手数をおかけいたしますが、記載の手順に従って再度お試しいただけるようお願い申し上げます。
-							<br>それに伴いアプリのアップデートをお願いします。
-							アプリを起動いただくと、アップデートのご案内が表示されますので、表示に従いApp storeまたはGoogle Play ストアページにて操作をお願いいたします。
-							アップデート後のアプリ最新バージョンは5.0.3です。<br>※アプリのバージョンはホーム > アカウントのページ最下部に記載がございます。</p>
-				</details>
-				
-				<details class="accordion-003">
-			    	<summary>【2023/12/08】<br>サイトメンテナンスに伴うサービス一部停止のお知らせ</summary>
-			    		<p>お客さま各位<br>
-							いつもTeamAをご利用いただきありがとうございます。<br>
-							以下の内容でサイトメンテナンスを実施いたします。<br>
-							※メンテナンス中はサービスをご利用いただけません。あらかじめご了承ください。<br><br>
-							▼メンテナンス対象<br>
-							・TeamAのネット注文サイト
-							・TeamAの公式アプリ<br><br>
-							▼実施期間<br>
-							・2024年2月5日(月)　0:00am ~ 7:00am<br>
-							メンテナンス中はネット注文のご利用はできません。公式アプリを利用してTeamAカードを表示することもできないためご注意ください。
-							店舗等でスマートフォンからTeamAカードをご利用される場合は、公式サイトのマイページよりモバイルモスカードの表示をお願いいたします。
-							※公式サイトのマイページからモバイルモスカードを表示するためには、事前にTeamAカード情報をTeamA Web会員への登録が必要です。
-							<br>ご不便をおかけいたしますが、ご理解賜りますようお願い申し上げます。</p>
-				</details>
+	<div class="bg-overRay"></div>
 
-			</div>
-		</div>
-		
+	<!-- お知らせ -->
+	<div class="home">
+		<h2 class="information">information</h2>
+		<details class="accordion-003">
+			<summary>【2024/03/20】<br>～TeamAの“絶品”がリニューアル！～ <br>『絶品チーズバーガー』 2024年4月1日（月）から販売！</summary>
+			<p>『絶品チーズバーガー』をリニューアルし、<br>2024年4月1日（月）から全国のTeamA※1にて販売いたします。
+				※1：一部店舗を除く。
+				<br>
+				TeamAでは、2023年に『絶品チーズバーガー』を発売以来、人気定番商品として多くのお客様からご好評をいただいております。
+				そしてこのたび、『絶品チーズバーガー』をさらに美味しくリニューアルし、4月1日（月）から販売いたします。
+				リニューアルした『絶品チーズバーガー』は、岩塩や胡椒などのシンプルな味付けで肉の甘味と旨味を引き出した100％ビーフパティに、レッドチェダーチーズと4種類（ゴーダ、チェダー、マスカルポーネ、パルメザン）のチーズをブレンドしたとろ～りチーズソースを合わせ、アクセントのからしマヨとともに、ふんわりもっちり食感が特長のバンズで挟みました。
+				<br><br>
+				【新商品概要】<br>
+				販売期間：2024年4月1日（月）～レギュラーメニュー
+				販売店舗：全国のTeamA※1<br>
+				※1：さいたまスーパーアリーナ店を含む一部店舗を除く。<br>
+				*「MMセット」は対象バーガーと『フレンチフライポテトM』、『ドリンクM』のセットです。
+				同価格で『フレンチフライポテトM』を『オニオンフライ（5個入り）』または『チキンからあげっと（3本入り）』に変更いただけます。
+				また、プラス50円で『フレンチフライポテトM』を各種「ふるポテ」に、プラス100円で『フレンチフライポテトL』、『ドリンクL』の「LLセット」に変更いただけます。
+				<br>*表示価格は全て税込です。<br>
+				*一部店舗で価格が異なります。</p>
+		</details>
+
+		<details class="accordion-003">
+			<summary>【2024/01/14】<br>新アプリにおける一部不具合発生のお知らせ</summary>
+			<p>お客さま各位<br>
+				いつもTeamAをご利用いただきありがとうございます。<br>
+				2024年1月10日にリニューアルした新アプリにおいて一部不具合が発生しております。
+				早期改善に努めておりますが、以下のいずれかの事象が発生してしまった場合、大変お手数をおかけいたしますが、記載の手順に従って再度お試しいただけるようお願い申し上げます。
+				<br>それに伴いアプリのアップデートをお願いします。
+				アプリを起動いただくと、アップデートのご案内が表示されますので、表示に従いApp storeまたはGoogle Play ストアページにて操作をお願いいたします。
+				アップデート後のアプリ最新バージョンは5.0.3です。<br>※アプリのバージョンはホーム > アカウントのページ最下部に記載がございます。</p>
+		</details>
+
+		<details class="accordion-003">
+			<summary>【2023/12/08】<br>サイトメンテナンスに伴うサービス一部停止のお知らせ</summary>
+			<p>お客さま各位<br>
+				いつもTeamAをご利用いただきありがとうございます。<br>
+				以下の内容でサイトメンテナンスを実施いたします。<br>
+				※メンテナンス中はサービスをご利用いただけません。あらかじめご了承ください。<br><br>
+				▼メンテナンス対象<br>
+				・TeamAのネット注文サイト
+				・TeamAの公式アプリ<br><br>
+				▼実施期間<br>
+				・2024年2月5日(月)　0:00am ~ 7:00am<br>
+				メンテナンス中はネット注文のご利用はできません。公式アプリを利用してTeamAカードを表示することもできないためご注意ください。
+				店舗等でスマートフォンからTeamAカードをご利用される場合は、公式サイトのマイページよりモバイルモスカードの表示をお願いいたします。
+				※公式サイトのマイページからモバイルモスカードを表示するためには、事前にTeamAカード情報をTeamA Web会員への登録が必要です。
+				<br>ご不便をおかけいたしますが、ご理解賜りますようお願い申し上げます。</p>
+		</details>
+
+	</div>
+
 	<!-- キャンペーン -->
 	<div class="campaign">
 		<h2 class="information">campaign</h2>
-		    <div class="ad-container">
-	        <img src="https://banner-hiroba.com/wp-content/uploads/2022/05/c09ee966-a5e4-4a19-ae1d-088816734d33.jpg" alt="Ad 1">
-	        	<div class="horizontal-ads">
-	            	<img src="https://img.pikbest.com/origin/06/68/55/46cpIkbEsTJBS.jpg!w700wp" alt="Ad 3">
-	            	<img src="https://img.pikbest.com/origin/10/12/72/076pIkbEsTbpf.jpg!w700wp" alt="Ad 4">
-	        	</div>
-	        <img src="https://www.shutterstock.com/image-vector/delicious-homemade-burger-chili-bbq-600nw-1804330342.jpg" alt="Ad 2">
+		<div class="ad-container">
+			<img src="https://banner-hiroba.com/wp-content/uploads/2022/05/c09ee966-a5e4-4a19-ae1d-088816734d33.jpg" alt="Ad 1">
+			<div class="horizontal-ads">
+				<img src="https://img.pikbest.com/origin/06/68/55/46cpIkbEsTJBS.jpg!w700wp" alt="Ad 3">
+				<img src="https://img.pikbest.com/origin/10/12/72/076pIkbEsTbpf.jpg!w700wp" alt="Ad 4">
+			</div>
+			<img src="https://www.shutterstock.com/image-vector/delicious-homemade-burger-chili-bbq-600nw-1804330342.jpg" alt="Ad 2">
 
-	    </div>
-    </div>
-    
+		</div>
+	</div>
+
 	<!--トップへ戻るボタンフラグメントの挿入 -->
-    <div th:replace="fragments/layout :: toTop"></div>
-    
-	</main>
-	
-	<!--固定フッターフラグメントの挿入 -->
-	<div th:replace="fragments/layout :: footer"></div>
-	
-<script>
-	
-	/**
-	informationのアニメーション
-	*/
-	// スクロール時にアニメーションを実行する関数
-	function animateOnScroll() {
-	    var informationElements = document.querySelectorAll('.information');
-	    var accordionElements = document.querySelectorAll('.accordion-003');
-	    
-	    informationElements.forEach(function(element) {
-	        // 要素が画面内に表示されたらアニメーションを実行
-	        if (isElementInViewport(element)) {
-	            element.classList.add('show');
-	        }
-	    });
-	    
-	    accordionElements.forEach(function(element) {
-	        // 要素が画面内に表示されたらアニメーションを実行
-	        if (isElementInViewport(element)) {
-	            element.classList.add('show');
-	        }
-	    });
-	}
-	
-	// 指定された要素が画面内に表示されているかどうかを判定する関数
-	function isElementInViewport(el) {
-	    var rect = el.getBoundingClientRect();
-	    return (
-	        rect.top >= 0 &&
-	        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)
-	    );
-	}
-	
-	// スクロール時にアニメーションを実行
-	window.addEventListener('scroll', animateOnScroll);
-	
-	// ページ読み込み時にもアニメーションを実行
-	window.addEventListener('load', animateOnScroll);	
-	
-	
-	/**
-	広告のアニメーション
-	*/
-	// ページ読み込み時にポップアップを表示する関数
-	function openPopup() {
-	    document.getElementById("popupOverlay").style.display = "flex";
-	}
-	
-	// ポップアップを閉じる関数
-	function closePopup() {
-	    document.getElementById("popupOverlay").style.display = "none";
-	}
-	
-	// 画面遷移後にポップアップを表示するための関数
-	function showPopupAfterDelay() {
-	    setTimeout(openPopup, 2000); // 2秒後にポップアップを表示
-	}
-	
-	// ページ読み込み時に関数を実行
-	window.onload = function() {
-	    showPopupAfterDelay();
-	};
+	<div th:replace="fragments/layout :: toTop"></div>
 
-        // スクロールまたはページの読み込み時に実行される関数
-        window.addEventListener('scroll', popInImages);
-        window.addEventListener('DOMContentLoaded', popInImages);
-        
-        function popInImages() {
-          const images = document.querySelectorAll('.ad-container img');
-        
-          images.forEach((image) => {
-            // 画像の上端がウィンドウの下端よりも上に位置する場合に、popクラスを追加してアニメーションをトリガー
-            if (image.getBoundingClientRect().top < window.innerHeight) {
-              image.classList.add('pop');
-            }
-          });
-        }
-        
+</main>
+
+<!--固定フッターフラグメントの挿入 -->
+<div th:replace="fragments/layout :: footer"></div>
+
+<script th:src="@{/js/top.js}"></script> <!-- 外部のJavaScriptファイル -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+<script>
+	// anime.jsを使用して1文字ずつのアニメーションを定義
+	anime.timeline({
+		easing: 'easeOutExpo',
+	})
+			.add({
+				targets: '.midashi span',
+				opacity: [0,1], // 透明から不透明に
+				translateY: [-100,0], // 上から下に移動
+				delay: anime.stagger(100), // 100msずつ遅延してアニメーション
+			})
 </script>
 <!-- ポップアップ -->
 <div class="popup-overlay" id="popupOverlay">
-    <div class="popup-content">
-        <span class="close-btn" onclick="closePopup()">×</span>
-        <img src="https://data.editor-ac.com/data/thumbnails/templates/d54fdd5beded36ae9abcf3b54d0e976d/d54fdd5beded36ae9abcf3b54d0e976d-900.webp" alt="ポップアップ画像">
-    </div>
+	<div class="popup-content">
+		<span class="close-btn" onclick="closePopup()">×</span>
+		<img src="https://data.editor-ac.com/data/thumbnails/templates/d54fdd5beded36ae9abcf3b54d0e976d/d54fdd5beded36ae9abcf3b54d0e976d-900.webp" alt="ポップアップ画像">
+	</div>
 </div>
 
 </body>
