@@ -17,18 +17,18 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-	
+
 	<!--固定ヘッダーフラグメントの挿入 -->
     <div th:replace="fragments/layout :: header"></div>
 
 	<!-- 見出し -->
     <h1 class="midashi">Menu</h1>
-    
+
     <!-- メインコンテンツ -->
 	<main class="wrap">
-	<div class="main">	
+	<div class="main">
 	<div class="main_content">
-		
+
 	<!-- スライドショー -->
 	<ul class="slider">
 	  <li><img src="https://images.pexels.com/photos/2619970/pexels-photo-2619970.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt=""></li>
@@ -43,17 +43,19 @@
 	<script src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/6-1-7/js/6-1-7.js"></script>
 
         <!-- カテゴリ選択用のドロップダウンメニュー -->
-        <form th:action="@{/takeout/product}" method="get">
-            <label>
-                <select name="category" onchange="this.form.submit()">
-                    <option value="">全てのカテゴリ</option>
-                    <option value="FOOD">食品</option>
-                    <option value="DRINK">飲料</option>
-                    <option value="SIDE">サイド</option>
-                    <!-- 他のカテゴリオプション -->
-                </select>
-            </label>
-        </form>
+        <div class="selectbox-1 ">
+            <form th:action="@{/takeout/product}" method="get">
+                <label>
+                    <select name="category" onchange="this.form.submit()">
+                        <option value="">全てのカテゴリ</option>
+                        <option value="FOOD">食品</option>
+                        <option value="DRINK">ドリンク</option>
+                        <option value="SIDE">サイド</option>
+                        他のカテゴリオプション
+                    </select>
+                </label>
+            </form>
+        </div>
 
 
         <!-- 商品カードを動的に表示 -->

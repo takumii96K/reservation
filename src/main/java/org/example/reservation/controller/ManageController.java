@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequiredArgsConstructor
@@ -43,9 +44,9 @@ public class ManageController {
 
 
 	/** 商品情報の編集処理 */
-	// 商品情報の更新を行うメソッド
+	// エラーが出る、formのimagefileの扱いを変えないのが原因
 	@PutMapping("/edit/{id}")
-	@ResponseBody // RESTful な応答をこのメソッドから送る
+	@ResponseBody
 	public ResponseEntity<?> updateProduct(@PathVariable("id") Long id, @RequestBody ProductForm form) {
 		try {
 			Product updatedProduct = productService.updateProduct(id, form);
@@ -60,21 +61,15 @@ public class ManageController {
 
 	/** 商品情報の追加処理 */
 	@PostMapping("/manage/add-product")
-	public String addProduct(@ModelAttribute("form") ProductForm form, Model model) {
+	public String addProduct(@ModelAttribute("form") ProductForm form, RedirectAttributes redirectAttributes) {
 		try {
 			productService.createProduct(form);
-			model.addAttribute("successMessage", "登録できました！");
+			redirectAttributes.addFlashAttribute("successMessage", "登録できました！");
 
 		} catch (Exception e) {
-			model.addAttribute("errorMessage", "登録できませんでした");
-			model.addAttribute("form", form); // 入力されたフォームデータを再表示するために必要な場合
+			redirectAttributes.addFlashAttribute("errorMessage", "登録できませんでした");
+			redirectAttributes.addFlashAttribute("form", form); // 入力されたフォームデータを再表示するために必要な場合
 		}
-
-		// 商品情報, ユーザー情報, 予約情報の再取得とビューへの追加
-		model.addAttribute("products", converter.convertToDtoList(productService.getAllProducts()));
-		model.addAttribute("form", new ProductForm());
-		model.addAttribute("users", userService.findUserWithAuthorityKindOne());
-		model.addAttribute("reservations", reservationService.getReservationProductDtoAll());
 
 		return "redirect:/admin/manage"; // 商品登録画面にフォワード
 	}

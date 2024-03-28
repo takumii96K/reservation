@@ -38,7 +38,7 @@ public class ShoppingCartController {
         return ResponseEntity.ok(Map.of("redirectUrl", "/takeout/product/reservation"));
     }
 
-    @DeleteMapping("/delete/{itemId}")//1行削除
+    @DeleteMapping("/delete/{itemId}")
     public ResponseEntity<?> deleteProduct(@PathVariable Long itemId) {
         // 受け取ったIDを使用して商品の削除を処理
     	service.getSession().getCart().removeItem(itemId);

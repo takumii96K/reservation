@@ -138,30 +138,6 @@
 	<!--固定フッターフラグメントの挿入 -->
 	<div th:replace="fragments/layout :: footer"></div>
 
-
-
-    <script>
-        // JavaScript
-        document.addEventListener('DOMContentLoaded', function() {
-            const profiles = document.querySelectorAll('.profile');
-
-            // スクロール時のイベントリスナーを追加
-            window.addEventListener('scroll', function() {
-                profiles.forEach((profile, index) => {
-                    // プロフィールが画面内に入ったかどうかを判定
-                    const rect = profile.getBoundingClientRect();
-                    const windowHeight = window.innerHeight || document.documentElement.clientHeight;
-                    const isVisible = rect.top < windowHeight;
-
-                    // プロフィールが画面内に入ったらアニメーションを適用
-                    if (isVisible) {
-                        setTimeout(() => {
-                            profile.style.display = 'block';
-                        }, index * 300); // 時差を設定
-                    }
-                });
-            });
-        });
-    </script>
+	<script th:src="@{/js/member.js}"></script>
 </body>
 </html>

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta id="csrfToken" name="_csrf" th:content="${_csrf.token}"/>
     <meta id="csrfHeaderName" name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <title>管理画面</title>
     <style>
         body {
@@ -133,7 +134,6 @@
     </form>
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     function showEditForm(button) {
         let row = button.parentNode.parentNode;

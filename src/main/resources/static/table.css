@@ -1,0 +1,170 @@
+@charset "UTF-8";
+
+/* フォームスタイル */
+form {
+    margin-top: 0;
+}
+
+/* テーブルのスタイル */
+table {
+    margin: 0 auto; /* テーブルを中央揃えにする */
+    width: 80%; /* テーブルの幅を指定 */
+    border-collapse: collapse; /* セルの境界線を重ねる */
+}
+
+/* テーブルのヘッダー行のスタイル */
+th {
+    background-color: rgb(254, 149, 63); /* ヘッダー行の背景色 */
+    color: #fff; /* ヘッダー行の文字色 */
+    font-weight: bold; /* ヘッダー行の文字を太字にする */
+    padding: 10px; /* ヘッダー行の内側の余白 */
+    border: 1px solid rgb(128, 64, 0); /* 境界線のスタイルを指定 */
+}
+
+/* テーブルのデータ行のスタイル */
+td {
+    border: 1px solid rgb(174, 87, 0); /* セルの境界線を設定 */
+    padding: 10px; /* セルの内側の余白 */
+    text-align: center; /* セル内のテキストを中央揃えにする */
+}
+
+/* 奇数行の背景色を設定 */
+tr:nth-child(odd) {
+    background-color: rgba(174, 87, 0, 0.1); /* 奇数行の背景色 */
+}
+
+div {
+    margin-bottom: 40px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: rgb(128, 64, 0);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="password"] {
+    width: 40%;
+    padding: 8px;
+    border: 1px solid rgb(128, 64, 0);
+    border-radius: 5px;
+    text-align: center;
+}
+
+/*決済ボタン*/
+button[type="submit"] {
+    background-color: rgb(255, 156, 66);
+    color: rgb(128, 64, 0);
+    padding: 10px 20px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+    border: 1px solid rgb(128, 64, 0);
+
+}
+
+button[type="submit"]:hover {
+    background-color: rgb(170, 85, 0);
+    color: #fff;
+}
+
+/*totalの文字*/
+#text{
+    font-size: 20px;
+    color: rgb(183, 107, 6);
+}
+#text span{
+    font-size: 35px;
+}
+
+.button-container {
+    margin-bottom: 20px; /* ボタンとリンク間のスペースを設定 */
+}
+
+.link-container {
+    margin-top: 20px; /* ボタンとリンク間のスペースを設定 */
+}
+/* totalのテキストスタイル */
+div p {
+    margin-top: 40px;
+    font-size: 1.2em; /* フォントサイズを設定 */
+    font-weight: bold; /* フォントを太字にする */
+    color: rgb(174, 87, 0); /* テキストの色を設定 */
+}
+
+/* totalの数字のスタイル */
+div span {
+    margin-top: 40px;
+    font-size: 1.2em; /* フォントサイズを大きくする */
+    color: rgb(174, 87, 0); /* テキストの色を設定 */
+}
+
+
+
+
+/*inCartListのCSS*/
+
+/* テーブルのスタイル */
+table {
+    margin: 0 auto; /* テーブルを中央揃えにする */
+    width: 80%; /* テーブルの幅を指定 */
+    border-collapse: collapse; /* セルの境界線を重ねる */
+}
+
+/* テーブルのヘッダー行のスタイル */
+th {
+    background-color: rgb(254, 149, 63); /* ヘッダー行の背景色 */
+    color: #fff; /* ヘッダー行の文字色 */
+    font-weight: bold; /* ヘッダー行の文字を太字にする */
+    padding: 10px; /* ヘッダー行の内側の余白 */
+    border: 1px solid rgb(128, 64, 0); /* 境界線のスタイルを指定 */
+}
+
+/* テーブルのデータ行のスタイル */
+td {
+    border: 1px solid rgb(174, 87, 0); /* セルの境界線を設定 */
+    padding: 10px; /* セルの内側の余白 */
+    text-align: center; /* セル内のテキストを中央揃えにする */
+}
+
+/* 奇数行の背景色を設定 */
+tr:nth-child(odd) {
+    background-color: rgba(174, 87, 0, 0.1); /* 奇数行の背景色 */
+}
+
+
+/* totalテキストのスタイル */
+div p{
+    text-align: center; /* テキストを中央揃えにする */
+    margin-top: 40px; /* 上部の余白を設定 */
+}
+div p span {
+    font-size: 35px;
+}
+
+/*編集テキストのスタイル*/
+#newQuantityInput{
+    width: 30px; /* テキストボックスの横幅を指定 */
+}
+
+#checkoutButton{
+    background-color: rgb(255, 156, 66);
+    color: rgb(128, 64, 0);
+    padding: 10px 20px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+    border: 1px solid rgb(128, 64, 0);
+}
+
+#checkoutButton:hover {
+    background-color: rgb(170, 85, 0);
+    color: #fff;
+}

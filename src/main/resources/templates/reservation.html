@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdn.skypack.dev/sanitize.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css"/>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <style>
 
         /* フォームスタイル */
@@ -91,6 +92,11 @@
         </div>
         </div>
 
+		<!-- エラーメッセージを表示 -->
+		<div th:if="${errorMessage}" class="alert alert-danger">
+			<p th:text="${errorMessage}">エラーメッセージがここに表示されます。</p>
+		</div>
+
 	<!-- 注文者情報入力フォーム -->
 	<h2>注文者情報</h2>
 	<form th:action="@{/takeout/product/completeOrder}" th:object="${reservationForm}" method="post">
@@ -132,7 +138,6 @@
 			<span th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></span><!-- 日時のエラーメッセージ表示 -->
 			<label for="datetime">☝受取日時を選択してください☝</label>
 		 </div>
-
 
 	    <script>
 	        $('#datetime').datetimepicker({
